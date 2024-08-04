@@ -477,17 +477,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Task: () => (/* binding */ Task)
 /* harmony export */ });
 class Task {
-    constructor(title, description, dueDate, priority, notes) {
+    constructor(title, description, dueDate, priority, notes = '') {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
-    }
-}
+    };
+};
 
 
-//do something with projects
+
 
 /***/ })
 
@@ -570,11 +570,13 @@ var __webpack_exports__ = {};
   \*********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
-/* harmony import */ var _components_task_master__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/task-master */ "./src/components/task-master.js");
+/* harmony import */ var _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/task-master.js */ "./src/components/task-master.js");
 
 
 
-tasks = [];
+const tasks = [];
+const fakeTask = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("clean the room", "just do it", '12/08/2024', 'urgent')
+
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map

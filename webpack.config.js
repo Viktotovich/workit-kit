@@ -13,6 +13,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'workit-kit',
+            template: './src/index.html'
         }),
     ],
     devtool: 'source-map',
