@@ -575,7 +575,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const tasks = [];
-const fakeTask = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("clean the room", "just do it", '12/08/2024', 'urgent')
+
+let fakeTask = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("clean the room", "just do it", '12/08/2024', 'urgent')
 
 /******/ })()
 ;
