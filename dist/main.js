@@ -510,7 +510,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Category: () => (/* binding */ Category),
 /* harmony export */   Subtask: () => (/* binding */ Subtask),
-/* harmony export */   Task: () => (/* binding */ Task)
+/* harmony export */   Task: () => (/* binding */ Task),
+/* harmony export */   projects: () => (/* binding */ projects)
 /* harmony export */ });
 class Category {
     constructor(catTitle, catDescription){
@@ -537,69 +538,40 @@ class Subtask {
     }
 }
 
+//super duper crucial
+const projects = {};
 
+//adding example tasks - without polluting names
+(function(){
+    const workCat = new Category("Work Tasks", "This category contains all tasks pertaining to work");
 
+    projects.workCat = workCat;
 
+    function exampleTasks() {
+        const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '31/08/2024', 'high');
 
-/* How I want things to look like:
-const projects = {
-    myProjects: {
-        catDescription: '',
-        catTitle: '',
-        tasks: [
-            task1 = {
-                name: 'example task',
-                description: 'example task description',
-                due: "12/08/2024",
-                subtasks: [
-                    subtask1 = {
-                        description: '',
-                        completed: 'yes'
-                    },
-                    subtask2 = {
-                        description: '',
-                        completed: 'no'
-                    }
-                ],
-            },
-            task2 = {
-                name: 'example task',
-                description: 'example task description',
-                due: "12/08/2024",
-                subtasks: [
-                    subtask1 = {
-                        name: xyz,
-                        description: ''
-                    },
-                    subtask2 = {
-                        name: zyx,
-                        description: ''
-                    }
-                ],
-            },
-        ]
-    },
-    myWork: {
-        catDescription: '',
-        catTitle: '',
-        tasks: [
-            task1 = {
-                name: 'example task',
-                description: 'example task description',
-                due: "12/08/2024",
-                notes: "optional notes"
-            },
-            task2 = {
-                name: 'example task',
-                description: 'example task description',
-                due: "12/08/2024",
-                notes: "optional notes"
-            },
-        ]
-    }
-}
+        exampleSubtasks1(exampleTask1);
 
-*/
+        function exampleSubtasks1(exampleTask1){
+            const subtask1 = new Subtask("Create a buget");
+            const subtask2 = new Subtask("Determine project targets");
+            const subtask3 = new Subtask("Choose a good framework to follow");
+
+            exampleTask1.subtasks.push(subtask1, subtask2, subtask3);
+        };
+
+        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "20/08/2024", 'high');
+
+        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '25/08/2024', 'low');
+
+        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', 'today', 'medium');
+
+        workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
+    };
+
+    exampleTasks();
+})();
+
 
 
 /***/ })
@@ -689,31 +661,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const projects = {};
 (0,_components_dom_master__WEBPACK_IMPORTED_MODULE_2__.domManager)();
 
 //adding example tasks - without polluting names
-(function(){
-    const workCat = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Category("Work Tasks", "This category contains all tasks pertaining to work");
 
-    projects.workCat = workCat;
 
-    function exampleTasks() {
-        const exampleTask1 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Get Followers", "Run a social media campaign to generate new followers", '31/08/2024', 'high');
-
-        const exampleTask2 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "20/08/2024", 'high');
-
-        const exampleTask3 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '25/08/2024', 'low');
-
-        const exampleTask4 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', 'today', 'medium');
-
-        workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
-    };
-
-    exampleTasks();
-})();
-
-console.log(projects.workCat)
+console.log(_components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.projects.workCat)
 
 
 /******/ })()
