@@ -35,17 +35,12 @@ const projects = {};
     function exampleTasks() {
         const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '31/08/2024', 'high');
 
-        exampleSubtasks1(exampleTask1);
-
-        function exampleSubtasks1(exampleTask1){
-            const subtask1 = new Subtask("Create a buget");
-            const subtask2 = new Subtask("Determine project targets");
-            const subtask3 = new Subtask("Choose a good framework to follow");
-
-            exampleTask1.subtasks.push(subtask1, subtask2, subtask3);
-        };
+        //either move this to own object, or do something else
+        subtasksObj.exampleSubtasks1(exampleTask1)
 
         const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "20/08/2024", 'high');
+
+        subtasksObj.exampleSubtasks2(exampleTask2);
 
         const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '25/08/2024', 'low');
 
@@ -56,5 +51,22 @@ const projects = {};
 
     exampleTasks();
 })();
+
+const subtasksObj = {
+    subtasks1: (exampleTask1) => {
+        const subtask1 = new Subtask("Create a buget");
+        const subtask2 = new Subtask("Determine project targets");
+        const subtask3 = new Subtask("Choose a good framework to follow");
+
+        exampleTask1.subtasks.push(subtask1, subtask2, subtask3);
+    },
+    subtasks2: (exampleTask2) => {
+        const subtask1 = new Subtask("Create a blueprint of the client's business");
+        const subtask2 = new Subtask("Video call the client and have a meeting");
+        const subtask3 = new Subtask("Share the findings with Vlad");
+
+        exampleTask2.subtasks.push(subtask1, subtask2, subtask3);
+    },
+}
 
 export { Task, Category, Subtask, projects};
