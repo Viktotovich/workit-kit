@@ -466,6 +466,40 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/components/dom-master.js":
+/*!**************************************!*\
+  !*** ./src/components/dom-master.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   domManager: () => (/* binding */ domManager)
+/* harmony export */ });
+function domManager(){
+    function domFinder(){
+        const addCategoryButton = document.querySelector(".add-cat");
+        const main = document.querySelector(".main");
+
+        addCategoryButton.addEventListener("click", functionContainer.addCategory)
+    };
+
+    //initializer
+    domFinder();
+};
+
+const functionContainer = {
+    addCategory: function(){
+        const sidebarOptions = document.querySelector(".sidebar-options");
+        //create a dynamic modal here
+    },
+
+}
+
+
+
+/***/ }),
+
 /***/ "./src/components/task-master.js":
 /*!***************************************!*\
   !*** ./src/components/task-master.js ***!
@@ -474,19 +508,98 @@ module.exports = styleTagTransform;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Category: () => (/* binding */ Category),
+/* harmony export */   Subtask: () => (/* binding */ Subtask),
 /* harmony export */   Task: () => (/* binding */ Task)
 /* harmony export */ });
-class Task {
-    constructor(title, description, dueDate, priority, notes = '') {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.notes = notes;
+class Category {
+    constructor(catTitle, catDescription){
+        this.catTitle = catTitle;
+        this.catDescription = catDescription;
+        this.tasks = [];
     };
 };
 
+class Task {
+    constructor(title, description, due, priority){
+        this.title = title;
+        this.description = description;
+        this.due = due;
+        this.priority = priority;
+        this.subtasks = [];
+    }
+}
 
+class Subtask {
+    constructor(details, status){
+        this.details = details,
+        this.status = 'incomplete'
+    }
+}
+
+
+
+
+
+/* How I want things to look like:
+const projects = {
+    myProjects: {
+        catDescription: '',
+        catTitle: '',
+        tasks: [
+            task1 = {
+                name: 'example task',
+                description: 'example task description',
+                due: "12/08/2024",
+                subtasks: [
+                    subtask1 = {
+                        description: '',
+                        completed: 'yes'
+                    },
+                    subtask2 = {
+                        description: '',
+                        completed: 'no'
+                    }
+                ],
+            },
+            task2 = {
+                name: 'example task',
+                description: 'example task description',
+                due: "12/08/2024",
+                subtasks: [
+                    subtask1 = {
+                        name: xyz,
+                        description: ''
+                    },
+                    subtask2 = {
+                        name: zyx,
+                        description: ''
+                    }
+                ],
+            },
+        ]
+    },
+    myWork: {
+        catDescription: '',
+        catTitle: '',
+        tasks: [
+            task1 = {
+                name: 'example task',
+                description: 'example task description',
+                due: "12/08/2024",
+                notes: "optional notes"
+            },
+            task2 = {
+                name: 'example task',
+                description: 'example task description',
+                due: "12/08/2024",
+                notes: "optional notes"
+            },
+        ]
+    }
+}
+
+*/
 
 
 /***/ })
@@ -571,12 +684,37 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
 /* harmony import */ var _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/task-master.js */ "./src/components/task-master.js");
+/* harmony import */ var _components_dom_master__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/dom-master */ "./src/components/dom-master.js");
 
 
 
-const tasks = [];
 
-let fakeTask = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("clean the room", "just do it", '12/08/2024', 'urgent')
+const projects = {};
+(0,_components_dom_master__WEBPACK_IMPORTED_MODULE_2__.domManager)();
+
+//adding example tasks - without polluting names
+(function(){
+    const workCat = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Category("Work Tasks", "This category contains all tasks pertaining to work");
+
+    projects.workCat = workCat;
+
+    function exampleTasks() {
+        const exampleTask1 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Get Followers", "Run a social media campaign to generate new followers", '31/08/2024', 'high');
+
+        const exampleTask2 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "20/08/2024", 'high');
+
+        const exampleTask3 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '25/08/2024', 'low');
+
+        const exampleTask4 = new _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', 'today', 'medium');
+
+        workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
+    };
+
+    exampleTasks();
+})();
+
+console.log(projects.workCat)
+
 
 /******/ })()
 ;
