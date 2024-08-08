@@ -43,10 +43,15 @@ const domManager = {
         catDescriptionContainer.appendChild(catDescriptionLabel)
         catDescriptionContainer.appendChild(catDescription);
 
+        //make this repeatable
         function bindAttributes(){
-
+            Object.keys(domManager.attributes.catTitle).forEach(attr => {
+                catTitle.setAttribute(attr, domManager.attributes.catTitle[attr]);
+            });
         };
 
+        bindAttributes();
+        
         formDescription.textContent = "Please fill in the categories and text"
         catTitleLabel.textContent = "Enter the Category title:"
         catDescriptionLabel.textContent = "Please describe the Task Category:"
