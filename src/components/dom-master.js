@@ -4,6 +4,11 @@ const domManager = {
 
         addCategoryButton.addEventListener("click", this.categoryPopup)
     },
+    bindAttributes: function (target, pointer){
+        Object.keys(pointer).forEach(attr => {
+            target.setAttribute(attr, pointer[attr]);
+        })
+    },
     attributes: {
         catTitle: {
             name: 'cat-title',
@@ -11,12 +16,18 @@ const domManager = {
             id: 'cat-title',
             required: '',
         },
+        catTitleLabel: {
+            for: 'cat-title'
+        },
         catDescription: {
             name: 'cat-description',
             type: 'text',
             id: 'cat-description',
             required: '',
             maxlength: '45'
+        },
+        catDescriptionLabel: {
+            for: 'cat-description'
         }
     },
     categoryPopup: function(){
@@ -43,14 +54,13 @@ const domManager = {
         catDescriptionContainer.appendChild(catDescriptionLabel)
         catDescriptionContainer.appendChild(catDescription);
 
-        //make this repeatable
-        function bindAttributes(){
-            Object.keys(domManager.attributes.catTitle).forEach(attr => {
-                catTitle.setAttribute(attr, domManager.attributes.catTitle[attr]);
-            });
-        };
+        domManager.bindAttributes(catTitle, domManager.attributes.catTitle);
 
-        bindAttributes();
+        domManager.bindAttributes(catDescription, domManager.attributes.catDescription);
+
+        domManager.bindAttributes(catDescriptionLabel, domManager.attributes.catDescriptionLabel)
+
+        domManager.bindAttributes(catTitleLabel, domManager.attributes.catTitleLabel)
         
         formDescription.textContent = "Please fill in the categories and text"
         catTitleLabel.textContent = "Enter the Category title:"
