@@ -65,7 +65,7 @@ const exampleTasksObj = {
 
         workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
     }
-}
+};
 
 const exampleSubtasksObj = {
     subtasks1: (exampleTask1) => {

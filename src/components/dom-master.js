@@ -306,8 +306,9 @@ const domMain = {
             let catTitle = domMain.findOwnerCat()
             taskMaster.taskManager.addTask(catTitle, taskTitle, taskDescription, taskDue, taskPriority);
             domMain.clearModal();
+            //prevents error 732
+            domMain.taskIndex = 0;
             domMain.renderTasks(catTitle);
-            console.log(taskMaster.projects)
         }
     },
     findOwnerCat: function(){
@@ -789,8 +790,6 @@ export { domManager, domMain };
 
     /*
     To do:
-        
-    3 - error 732 persists: to replicate - add a new task, and try to add a subtask under the new task. 
 
     4 - Date handler: working on it
         
@@ -808,7 +807,7 @@ export { domManager, domMain };
     */
 
 
-    /* 
+    /*  BUG DOCUMENTATION:
     Old bug - possibly fixed now but I will keep this for documentation just in case:
 
     Fix bugs, error on line 471: i)subtaskPath is undefined (when creating a new cat and coming back - to try to delete one of the first subtasks)
@@ -819,5 +818,11 @@ export { domManager, domMain };
     dom-master.js:719:28 --> 
 
     happens when i delete subtasks on main, come to another category, and delete subtasks there.
+
+    error 732 (719 but more lines of code were added) was caused whenever new task was added and a subtask was then upended. The issue was that the current system relies on DOM id's and DOM-set-index to get the index of the task/subtask.
+
+    This has let to error 732, which was caused by the fact that the add-task method did not reset domMain.taskIndex, which made the DOM counter go above the actual task index.
+
+    The fix was (and will be for future errors like this to do with line 732), is to trace it to the point the cats, tasks, and subtasks are reset - and reset the taskIndex at domMain as well
 
     */
