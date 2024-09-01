@@ -1,3 +1,5 @@
+import { getDateInformation } from "./date-handler";
+
 class Category {
     constructor(catTitle, catDescription){
         this.catTitle = catTitle;
@@ -10,9 +12,13 @@ class Task {
     constructor(title, description, due, priority){
         this.title = title;
         this.description = description;
-        this.due = due;
+        this.due = this.processDate(due);
         this.priority = priority;
         this.subtasks = [];
+    }
+
+    processDate(date){
+        return getDateInformation.formatDueDate(date);
     }
 }
 
@@ -44,18 +50,18 @@ projects[workCat.catTitle] = workCat;
 
 const exampleTasksObj = {
     addExampleTasks: ()=> {
-        const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '31/08/2024', 'urgent');
+        const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '08/31/2024', 'urgent');
 
         //either move this to own object, or do something else
         exampleSubtasksObj.subtasks1(exampleTask1)
 
-        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "20/08/2024", 'overdue');
+        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "08/20/2024", 'overdue');
 
         exampleSubtasksObj.subtasks2(exampleTask2);
 
-        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '25/08/2024', 'normal');
+        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '08/25/2024', 'normal');
 
-        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', 'today', 'normal');
+        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', '08/27/2024', 'normal');
 
         workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
     }

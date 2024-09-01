@@ -33,6 +33,11 @@ const getDateInformation = {
     getEndOfMonth: function(){
         return format(endOfMonth(new Date()), 'MMMdd');
     },
+    //FIXED
+    formatDueDate: function(dueDate){
+        const dateObj = new Date(Date.parse(dueDate));
+        return format(dateObj, 'MMM/dd');
+    }
 };
 
 const defaultDue = getDateInformation.getEndOfMonth();

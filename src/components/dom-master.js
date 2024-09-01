@@ -307,6 +307,7 @@ const domMain = {
             taskMaster.taskManager.addTask(catTitle, taskTitle, taskDescription, taskDue, taskPriority);
             domMain.clearModal();
             domMain.renderTasks(catTitle);
+            console.log(taskMaster.projects)
         }
     },
     findOwnerCat: function(){
