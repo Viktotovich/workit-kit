@@ -22,5 +22,7 @@ Why normal date object wouldn't do:
 2 - After hefty research, normal date object work.. but it wont cover many edge cases, and is harder to implement. Date-fns just makes it easier to work with, but has weirder documentation
 
 Note: toJson() calls toIsoString()
+
+Sidenote: Adding date-fns corrupted my whole git HEAD
 */
 import { } from "date-fns";
