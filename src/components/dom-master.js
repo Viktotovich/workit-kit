@@ -789,7 +789,9 @@ export { domManager, domMain };
     /*
     To do:
         
-    4 - Date handler: maybe even leave it out
+    3 - error 732 persists: to replicate - add a new task, and try to add a subtask under the new task. 
+
+    4 - Date handler: working on it
         
     5 - Visual UI/UX and making the code here more approachable
     

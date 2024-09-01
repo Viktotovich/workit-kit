@@ -25,4 +25,16 @@ Note: toJson() calls toIsoString()
 
 Sidenote: Adding date-fns corrupted my whole git HEAD
 */
-import { } from "date-fns";
+
+//pnce implemented, go back to task-editor and add the date as well
+const { endOfMonth, format } = require("date-fns");
+
+const getDateInformation = {
+    getEndOfMonth: function(){
+        return format(endOfMonth(new Date()), 'MMMdd');
+    },
+};
+
+const defaultDue = getDateInformation.getEndOfMonth();
+
+export {getDateInformation, defaultDue};
