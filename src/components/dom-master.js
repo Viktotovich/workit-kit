@@ -819,7 +819,7 @@ export { domManager, domMain };
 
     happens when i delete subtasks on main, come to another category, and delete subtasks there.
 
-    error 732 (719 but more lines of code were added) was caused whenever new task was added and a subtask was then upended. The issue was that the current system relies on DOM id's and DOM-set-index to get the index of the task/subtask.
+    error 732 (719 but more lines of code were added) was caused whenever new task was created, and we attempted to create a new subtask under that new task. The issue was that the current system relies on DOM id's and DOM-set-index to get the index of the task/subtask.
 
     This has let to error 732, which was caused by the fact that the add-task method did not reset domMain.taskIndex, which made the DOM counter go above the actual task index.
 
