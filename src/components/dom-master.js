@@ -2,8 +2,8 @@ import * as taskMaster from "./task-master";
 import { changeListener } from "./sub-to-changes";
 
 //make it sleek
-function updateListener(cat){
-    changeListener.pubChangesToDates(cat);
+function updateListener(cats){
+    changeListener.pubChangesToDates(cats);
 };
 
 //can't change domManager name now - couldn't use "this." due to context issues
@@ -172,7 +172,7 @@ const domMain = {
         cat.setAttribute("id", catTitle)
 
         //After a while, I concluded this is the best place to put this function:
-        updateListener(taskMaster.projects[catTitle]);
+        updateListener(taskMaster.projects);
 
         const catDetails = document.querySelector(".cat-description");
         catDetails.textContent = catDescription;

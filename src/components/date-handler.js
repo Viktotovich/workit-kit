@@ -31,13 +31,18 @@ export const dateSorter = {
     overdueArray: [],
     //basically all
     anytimeArray: [],
+    //big overlook: it has to be all cats actually... 
     sortToday: function(catObj){
         const tasksArr = catObj.tasks;
         tasksArr.forEach(element => {
             let dateCheck = getDateInformation.isToday(element.due);
             if (dateCheck === true){
-                console.log('something')
-            };
+                //works flawlessly
+                this.todayArray.push(element)
+                console.log(this.todayArray)
+            } else {
+                //do nothing
+            }
         });
         
         //sort for each task, append each isToday to a new object called today
