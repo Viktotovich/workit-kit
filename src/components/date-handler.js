@@ -1,6 +1,6 @@
 const { endOfMonth, format, isBefore } = require("date-fns");
 
-//sadly, I need to keep the years all the way up until now, otherwise we wont be able to sort properly
+// Years must be displayed
 const getDateInformation = {
     getEndOfMonth: function(){
         return format(endOfMonth(new Date()), 'MMM/dd/yyyy');
@@ -91,13 +91,14 @@ Anytime: View all projects basically
 */
 
 /*
-To Do (These were the benefits listed out before, but I changed them to things we can implement):
-2- Quantify distances in date - 17th sept from today - it will help with the sorting (sorting in a sense: what belongs to today, soon, tommorow, etc).
+To Do:
 
-3 - Call whatever does point 2 by the end of task-master; Tasks have to be fully rendered.
+3 - Finish the sortSoon sorter.
+
+4 - Implement pub sub to translate MMM/dd/yyyy format into MMM/DD and display it into the DOM
 
 Bonus (if I feel like it's worth the scope creep):
-4 - Sort tasks by dates ascending / descending (compareAsc)
+5 - Sort tasks by dates ascending / descending (compareAsc)
 
 And Most Importantly: Leave dom-master for now alone.
 
@@ -106,5 +107,3 @@ Note:
 (2) To get default to get called into getEndOfMonth in taskMaster, call a Task constructor with '', undefined, or NaN => putting undefined helps bandaid edge case errors to do with dates. ezpz
 
 */
-
-//Once implemented, go back to task-editor and add the date as well

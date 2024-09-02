@@ -800,11 +800,14 @@ export { domManager, domMain };
     /*
     To do:
 
-    4 - Date handler: working on it
+    4 - Date handler: Around 50-60% done, but will have to be re-visited for MMM-DD format, since the tasks will look like this:
+
+    [JAN/21] Conduct Market Research ...
+    (task description and et all here)
         
     5 - Visual UI/UX and making the code here more approachable
     
-    6 - a global object that sorts stuff by dates
+    6 - a global object that sorts stuff by dates : or just an event listener that appends the correct DOM
 
     7 - JSONify everything
 
