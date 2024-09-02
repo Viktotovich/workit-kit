@@ -12,7 +12,7 @@ const getDateInformation = {
 
 const defaultDue = getDateInformation.getEndOfMonth();
 
-const dateSorter = {
+export const dateSorter = {
     //isToday an array of Tasks
     todayArray: [],
     // up to week from now
@@ -22,6 +22,7 @@ const dateSorter = {
     //basically all
     anytimeArray: [],
     sortToday: function(taskArr){
+        console.log("Works");
         //sort for each task, append each isToday to a new object called today
     }
 }

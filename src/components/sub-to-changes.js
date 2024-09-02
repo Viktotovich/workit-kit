@@ -3,11 +3,12 @@
 //But Why?
 
 // 1 - Cleaner code, 2 - pubsub is a standard, 3 - no mess and less bugs when communicating between dom-master and date-hanger, 4 - much less lines since dom-master is overflowing at this point
+import * as dateMaster from './date-handler';
 
 const changeListener = {
     pubChangesToDates: function(catObj){
-        console.log("Works")
-    }
+        dateMaster.dateSorter.sortToday(catObj);
+    },
 }
 
 export { changeListener }
