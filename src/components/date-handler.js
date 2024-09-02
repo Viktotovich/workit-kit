@@ -1,13 +1,13 @@
-const { endOfMonth, format } = require("date-fns");
-//isToday doesnt work well - i need my own implementation of the same
+const { endOfMonth, format, isBefore } = require("date-fns");
 
+//sadly, I need to keep the years all the way up until now, otherwise we wont be able to sort properly
 const getDateInformation = {
     getEndOfMonth: function(){
-        return format(endOfMonth(new Date()), 'MMM/dd');
+        return format(endOfMonth(new Date()), 'MMM/dd/yyyy');
     },
     formatDueDate: function(dueDate){
         const dateObj = new Date(Date.parse(dueDate));
-        return format(dateObj, 'MMM/dd');
+        return format(dateObj, 'MMM/dd/yyyy');
     },
     isToday: function(dateStr){
         const todayObj = new Date();
@@ -17,43 +17,64 @@ const getDateInformation = {
         } else {
             return false;
         }
+    },
+    getToday: function(){
+        const todayObj = new Date();
+        const today = this.formatDueDate(todayObj);
+        return today 
     }
 };
 
 const defaultDue = getDateInformation.getEndOfMonth();
 
 export const dateSorter = {
-    //isToday an array of Tasks
+    sortAll: function(catObj){
+        this.sortAnytime(catObj);
+        this.sortToday(catObj);
+        this.sortOverdue(catObj);
+        },
     todayArray: [],
     // up to week from now
     soonArray: [],
     //all before today / less than today
     overdueArray: [],
-    //basically all
     anytimeArray: [],
-    //big overlook: it has to be all cats actually... 
     sortToday: function(catObj){
         const tasksArr = catObj.tasks;
         tasksArr.forEach(element => {
             let dateCheck = getDateInformation.isToday(element.due);
             if (dateCheck === true){
                 //works flawlessly
-                this.todayArray.push(element)
-                console.log(this.todayArray)
-            } else {
-                //do nothing
+                this.todayArray.push(element);
+            };
+        });
+    },
+    sortOverdue: function(catObj){
+        const tasksArr = catObj.tasks;
+        const today = getDateInformation.getToday();
+
+        tasksArr.forEach(element => {
+            let dateCheck = isBefore(element.due, today);
+            if (dateCheck === true){
+                this.overdueArray.push(element);
             }
         });
-        
-        //sort for each task, append each isToday to a new object called today
-    }
+    },
+    sortAnytime: function(catObj){
+        const tasksArr = catObj.tasks;
+
+        tasksArr.forEach(element => {
+            this.anytimeArray.push(element);
+        });
+    },
+    sortSoon: function(catObj){
+        //today +1 week, but not overdue: probs .map
+    },
 }
 
 //whatever date object styles I go to, addEventListeners to today, anytime, etc sidebar, and throw the object into defaultLoad(dateObj)
 
-/* Also question: what do I do if someone wants to add a task for today? 
-
-Let them, the task is appended to the today or whatever dateObj - DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT.
+/* DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT.
 
 The task will belong to no cats, or in other words: it will be catless. (jokes aside: it will be under the date cat)
  */

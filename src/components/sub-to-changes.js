@@ -9,8 +9,7 @@ const changeListener = {
     //we actually don't need to get the catObj
     pubChangesToDates: function(cats){
         Object.keys(cats).forEach(cat => {
-            console.log(projects[cat])
-            dateMaster.dateSorter.sortToday(projects[cat]);
+            dateMaster.dateSorter.sortAll(projects[cat]);
         })
     },
     
