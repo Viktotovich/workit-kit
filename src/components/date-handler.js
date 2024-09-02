@@ -1,4 +1,5 @@
-const { endOfMonth, format, isToday } = require("date-fns");
+const { endOfMonth, format } = require("date-fns");
+//isToday doesnt work well - i need my own implementation of the same
 
 const getDateInformation = {
     getEndOfMonth: function(){
@@ -7,6 +8,15 @@ const getDateInformation = {
     formatDueDate: function(dueDate){
         const dateObj = new Date(Date.parse(dueDate));
         return format(dateObj, 'MMM/dd');
+    },
+    isToday: function(dateStr){
+        const todayObj = new Date();
+        const today = this.formatDueDate(todayObj);
+        if (dateStr === today){
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
@@ -21,8 +31,15 @@ export const dateSorter = {
     overdueArray: [],
     //basically all
     anytimeArray: [],
-    sortToday: function(taskArr){
-        console.log("Works");
+    sortToday: function(catObj){
+        const tasksArr = catObj.tasks;
+        tasksArr.forEach(element => {
+            let dateCheck = getDateInformation.isToday(element.due);
+            if (dateCheck === true){
+                console.log('something')
+            };
+        });
+        
         //sort for each task, append each isToday to a new object called today
     }
 }
