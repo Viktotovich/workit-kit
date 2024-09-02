@@ -26,7 +26,7 @@ const { endOfMonth, format } = require("date-fns");
 
 const getDateInformation = {
     getEndOfMonth: function(){
-        return format(endOfMonth(new Date()), 'MMMdd');
+        return format(endOfMonth(new Date()), 'MMM/dd');
     },
     //FIXED
     formatDueDate: function(dueDate){

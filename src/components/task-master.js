@@ -1,4 +1,4 @@
-import { getDateInformation } from "./date-handler";
+import { getDateInformation, defaultDue } from "./date-handler";
 
 class Category {
     constructor(catTitle, catDescription){
@@ -18,7 +18,11 @@ class Task {
     }
 
     processDate(date){
-        return getDateInformation.formatDueDate(date);
+        if (date === '' || date === undefined || date === NaN){
+            return defaultDue;
+        } else {
+            return getDateInformation.formatDueDate(date);
+        }
     }
 }
 
@@ -61,7 +65,7 @@ const exampleTasksObj = {
 
         const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '08/25/2024', 'normal');
 
-        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', '08/27/2024', 'normal');
+        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', '', 'normal');
 
         workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
     }
