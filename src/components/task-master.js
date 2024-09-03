@@ -63,7 +63,7 @@ const exampleTasksObj = {
 
         exampleSubtasksObj.subtasks2(exampleTask2);
 
-        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '09/02/2024', 'normal');
+        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '09/03/2024', 'normal');
 
         const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', '', 'normal');
 

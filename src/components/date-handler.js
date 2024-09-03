@@ -1,4 +1,4 @@
-const { endOfMonth, format, isBefore } = require("date-fns");
+const { endOfMonth, format, isBefore, isAfter, add, endOfYesterday } = require("date-fns");
 
 // Years must be displayed
 const getDateInformation = {
@@ -22,7 +22,14 @@ const getDateInformation = {
         const todayObj = new Date();
         const today = this.formatDueDate(todayObj);
         return today 
-    }
+    },
+    getWeekFromNow: function(){
+        const today = this.getToday();
+        const weekFromToday = add(today, {
+            weeks: 1,
+        });
+        return weekFromToday
+    },
 };
 
 const defaultDue = getDateInformation.getEndOfMonth();
@@ -32,11 +39,10 @@ export const dateSorter = {
         this.sortAnytime(catObj);
         this.sortToday(catObj);
         this.sortOverdue(catObj);
+        this.sortSoon(catObj);
         },
     todayArray: [],
-    // up to week from now
     soonArray: [],
-    //all before today / less than today
     overdueArray: [],
     anytimeArray: [],
     sortToday: function(catObj){
@@ -68,7 +74,19 @@ export const dateSorter = {
         });
     },
     sortSoon: function(catObj){
-        //today +1 week, but not overdue: probs .map
+        const tasksArr = catObj.tasks;
+
+        const weekFromToday = getDateInformation.getWeekFromNow();
+        const yesterday = endOfYesterday();
+
+        tasksArr.forEach(element => {
+            let dateCheckBefore = isAfter(element.due, yesterday);
+            let dateCheckAfter = isBefore(element.due, weekFromToday);
+
+            if (dateCheckAfter === true && dateCheckBefore === true){
+                this.soonArray.push(element);
+            };
+        });
     },
 }
 
@@ -83,17 +101,10 @@ export {getDateInformation, defaultDue};
 
 /*
 There should be an Object that has all the tasks, regardless of cats, based on their dates.
-
-Today: whatever date === today;
-Soon: whatever date up to 1 week from today;
-Overdue: any date < today;
-Anytime: View all projects basically
 */
 
 /*
 To Do:
-
-3 - Finish the sortSoon sorter.
 
 4 - Implement pub sub to translate MMM/dd/yyyy format into MMM/DD and display it into the DOM
 
