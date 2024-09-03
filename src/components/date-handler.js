@@ -1,4 +1,5 @@
 const { endOfMonth, format, isBefore, isAfter, add, endOfYesterday } = require("date-fns");
+import { changeListener } from './sub-to-changes'
 
 // Years must be displayed
 const getDateInformation = {
@@ -40,7 +41,13 @@ export const dateSorter = {
         this.sortToday(catObj);
         this.sortOverdue(catObj);
         this.sortSoon(catObj);
-        },
+        changeListener.pubChangesToDom({
+            todayArray: this.todayArray,
+            soonArray: this.soonArray,
+            overdueArray: this.overdueArray,
+            anytimeArray: this.anytimeArray,
+        });
+    },
     todayArray: [],
     soonArray: [],
     overdueArray: [],
