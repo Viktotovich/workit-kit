@@ -41,12 +41,13 @@ export const dateSorter = {
         this.sortToday(catObj);
         this.sortOverdue(catObj);
         this.sortSoon(catObj);
-        changeListener.pubChangesToDom({
-            todayArray: this.todayArray,
-            soonArray: this.soonArray,
-            overdueArray: this.overdueArray,
-            anytimeArray: this.anytimeArray,
-        });
+        this.pubDateArrays()
+    },
+    pubDateArrays: function(){
+        changeListener.saveAnytimeArray(this.anytimeArray);
+        changeListener.saveOverdueArray(this.overdueArray);
+        changeListener.saveSoonArray(this.soonArray);
+        changeListener.saveTodayArray(this.todayArray);
     },
     todayArray: [],
     soonArray: [],

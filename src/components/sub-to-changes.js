@@ -9,9 +9,21 @@ const changeListener = {
             dateMaster.dateSorter.sortAll(projects[cat]);
         })
     },
-    pubChangesToDom: function(obj){
-        console.log(obj)
-        //for each, send to DOM and add an event listener
+    todayArray: [],
+    soonArray: [],
+    overdueArray: [],
+    anytimeArray: [],
+    saveTodayArray: function(arr){
+        this.todayArray = arr;
+    },
+    saveSoonArray: function(arr){
+        this.soonArray = arr;
+    },
+    saveOverdueArray: function(arr){
+        this.overdueArray = arr;
+    },
+    saveAnytimeArray: function(arr){
+        this.anytimeArray = arr;
     }
 }
 

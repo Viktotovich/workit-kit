@@ -794,8 +794,24 @@ const errorHandler = {
     },
 };
 
+
+//AVOIDING CYCLICAL DEPENDANCIES - and preventing having to resort to MDN's solution of asynchronious timeout:
+
+// 2 key things: 1 - we are importing pub-sub
+// 2 - DOM Runs first
+const connectDateObjsToDom = {
+    processDates: function(dateObj){
+        dateObj.forEach(date => {
+            console.log('YEEE')
+        })
+    },
+    connectToDom: function(){
+
+    },
+}
+
 domSidebar.pubCats();
-export { domManager, domMain };
+export { domManager, domMain, connectDateObjsToDom};
 
     /*
     To do:
