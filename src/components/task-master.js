@@ -35,6 +35,7 @@ class Subtask {
 
 //super duper crucial
 const projects = {};
+const dateObjs = {};
 
 const taskManager = {
     addCat: function(catTitle, catDescription){
@@ -89,4 +90,4 @@ const exampleSubtasksObj = {
 }
 
 exampleTasksObj.addExampleTasks()
-export { Task, Category, Subtask, projects, taskManager};
+export { Task, Category, Subtask, projects, taskManager, dateObjs};

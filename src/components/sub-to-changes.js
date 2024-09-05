@@ -1,5 +1,5 @@
 //pub/sub - this is listening to any time cats are rendered/re-rendered
-import { projects } from './task-master';
+import { projects, dateObjs } from './task-master';
 import * as dateMaster from './date-handler';
 
 const changeListener = {
@@ -7,24 +7,22 @@ const changeListener = {
     pubChangesToDates: function(cats){
         Object.keys(cats).forEach(cat => {
             dateMaster.dateSorter.sortAll(projects[cat]);
-        })
+        });
     },
-    todayArray: [],
-    soonArray: [],
-    overdueArray: [],
-    anytimeArray: [],
     saveTodayArray: function(arr){
-        this.todayArray = arr;
+        dateObjs.today = arr;
     },
     saveSoonArray: function(arr){
-        this.soonArray = arr;
+        dateObjs.soonArray = arr;
+        //for watching purposes
+        console.log(dateObjs)
     },
     saveOverdueArray: function(arr){
-        this.overdueArray = arr;
+        dateObjs.overdueArray = arr;
     },
     saveAnytimeArray: function(arr){
-        this.anytimeArray = arr;
-    }
+        dateObjs.anytimeArray = arr;
+    },
 }
 
 export { changeListener }
