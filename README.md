@@ -11,4 +11,4 @@ Working with DOM is awesome, but using DOM for interactivity, and tracking posit
 
 Additionally, at the point of time that I am writing this, this project has no UI apart from 3 or 4 lines of CSS. This project is built on confidence.
 
-30AUG2024, 3:42 AM: I dream in Object Oriented Programming. I wish I was sarcastic or joking, but everything I think about is a JavaScript Object.
+05SEP2024 06:33 AM: Cyclical dependecy problem is a giant problem for this codebase at the moment that has to be solved for the date-obj idea to work

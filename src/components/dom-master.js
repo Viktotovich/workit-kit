@@ -4,6 +4,10 @@ import { changeListener } from "./sub-to-changes";
 //make it sleek
 function updateListener(cats){
     changeListener.pubChangesToDates(cats);
+    console.log(taskMaster.dateObjs);
+    Object.values(taskMaster.dateObjs).forEach(dateArr => {
+        console.log(dateArr);
+    })
 };
 
 //can't change domManager name now - couldn't use "this." due to context issues
@@ -158,6 +162,9 @@ const domMain = {
         let catTitle = e.target.getAttribute('class');
         let catDescription = taskMaster.projects[catTitle].catDescription
         domMain.displayCat(catTitle, catDescription)
+    },
+    renderDate: function(e){
+        //replicate renderCat and throw it into displayDate
     },
     defaultLoad: function(cat){
         domMain.taskIndex *= 0;
@@ -793,6 +800,7 @@ const errorHandler = {
         errorHandler.textContent = "Please don't leave fields blank, or exceed the 45 character limit."
     },
 };
+
 
 domSidebar.pubCats();
 export { domManager, domMain };

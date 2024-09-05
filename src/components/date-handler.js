@@ -109,12 +109,8 @@ The task will belong to no cats, or in other words: it will be catless. (jokes a
 export {getDateInformation, defaultDue};
 
 /*
-There should be an Object that has all the tasks, regardless of cats, based on their dates.
-*/
-
-/*
 To Do:
-
+3 - Convert the date OBJ to displayed DOM
 4 - Implement pub sub to translate MMM/dd/yyyy format into MMM/DD and display it into the DOM
 
 Bonus (if I feel like it's worth the scope creep):
