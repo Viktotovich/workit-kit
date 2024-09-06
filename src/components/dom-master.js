@@ -27,8 +27,6 @@ const processDateObjs = {
         anytimeDiv.addEventListener("click", this.anytimeToDom)
     },
     todayToDom: function(){
-        console.log(taskMaster.dateObjs.today)
-        //THIS SHOULDNT BE WORKING, DO NOT TRUST THIS FUNCTION
         domMain.displayTasks(taskMaster.dateObjs.today, 'date');
     },
     soonToDom: function(){
@@ -40,6 +38,9 @@ const processDateObjs = {
     anytimeToDom: function(){
         domMain.displayTasks(taskMaster.dateObjs.anytimeArray, 'date')
     }
+    //functions are not done, continue on line 254 to make tasks editable. This is just the MVP, we need a better implementation where you can change stuff from the date Objs themselves;
+
+    //make the line 252 callback to here so we can generate subtasks and toolbar but in our own way that will be applicable for date arrays. 
 }
 
 
@@ -248,13 +249,14 @@ const domMain = {
             detailsContainer.setAttribute("class", 'details-container')
 
             if (type === 'date'){
+                domMain.createToolbar(taskDescription, 'tasks');
                 return
             } else {
                 domMain.renderSubtasks(element.subtasks, detailsContainer);
                 //if you ever wonder why index starts at 3, follow this path
                 domMain.createToolbar(taskDescription, 'tasks');
                 this.createSubSection();
-            }
+            };
         });
     },
     renderSubtasks: function(subtaskArray, location){
