@@ -14,8 +14,6 @@ const changeListener = {
     },
     saveSoonArray: function(arr){
         dateObjs.soonArray = arr;
-        //for watching purposes
-        console.log(dateObjs)
     },
     saveOverdueArray: function(arr){
         dateObjs.overdueArray = arr;

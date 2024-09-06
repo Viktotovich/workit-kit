@@ -1,14 +1,42 @@
 import * as taskMaster from "./task-master";
 import { changeListener } from "./sub-to-changes";
 
-//make it sleek
+//make it sleek - move it down after finishing
 function updateListener(cats){
     changeListener.pubChangesToDates(cats);
-    console.log(taskMaster.dateObjs);
-    Object.values(taskMaster.dateObjs).forEach(dateArr => {
-        console.log(dateArr);
-    })
+    //prevents circular dependencies
+    processDateObjs.updateDomWithDates();
 };
+
+
+
+const processDateObjs = {
+    updateDomWithDates: function(){
+        console.log(taskMaster.dateObjs)
+        this.bindToDom();
+    },
+    bindToDom: function(){
+        const todayDiv = document.querySelector(".today");
+        const soonDiv = document.querySelector(".soon");
+        const overdueDiv = document.querySelector(".overdue");
+        const anytimeDiv = document.querySelector(".anytime");
+
+        todayDiv.addEventListener("click", this.todayToDom)
+    },
+    todayToDom: function(){
+        console.log(taskMaster.dateObjs.today)
+    },
+    soonToDom: function(){
+        console.log(taskMaster.dateObjs.soonArray)
+    },
+    overdueToDom: function(){
+        console.log(taskMaster.dateObjs.overdueArray)
+    },
+    anytimeToDom: function(){
+        console.log(taskMaster.dateObjs.anytimeArray)
+    }
+}
+
 
 //can't change domManager name now - couldn't use "this." due to context issues
 const domManager = {
