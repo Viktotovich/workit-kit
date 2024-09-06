@@ -22,18 +22,23 @@ const processDateObjs = {
         const anytimeDiv = document.querySelector(".anytime");
 
         todayDiv.addEventListener("click", this.todayToDom)
+        soonDiv.addEventListener("click", this.soonToDom);
+        overdueDiv.addEventListener("click", this.overdueToDom);
+        anytimeDiv.addEventListener("click", this.anytimeToDom)
     },
     todayToDom: function(){
         console.log(taskMaster.dateObjs.today)
+        //THIS SHOULDNT BE WORKING, DO NOT TRUST THIS FUNCTION
+        domMain.displayTasks(taskMaster.dateObjs.today, 'date');
     },
     soonToDom: function(){
-        console.log(taskMaster.dateObjs.soonArray)
+        domMain.displayTasks(taskMaster.dateObjs.soonArray, 'date');
     },
     overdueToDom: function(){
-        console.log(taskMaster.dateObjs.overdueArray)
+        domMain.displayTasks(taskMaster.dateObjs.overdueArray, 'date')
     },
     anytimeToDom: function(){
-        console.log(taskMaster.dateObjs.anytimeArray)
+        domMain.displayTasks(taskMaster.dateObjs.anytimeArray, 'date')
     }
 }
 
@@ -217,9 +222,9 @@ const domMain = {
     },
     renderTasks: function(catTitle){
         const taskArray = taskMaster.projects[catTitle].tasks;
-        domMain.displayTasks(taskArray);
+        domMain.displayTasks(taskArray, "normal");
     },
-    displayTasks: function(taskArray){
+    displayTasks: function(taskArray, type){
         const taskContainer = document.querySelector(".task-container");
 
         taskContainer.innerHTML = '';
@@ -242,10 +247,14 @@ const domMain = {
             taskDescription.classList.add(`${element.priority}`)
             detailsContainer.setAttribute("class", 'details-container')
 
-            domMain.renderSubtasks(element.subtasks, detailsContainer);
-            //if you ever wonder why index starts at 3, follow this path
-            domMain.createToolbar(taskDescription, 'tasks');
-            this.createSubSection();
+            if (type === 'date'){
+                return
+            } else {
+                domMain.renderSubtasks(element.subtasks, detailsContainer);
+                //if you ever wonder why index starts at 3, follow this path
+                domMain.createToolbar(taskDescription, 'tasks');
+                this.createSubSection();
+            }
         });
     },
     renderSubtasks: function(subtaskArray, location){
