@@ -28,16 +28,24 @@ const processDateObjs = {
         anytimeDiv.addEventListener("click", this.anytimeToDom)
     },
     todayToDom: function(){
+        domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.today, ': due by today');
+        dateDomManager.currentDateType = "today"
     },
     soonToDom: function(){
+        domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.soonArray, ': due soon');
+        dateDomManager.currentDateType = "soonArray"
     },
     overdueToDom: function(){
+        domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.overdueArray, ': overdue')
+        dateDomManager.currentDateType = "overdueArray"
     },
     anytimeToDom: function(){
+        domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.anytimeArray, ': due anytime')
+        dateDomManager.currentDateType = "anytimeArray"
     },
     checkType: function(type){
         if (type === 'normal'){
@@ -51,7 +59,10 @@ const processDateObjs = {
         const catDescriptionDiv = document.querySelector(".cat-description");
 
         catDescriptionDiv.textContent = '';
-        catDiv.innerHTML = `These tasks are <span>${type} </span>`;
+        catDiv.innerHTML = `These tasks are <span id="date-type">${type} </span>`;
+
+        //Ru class name for time, to avoid conflict with user-set cat titles
+        catDiv.setAttribute("id", "obyect-vremeni")
 
         this.hideAddTaskOption()
     },
@@ -67,7 +78,15 @@ const processDateObjs = {
     }
 }
 
-
+const dateDomManager = {
+    currentDateType: null,
+    popupSubtaskDate: function(subtaskIndex, taskIndex, location){
+        const modal = document.createElement("dialog");
+        console.log(taskIndex)
+        const subtaskPath = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex]
+        console.log(subtaskPath)
+    }
+}
 //can't change domManager name now - couldn't use "this." due to context issues
 const domManager = {
     findDom: function(){
@@ -286,6 +305,12 @@ const domMain = {
                 domMain.createToolbar(taskDescription, 'tasks');
                 this.createSubSection();
             } else {
+                //chase down each and fix potential bugs
+                //Line 487 editSubtasks - we'd have to add a type to the class list or so
+                //line 509 processElements, is where let cat = this.getCat(); messes up
+                domMain.renderSubtasks(element.subtasks, detailsContainer);
+                domMain.createToolbar(taskDescription, 'tasks');
+                this.createSubSection();
                 return
             };
         });
@@ -470,7 +495,6 @@ const editors = {
         editors.checkType(classArray, e);
     },
     checkType: function(classArray, e){
-        //step 3 - find a way to re-use processElements
         if (classArray.contains("subtasks")){
             editors.editSubtask(e);
         } else if (classArray.contains("tasks")){
@@ -506,7 +530,12 @@ const editors = {
         let taskIndex = this.getTaskIndex(target);
         let cat = this.getCat();
 
-        this.popupSubtask(cat, subtaskIndex, taskIndex, target)
+        if (cat === 'obyect-vremeni'){
+            console.log("yes");
+            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, location);
+        } else {
+            this.popupSubtask(cat, subtaskIndex, taskIndex, target)
+        }
     },
     getSubtaskIndex: function(target){
         let subtaskIndex = target.classList[2].split('subtask')[1];
