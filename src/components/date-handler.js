@@ -38,11 +38,18 @@ const defaultDue = getDateInformation.getEndOfMonth();
 //Due to the implementation 
 export const dateSorter = {
     sortAll: function(catObj){
+        this.resetArrays();
         this.sortAnytime(catObj);
         this.sortToday(catObj);
         this.sortOverdue(catObj);
         this.sortSoon(catObj);
         this.pubDateArrays();
+    },
+    resetArrays: function(){
+        this.todayArray.length = 0;
+        this.soonArray.length = 0;
+        this.anytimeArray.length = 0;
+        this.overdueArray.length = 0;
     },
     pubDateArrays: function(){
         changeListener.saveAnytimeArray(this.anytimeArray);

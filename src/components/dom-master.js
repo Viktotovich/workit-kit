@@ -11,6 +11,10 @@ function updateListener(cats){
 
 
 const processDateObjs = {
+    resetDomObjs: function(obj){
+        console.log(Object.keys(obj).length)
+        Object.keys(obj).length = 0
+    },
     updateDomWithDates: function(){
         console.log(taskMaster.dateObjs)
         this.bindToDom();
@@ -27,20 +31,33 @@ const processDateObjs = {
         anytimeDiv.addEventListener("click", this.anytimeToDom)
     },
     todayToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.today, 'date');
+        domMain.displayTasks(taskMaster.dateObjs.today, 'today');
     },
     soonToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.soonArray, 'date');
+        domMain.displayTasks(taskMaster.dateObjs.soonArray, 'soon');
     },
     overdueToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.overdueArray, 'date')
+        domMain.displayTasks(taskMaster.dateObjs.overdueArray, 'overdue')
     },
     anytimeToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.anytimeArray, 'date')
+        domMain.displayTasks(taskMaster.dateObjs.anytimeArray, 'anytime')
+    },
+    checkType: function(type){
+        if (type === 'normal'){
+            return
+        } else {
+            this.changeCatDisplay(type);
+        }
+    },
+    changeCatDisplay: function(type){
+        console.log(type)
     }
+
     //functions are not done, continue on line 254 to make tasks editable. This is just the MVP, we need a better implementation where you can change stuff from the date Objs themselves;
 
     //make the line 252 callback to here so we can generate subtasks and toolbar but in our own way that will be applicable for date arrays. 
+
+    //normal implementation of what you just did is a ticking timebomb, line 465
 }
 
 
@@ -213,6 +230,7 @@ const domMain = {
         cat.setAttribute("id", catTitle)
 
         //After a while, I concluded this is the best place to put this function:
+        processDateObjs.resetDomObjs(taskMaster.dateObjs);
         updateListener(taskMaster.projects);
 
         const catDetails = document.querySelector(".cat-description");
@@ -230,6 +248,8 @@ const domMain = {
 
         taskContainer.innerHTML = '';
             editors.taskTracker *= 0
+        
+        processDateObjs.checkType(type);
 
         taskArray.forEach((element) => {
             let taskTitle = document.createElement('div');
@@ -248,14 +268,14 @@ const domMain = {
             taskDescription.classList.add(`${element.priority}`)
             detailsContainer.setAttribute("class", 'details-container')
 
-            if (type === 'date'){
-                domMain.createToolbar(taskDescription, 'tasks');
-                return
-            } else {
+
+            if (type === 'normal') {
                 domMain.renderSubtasks(element.subtasks, detailsContainer);
                 //if you ever wonder why index starts at 3, follow this path
                 domMain.createToolbar(taskDescription, 'tasks');
                 this.createSubSection();
+            } else {
+                return
             };
         });
     },
@@ -457,7 +477,6 @@ const editors = {
         const target = e.target.getAttribute("id").split('task-index')[1];
         const cat = this.getCat();
         const taskPath = taskMaster.projects[cat].tasks[target];
-
         const location = e.target.parentElement;
 
         editors.popupTask(taskPath, location, target);
