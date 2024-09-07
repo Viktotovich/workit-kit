@@ -119,8 +119,37 @@ const dateDomManager = {
         this.activateSubtaskButtons();
     },
     activateSubtaskButtons: function(){
-        //
-    }
+        const clearModalButton = document.querySelector(".clear-modal");
+        const submitChangesButton = document.querySelector("#edit-subtask-button");
+        const clearSubtaskButton = document.querySelector("#clear-subtask");
+        const deleteSubtask = document.querySelector("#delete-subtask-button")
+
+        clearSubtaskButton.addEventListener("click", editors.clearSubtask);
+        clearModalButton.addEventListener("click", editors.clearSubtaskModal);
+        deleteSubtask.addEventListener("click", this.deleteSubtask);
+        submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
+    },
+    deleteSubtask: function(e){
+        e.preventDefault;
+
+        dateDomManager.currentTaskPath.subtasks.splice([dateDomManager.currentSubtaskIndex], 1);
+
+        dateDomManager.defaultLoad();
+    },
+    submitSubtaskChanges: function(){
+
+    },
+    defaultLoad: function(){
+        if (this.currentDateType === 'today'){
+            processDateObjs.todayToDom();
+        } else if (this.currentDateType === 'soonArray'){
+            processDateObjs.soonToDom();
+        } else if (this.currentDateType === 'overdueArray'){
+            processDateObjs.overdueToDom();
+        } else {
+            processDateObjs.anytimeToDom();
+        }
+    },
 }
 //can't change domManager name now - couldn't use "this." due to context issues
 const domManager = {
