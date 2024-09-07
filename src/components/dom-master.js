@@ -80,11 +80,46 @@ const processDateObjs = {
 
 const dateDomManager = {
     currentDateType: null,
+    currentSubtaskPath: null,
+    currentTaskPath: null,
+    currentSubtaskIndex: null,
     popupSubtaskDate: function(subtaskIndex, taskIndex, location){
         const modal = document.createElement("dialog");
-        console.log(taskIndex)
-        const subtaskPath = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex]
-        console.log(subtaskPath)
+        const taskPath = taskMaster.dateObjs[this.currentDateType][taskIndex];
+        const subtaskPath = taskPath.subtasks[subtaskIndex];
+        const subtask = subtaskPath.details;
+
+        //more sane way of not relying on DOM id's and classes for positions
+        this.currentSubtaskPath = subtaskPath;
+        this.currentTaskPath = taskPath;
+        this.currentSubtaskIndex = subtaskIndex;
+
+        modal.innerHTML = '';
+
+        const template = `
+            <div class="clear-modal">x</div>
+            <div class="subtask-container">
+                <div class="popup-subtask-details">
+                    <label for="edit-subtask-details">Edit Subtask:</label>
+                    <textarea name="edit-subtasks-details" id="edit-subtask-details" maxlength="45" required>${subtask}</textarea>
+                </div>
+                <div class="error-handler"></div>
+                <div class="subtask-buttons">
+                    <button type="submit" id="edit-subtask-button">Submit Changes</button>
+                    <button type="submit" id="clear-subtask">Clear</button>
+                    <button type="submit" id="delete-subtask-button">Delete Subtask</button>
+                </div>
+            </div>
+        `
+
+        modal.classList.add("subtask-editor");
+        location.appendChild(modal);
+
+        editors.activateTemplate(modal, template)
+        this.activateSubtaskButtons();
+    },
+    activateSubtaskButtons: function(){
+        //
     }
 }
 //can't change domManager name now - couldn't use "this." due to context issues
@@ -532,9 +567,9 @@ const editors = {
 
         if (cat === 'obyect-vremeni'){
             console.log("yes");
-            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, location);
+            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, target);
         } else {
-            this.popupSubtask(cat, subtaskIndex, taskIndex, target)
+            this.popupSubtask(cat, subtaskIndex, taskIndex, target);
         }
     },
     getSubtaskIndex: function(target){
