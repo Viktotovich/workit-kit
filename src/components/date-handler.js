@@ -106,8 +106,6 @@ export const dateSorter = {
     },
 }
 
-//whatever date object styles I go to, addEventListeners to today, anytime, etc sidebar, and throw the object into defaultLoad(dateObj)
-
 /* DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT.
 
 The task will belong to no cats, or in other words: it will be catless. (jokes aside: it will be under the date cat)
@@ -117,13 +115,10 @@ export {getDateInformation, defaultDue};
 
 /*
 To Do:
-3 - Convert the date OBJ to displayed DOM
 4 - Implement pub sub to translate MMM/dd/yyyy format into MMM/DD and display it into the DOM
 
 Bonus (if I feel like it's worth the scope creep):
 5 - Sort tasks by dates ascending / descending (compareAsc)
-
-And Most Importantly: Leave dom-master for now alone.
 
 Note: 
 (1) toJson() calls toIsoString()

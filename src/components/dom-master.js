@@ -8,11 +8,8 @@ function updateListener(cats){
     processDateObjs.updateDomWithDates();
 };
 
-
-
 const processDateObjs = {
     resetDomObjs: function(obj){
-        console.log(Object.keys(obj).length)
         Object.keys(obj).length = 0
     },
     updateDomWithDates: function(){
@@ -31,16 +28,16 @@ const processDateObjs = {
         anytimeDiv.addEventListener("click", this.anytimeToDom)
     },
     todayToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.today, 'today');
+        domMain.displayTasks(taskMaster.dateObjs.today, ': due by today');
     },
     soonToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.soonArray, 'soon');
+        domMain.displayTasks(taskMaster.dateObjs.soonArray, ': due soon');
     },
     overdueToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.overdueArray, 'overdue')
+        domMain.displayTasks(taskMaster.dateObjs.overdueArray, ': overdue')
     },
     anytimeToDom: function(){
-        domMain.displayTasks(taskMaster.dateObjs.anytimeArray, 'anytime')
+        domMain.displayTasks(taskMaster.dateObjs.anytimeArray, ': due anytime')
     },
     checkType: function(type){
         if (type === 'normal'){
@@ -50,14 +47,24 @@ const processDateObjs = {
         }
     },
     changeCatDisplay: function(type){
-        console.log(type)
+        const catDiv = document.querySelector(".cat");
+        const catDescriptionDiv = document.querySelector(".cat-description");
+
+        catDescriptionDiv.textContent = '';
+        catDiv.innerHTML = `These tasks are <span>${type} </span>`;
+
+        this.hideAddTaskOption()
+    },
+    hideAddTaskOption: function(){
+        const addTask = document.querySelector(".add-task");
+
+        addTask.style.visibility = 'hidden'
+    },
+    showAddTaskOption: function(){
+        const addTask = document.querySelector(".add-task");
+
+        addTask.style.visibility = 'visible'
     }
-
-    //functions are not done, continue on line 254 to make tasks editable. This is just the MVP, we need a better implementation where you can change stuff from the date Objs themselves;
-
-    //make the line 252 callback to here so we can generate subtasks and toolbar but in our own way that will be applicable for date arrays. 
-
-    //normal implementation of what you just did is a ticking timebomb, line 465
 }
 
 
@@ -212,7 +219,9 @@ const domMain = {
         //communicate with domMain to show tasks
         let catTitle = e.target.getAttribute('class');
         let catDescription = taskMaster.projects[catTitle].catDescription
-        domMain.displayCat(catTitle, catDescription)
+        domMain.displayCat(catTitle, catDescription);
+
+        processDateObjs.showAddTaskOption();
     },
     renderDate: function(e){
         //replicate renderCat and throw it into displayDate
@@ -222,6 +231,8 @@ const domMain = {
         let catTitle = taskMaster.projects[cat].catTitle;
         let catDescription = taskMaster.projects[cat].catDescription;
         domMain.displayCat(catTitle, catDescription);
+
+        processDateObjs.showAddTaskOption();
     },
     displayCat: function(catTitle, catDescription){
         const cat = document.querySelector(".cat");
@@ -323,7 +334,8 @@ const domMain = {
         addSubtask.addEventListener("click", editors.addNewSubtask)
     },
     taskIndex: 0,
-    taskPopup: function(){
+    taskPopup: function(e){
+        console.log(e.target);
         const modalSpace = document.querySelector(".modal-space-tasks");
         //templating is just so much easier:
         const modal = document.createElement("dialog");
@@ -872,8 +884,6 @@ export { domManager, domMain };
     (task description and et all here)
         
     5 - Visual UI/UX and making the code here more approachable
-    
-    6 - a global object that sorts stuff by dates : or just an event listener that appends the correct DOM
 
     7 - JSONify everything
 
