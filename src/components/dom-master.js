@@ -140,7 +140,6 @@ const dateDomManager = {
             <div class="task-buttons">
                 <button type="submit" id="submit-task-button">Submit Changes</button>
                 <button type="submit" id="clear-task">Clear</button>
-                <button type="submit" id="delete-task-button">Delete Task</button>
             </div>
         </div>
         `
@@ -173,26 +172,10 @@ const dateDomManager = {
         const clearModalButton = document.querySelector(".clear-modal");
         const submitChangesButton = document.querySelector("#submit-task-button");
         const clearTaskButton = document.querySelector("#clear-task");
-        const deleteTaskButton = document.querySelector("#delete-task-button");
 
         clearTaskButton.addEventListener("click", editors.clearTask);
         clearModalButton.addEventListener("click", editors.clearTaskModal);
         submitChangesButton.addEventListener("click", this.submitTaskChanges);
-        deleteTaskButton.addEventListener("click", this.deleteTask)
-    },
-    deleteTask: function(e){
-        //NOTHING WORKS I HAVE FUCKING TRIED EVERYTHING, IT DOES NOT DELETE GLOBALLY
-        //The only way to make it work is to find a way to store the CAT within the Task object, and access it through path.category
-        e.preventDefault();
-        let path = taskMaster.dateObjs[dateDomManager.currentDateType];
-        const taskObj = path[dateDomManager.currentTaskIndex].title;
-
-        console.log(path)
-        path = path.filter(object => object.title !== taskObj);
-        taskMaster.dateObjs[dateDomManager.currentDateType] = path;
-
-        dateDomManager.defaultLoad();
-        console.log(taskMaster.dateObjs)
     },
     deleteSubtask: function(e){
         e.preventDefault;
