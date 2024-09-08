@@ -9,11 +9,7 @@ function updateListener(cats){
 };
 
 const processDateObjs = {
-    resetDomObjs: function(obj){
-        Object.keys(obj).length = 0
-    },
     updateDomWithDates: function(){
-        console.log(taskMaster.dateObjs)
         this.bindToDom();
     },
     bindToDom: function(){
@@ -83,6 +79,7 @@ const dateDomManager = {
     currentSubtaskPath: null,
     currentTaskPath: null,
     currentSubtaskIndex: null,
+    currentTaskIndex: null,
     popupSubtaskDate: function(subtaskIndex, taskIndex, location){
         const modal = document.createElement("dialog");
         const taskPath = taskMaster.dateObjs[this.currentDateType][taskIndex];
@@ -118,6 +115,49 @@ const dateDomManager = {
         editors.activateTemplate(modal, template)
         this.activateSubtaskButtons();
     },
+    popupTaskDate: function(path, location, taskIndex){
+        const modal = document.createElement("dialog");
+        const taskDescription = path.description;
+        const taskTitle = path.title;
+
+        dateDomManager.currentTaskPath = path;
+        dateDomManager.currentTaskIndex = taskIndex;
+
+        modal.innerHTML = '';
+
+        const template = `
+        <div class="clear-modal">x</div>
+            <div class="task-modal-container">
+                <div class="popup-task-title">
+                <label for="task-input-title">Task title: </label>
+                <input name="task-input-title" id="task-input-title" maxlength="45" required value="${taskTitle}"/>
+            </div>
+            <div class="popup-task-description">
+                <label for="edit-task-description">Task Description:</label>
+                <textarea name="edit-task-description" id="edit-task-description" maxlength="150" required>${taskDescription}</textarea>
+            </div>
+            <div class="error-handler"></div>
+            <div class="task-buttons">
+                <button type="submit" id="submit-task-button">Submit Changes</button>
+                <button type="submit" id="clear-task">Clear</button>
+                <button type="submit" id="delete-task-button">Delete Task</button>
+            </div>
+        </div>
+        `
+
+        modal.classList.add("task-editor");
+        location.appendChild(modal);
+
+        editors.activateTemplate(modal, template);
+        this.activateTaskButtons();
+    },
+    editTask: function(e){
+        const target = e.target.getAttribute("id").split('task-index')[1];
+        const taskPath = taskMaster.dateObjs[dateDomManager.currentDateType][target];
+        const location = e.target.parentElement;
+
+        this.popupTaskDate(taskPath, location, target);
+    },
     activateSubtaskButtons: function(){
         const clearModalButton = document.querySelector(".clear-modal");
         const submitChangesButton = document.querySelector("#edit-subtask-button");
@@ -129,15 +169,52 @@ const dateDomManager = {
         deleteSubtask.addEventListener("click", this.deleteSubtask);
         submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
     },
+    activateTaskButtons: function(){
+        const clearModalButton = document.querySelector(".clear-modal");
+        const submitChangesButton = document.querySelector("#submit-task-button");
+        const clearTaskButton = document.querySelector("#clear-task");
+        const deleteTaskButton = document.querySelector("#delete-task-button");
+
+        clearTaskButton.addEventListener("click", editors.clearTask);
+        clearModalButton.addEventListener("click", editors.clearTaskModal);
+        submitChangesButton.addEventListener("click", this.submitTaskChanges);
+        deleteTaskButton.addEventListener("click", this.deleteTask)
+    },
+    deleteTask: function(e){
+        e.preventDefault();
+        const path = taskMaster.dateObjs[dateDomManager.currentDateType];
+        const cat = editors.getCat()
+
+        //This doesnt work like deleteSubtask, the pointer doesnt point lol. The only way is to get ownerCat
+        path[dateDomManager.currentTaskIndex] = '';
+        path.splice(dateDomManager.currentTaskIndex, 1);
+
+        console.log(taskMaster.dateObjs)
+        dateDomManager.defaultLoad();
+    },
     deleteSubtask: function(e){
         e.preventDefault;
 
-        dateDomManager.currentTaskPath.subtasks.splice([dateDomManager.currentSubtaskIndex], 1);
+        dateDomManager.currentTaskPath.subtasks.splice(dateDomManager.currentSubtaskIndex, 1);
 
         dateDomManager.defaultLoad();
     },
-    submitSubtaskChanges: function(){
+    submitSubtaskChanges: function(e){
+        e.preventDefault();
 
+        let newSubtask = editors.getSubtaskInput();
+
+        dateDomManager.currentSubtaskPath.details = newSubtask;
+        dateDomManager.defaultLoad()
+    },
+    submitTaskChanges: function(e){
+        e.preventDefault();
+        const newTaskDescription = editors.getTaskDescription();
+        const newTaskTitle = editors.getTaskTitle();
+
+        dateDomManager.currentTaskPath.description = newTaskDescription;
+        dateDomManager.currentTaskPath.title = newTaskTitle;
+        dateDomManager.defaultLoad();
     },
     defaultLoad: function(){
         if (this.currentDateType === 'today'){
@@ -324,8 +401,6 @@ const domMain = {
         cat.setAttribute("id", catTitle)
 
         //After a while, I concluded this is the best place to put this function:
-        processDateObjs.resetDomObjs(taskMaster.dateObjs);
-        updateListener(taskMaster.projects);
 
         const catDetails = document.querySelector(".cat-description");
         catDetails.textContent = catDescription;
@@ -369,9 +444,6 @@ const domMain = {
                 domMain.createToolbar(taskDescription, 'tasks');
                 this.createSubSection();
             } else {
-                //chase down each and fix potential bugs
-                //Line 487 editSubtasks - we'd have to add a type to the class list or so
-                //line 509 processElements, is where let cat = this.getCat(); messes up
                 domMain.renderSubtasks(element.subtasks, detailsContainer);
                 domMain.createToolbar(taskDescription, 'tasks');
                 this.createSubSection();
@@ -424,7 +496,6 @@ const domMain = {
     },
     taskIndex: 0,
     taskPopup: function(e){
-        console.log(e.target);
         const modalSpace = document.querySelector(".modal-space-tasks");
         //templating is just so much easier:
         const modal = document.createElement("dialog");
@@ -562,9 +633,17 @@ const editors = {
         if (classArray.contains("subtasks")){
             editors.editSubtask(e);
         } else if (classArray.contains("tasks")){
-            editors.editTask(e);
+            editors.checkTaskType(e);
         } else {
             editors.editCat(e);
+        }
+    },
+    checkTaskType: function(e){
+        let cat = this.getCat();
+        if (cat === 'obyect-vremeni'){
+                dateDomManager.editTask(e);
+        } else {
+            editors.editTask(e);
         }
     },
     editSubtask: function(e){
@@ -963,6 +1042,7 @@ const errorHandler = {
         errorHandler.textContent = "Please don't leave fields blank, or exceed the 45 character limit."
     },
 };
+updateListener(taskMaster.projects);
 
 
 domSidebar.pubCats();
