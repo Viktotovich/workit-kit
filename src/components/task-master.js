@@ -24,7 +24,7 @@ class Task {
             return getDateInformation.formatDueDate(date);
         }
     }
-}
+};
 
 class Subtask {
     constructor(details, status = 'incomplete'){

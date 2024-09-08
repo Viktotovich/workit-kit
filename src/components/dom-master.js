@@ -181,16 +181,18 @@ const dateDomManager = {
         deleteTaskButton.addEventListener("click", this.deleteTask)
     },
     deleteTask: function(e){
+        //NOTHING WORKS I HAVE FUCKING TRIED EVERYTHING, IT DOES NOT DELETE GLOBALLY
+        //The only way to make it work is to find a way to store the CAT within the Task object, and access it through path.category
         e.preventDefault();
-        const path = taskMaster.dateObjs[dateDomManager.currentDateType];
-        const cat = editors.getCat()
+        let path = taskMaster.dateObjs[dateDomManager.currentDateType];
+        const taskObj = path[dateDomManager.currentTaskIndex].title;
 
-        //This doesnt work like deleteSubtask, the pointer doesnt point lol. The only way is to get ownerCat
-        path[dateDomManager.currentTaskIndex] = '';
-        path.splice(dateDomManager.currentTaskIndex, 1);
+        console.log(path)
+        path = path.filter(object => object.title !== taskObj);
+        taskMaster.dateObjs[dateDomManager.currentDateType] = path;
 
-        console.log(taskMaster.dateObjs)
         dateDomManager.defaultLoad();
+        console.log(taskMaster.dateObjs)
     },
     deleteSubtask: function(e){
         e.preventDefault;
