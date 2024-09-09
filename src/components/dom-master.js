@@ -235,7 +235,21 @@ const dateDomManager = {
     dateDomManager.activateNewSubtaskButtons();
     },
     activateNewSubtaskButtons: function(){
+        const clearModalButton = document.querySelector(".clear-modal");
+        const createSubtask = document.querySelector("#create-subtask-button");
 
+        createSubtask.addEventListener("click", this.submitNewSubtask);
+        clearModalButton.addEventListener("click", editors.clearSubtaskModal);
+    },
+    submitNewSubtask: function(e){
+        e.preventDefault();
+        
+        let path = taskMaster.dateObjs[dateDomManager.currentDateType][dateDomManager.currentTaskIndex].subtasks;
+        let newSubtaskDetails = editors.getNewSubtaskInput();
+        let subtask = new taskMaster.Subtask(newSubtaskDetails)
+
+        path.push(subtask)
+        dateDomManager.defaultLoad();
     },
     defaultLoad: function(){
         if (this.currentDateType === 'today'){
