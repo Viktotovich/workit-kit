@@ -201,6 +201,42 @@ const dateDomManager = {
         dateDomManager.currentTaskPath.title = newTaskTitle;
         dateDomManager.defaultLoad();
     },
+    addNewSubtask: function(e){
+        const location = e.target.parentElement;
+        const taskIndex = editors.getTaskIndex(e.target);
+
+        dateDomManager.currentTaskIndex = taskIndex;
+
+        const modal = document.createElement("dialog");
+        const subtaskPath = taskMaster.dateObjs[dateDomManager.currentDateType][taskIndex].subtasks;
+
+        dateDomManager.currentSubtaskPath = subtaskPath;
+        modal.innerHTML = '';
+
+        const template = `
+        <div class="clear-modal">x</div>
+        <div class="subtask-container">
+        <div class="subtask-location">This subtask will be under <span> Upcoming Tasks > ${taskMaster.dateObjs[dateDomManager.currentDateType][taskIndex].title}</span></div>
+            <div class="popup-subtask-details">
+                <label for="create-subtask-details">Create a new Subtask:</label>
+                <textarea name="create-subtasks-details" id="create-subtask-details" maxlength="150" minlength="5" placeholder ="Add details here" required></textarea>
+            </div>
+            <div class="error-handler"></div>
+            <div class="subtask-buttons">
+                <button type="submit" id="create-subtask-button">Submit Changes</button>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add("subtask-editor");
+    location.appendChild(modal);
+
+    editors.activateTemplate(modal, template);
+    dateDomManager.activateNewSubtaskButtons();
+    },
+    activateNewSubtaskButtons: function(){
+
+    },
     defaultLoad: function(){
         if (this.currentDateType === 'today'){
             processDateObjs.todayToDom();
@@ -477,7 +513,7 @@ const domMain = {
         taskContainer.appendChild(addSubtask);
         domMain.taskIndex += 1;
 
-        addSubtask.addEventListener("click", editors.addNewSubtask)
+        addSubtask.addEventListener("click", editors.precheckType)
     },
     taskIndex: 0,
     taskPopup: function(e){
@@ -965,6 +1001,14 @@ const editors = {
     checkValidity: function(operand){
         const isValid = Object.values(domManager.conditions).every(condition => condition(operand));
         return isValid
+    },
+    precheckType: function(e){
+        let cat = editors.getCat();
+        if (cat === 'obyect-vremeni'){
+                dateDomManager.addNewSubtask(e);
+        } else {
+            editors.addNewSubtask(e);
+        }
     },
     addNewSubtask: function(e){
         let location = e.target.parentElement;

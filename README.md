@@ -12,3 +12,5 @@ Working with DOM is awesome, but using DOM for interactivity, and tracking posit
 Additionally, at the point of time that I am writing this, this project has no UI apart from 3 or 4 lines of CSS. This project is built on confidence.
 
 05SEP2024 06:33 AM: Cyclical dependecy problem is a giant problem for this codebase at the moment that has to be solved for the date-obj idea to work
+
+08SEP2024 20:27: Having to admit that the Task Delete option for date objects has to go hurts so god damn bad, I feel like I failed but at the same time I know I didnt. 
