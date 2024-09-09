@@ -10,6 +10,10 @@ const getDateInformation = {
         const dateObj = new Date(Date.parse(dueDate));
         return format(dateObj, 'MMM/dd/yyyy');
     },
+    processDate: function(dueDate){
+        const dateObj = new Date(Date.parse(dueDate));
+        return format(dateObj, 'dd/MMM');
+    },
     isToday: function(dateStr){
         const todayObj = new Date();
         const today = this.formatDueDate(todayObj);
@@ -99,17 +103,13 @@ export const dateSorter = {
     },
 }
 
-/* DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT.
-
-The task will belong to no cats, or in other words: it will be catless. (jokes aside: it will be under the date cat)
+/* DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT. - on date object just leave the template the same
  */
 
 export {getDateInformation, defaultDue};
 
 /*
 To Do:
-4 - Implement pub sub to translate MMM/dd/yyyy format into MMM/DD and display it into the DOM
-
 Bonus (if I feel like it's worth the scope creep):
 5 - Sort tasks by dates ascending / descending (compareAsc)
 

@@ -71,6 +71,10 @@ const processDateObjs = {
         const addTask = document.querySelector(".add-task");
 
         addTask.style.visibility = 'visible'
+    },
+    processDateFormat: function(date){
+        const processedDate = changeListener.pubUnprocessedDates(date);
+        return processedDate;
     }
 }
 
@@ -456,17 +460,23 @@ const domMain = {
         processDateObjs.checkType(type);
 
         taskArray.forEach((element) => {
-            let taskTitle = document.createElement('div');
+            let taskTitleContainer = document.createElement('div');
+            let taskTitle = document.createElement("span");
             let taskDescription = document.createElement('div');
             let detailsContainer = document.createElement("div");
+            let dateSpan = document.createElement("span");
 
             taskTitle.textContent = element.title
             taskDescription.textContent = element.description;
+            dateSpan.textContent = `[${processDateObjs.processDateFormat(element.due)}]`
 
-            taskContainer.appendChild(taskTitle);
+            taskContainer.appendChild(taskTitleContainer);
             taskContainer.appendChild(detailsContainer);
             detailsContainer.appendChild(taskDescription);
+            taskTitleContainer.appendChild(dateSpan);
+            taskTitleContainer.appendChild(taskTitle)
 
+            dateSpan.setAttribute("class", "due-display")
             taskTitle.setAttribute("class", 'task-title');
             taskDescription.classList.add('task-description');
             taskDescription.classList.add(`${element.priority}`)
@@ -1093,13 +1103,10 @@ export { domManager, domMain };
 
     /*
     To do:
-
-    4 - Date handler: Around 50-60% done, but will have to be re-visited for MMM-DD format, since the tasks will look like this:
-
-    [JAN/21] Conduct Market Research ...
-    (task description and et all here)
         
     5 - Visual UI/UX and making the code here more approachable
+
+    6 - Make dates changeable, just alter the template
 
     7 - JSONify everything
 
@@ -1110,23 +1117,3 @@ export { domManager, domMain };
     Bonus points: add WARNINGS
     */
 
-
-    /*  BUG DOCUMENTATION:
-    Old bug - possibly fixed now but I will keep this for documentation just in case:
-
-    Fix bugs, error on line 471: i)subtaskPath is undefined (when creating a new cat and coming back - to try to delete one of the first subtasks)
-
-    More info on 471: every other subtask returns the same error once activated. 
-
-    ii) Uncaught TypeError: _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex] is undefined
-    dom-master.js:719:28 --> 
-
-    happens when i delete subtasks on main, come to another category, and delete subtasks there.
-
-    error 732 (719 but more lines of code were added) was caused whenever new task was created, and we attempted to create a new subtask under that new task. The issue was that the current system relies on DOM id's and DOM-set-index to get the index of the task/subtask.
-
-    This has let to error 732, which was caused by the fact that the add-task method did not reset domMain.taskIndex, which made the DOM counter go above the actual task index.
-
-    The fix was (and will be for future errors like this to do with line 732), is to trace it to the point the cats, tasks, and subtasks are reset - and reset the taskIndex at domMain as well
-
-    */

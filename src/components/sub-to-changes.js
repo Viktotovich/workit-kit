@@ -21,6 +21,10 @@ const changeListener = {
     saveAnytimeArray: function(arr){
         dateObjs.anytimeArray = arr;
     },
+    pubUnprocessedDates(date){
+        const processedDate = dateMaster.getDateInformation.processDate(date);
+        return processedDate;
+    },
 }
 
 export { changeListener }
