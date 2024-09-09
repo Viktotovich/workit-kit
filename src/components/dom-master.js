@@ -825,6 +825,10 @@ const editors = {
                     <label for="edit-task-description">Task Description:</label>
                     <textarea name="edit-task-description" id="edit-task-description" maxlength="150" required>${taskDescription}</textarea>
                 </div>
+                <div class="due-date-container">
+                <label for="due-date">(Optional) Change due date, current is ${processDateObjs.processDateFormat(path.due)}</label>
+                <input type="date" id="due-date" name="due-date"></input>
+                </div>
                 <div class="error-handler"></div>
                 <div class="task-buttons">
                     <button type="submit" id="submit-task-button">Submit Changes</button>
@@ -975,11 +979,13 @@ const editors = {
         e.preventDefault();
         const newTaskDescription = editors.getTaskDescription();
         const newTaskTitle = editors.getTaskTitle();
+        const newTaskDue = document.querySelector("#due-date").value;
         const currentPath = editors.currentSubtaskPath.getTaskPath();
         let cat = domMain.findOwnerCat();
 
         currentPath.description = newTaskDescription;
         currentPath.title = newTaskTitle;
+        currentPath.due = newTaskDue
         domMain.defaultLoad(cat);
     },
     submitCatChanges: function(e){
@@ -1106,7 +1112,7 @@ export { domManager, domMain };
         
     5 - Visual UI/UX and making the code here more approachable
 
-    6 - Make dates changeable, just alter the template
+    6 - Make dates changeable, just alter the template - Done, make new dates update on date Objs upon changes. Currently it's static: i.e - if you add a task due by today, it does not reflect on today Obj (because it doesnt get sorted)
 
     7 - JSONify everything
 
