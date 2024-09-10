@@ -15,19 +15,33 @@
     height: 100%;
 }
 
-/* Dom.Main */
+/* dom.Main */
+.main {
+    margin: 2rem 3rem 0 3rem;
+}
 .cat {
     font-size: var(--font-size-large);
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 0.5rem;
 }
 
+.cat-description {
+    display: flex;
+    justify-content: space-between;
+}
+
 .options-on-hover.cat {
     border-bottom: none;
 }
 
+.options-on-hover:hover {
+    cursor: pointer;
+}
+
 .task-description {
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
 }
 
 .due-display {
@@ -38,6 +52,17 @@
 .due-display {
     font-size: var(--font-size-medium);
 }
+
+.add-subtask {
+    margin: 0.3rem 0;
+    opacity: 0.8;
+}
+
+.add-subtask:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
 
 /* Notes
 1 - Do not add any colors till the end
