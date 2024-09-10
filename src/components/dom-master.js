@@ -461,26 +461,24 @@ const domMain = {
         processDateObjs.checkType(type);
 
         taskArray.forEach((element) => {
-            let taskTitleContainer = document.createElement('div');
             let taskTitle = document.createElement("span");
             let taskDescription = document.createElement('div');
             let detailsContainer = document.createElement("div");
-            let dateSpan = document.createElement("span");
 
-            taskTitle.textContent = element.title
+            taskTitle.innerHTML  = `
+                <span class="due-display">${processDateObjs.processDateFormat(element.due)}</span>
+                ${element.title}
+            `
+
             taskDescription.textContent = element.description;
-            dateSpan.textContent = `[${processDateObjs.processDateFormat(element.due)}]`
 
-            taskContainer.appendChild(taskTitleContainer);
+            taskContainer.appendChild(taskTitle);
             taskContainer.appendChild(detailsContainer);
             detailsContainer.appendChild(taskDescription);
-            taskTitleContainer.appendChild(dateSpan);
-            taskTitleContainer.appendChild(taskTitle)
 
-            dateSpan.setAttribute("class", "due-display")
             taskTitle.setAttribute("class", 'task-title');
             taskDescription.classList.add('task-description');
-            taskDescription.classList.add(`${element.priority}`)
+            taskDescription.classList.add(`${element.priority}`);
             detailsContainer.setAttribute("class", 'details-container')
 
 

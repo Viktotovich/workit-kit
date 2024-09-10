@@ -2,13 +2,13 @@
   "name": "v-and-bruno",
   "version": "1.0.0",
   "description": "to-workit-app",
+  "author": "Vladimir Laskin Viktorovich <vlad@vandbruno.com>",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "webpack --watch"
   },
-  "author": "Viktotovich",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^7.1.2",

@@ -1,6 +1,64 @@
+:root {
+    --primary-color: white;
+    --secondary-color: grey;
+    --font-size-main: 1rem;
+    --font-size-secondary: 0.8rem;
+    --font-size-large: 1.5rem;
+    --font-size-medium: 1.3rem;
+    --primary-font: 'Times New Roman';
+    --border-color: black;
+}
+
 #content {
     display: grid;
     grid-template-columns: 1.2fr 3fr;
-};
+    height: 100%;
+}
+
+/* Dom.Main */
+.cat {
+    font-size: var(--font-size-large);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+}
+
+.options-on-hover.cat {
+    border-bottom: none;
+}
+
+.task-description {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.due-display {
+    border: 1px solid var(--border-color);
+}
+
+.task-title,
+.due-display {
+    font-size: var(--font-size-medium);
+}
+
+/* Notes
+1 - Do not add any colors till the end
+
+2 - Work with whitespace, and css variables
+
+3 - Add the gif in the back, our logo somewhere (probably the black and white version)
+
+4 - Custom font
+
+5 - Jazz music maybe? in the background. unrelated to css obviously
+
+*/
+
+
+/* as weird as it sounds, sidebar is going to be the hardest parts and css will work along with display-assist.
+
+this is for a simple reason: under each cat, I want to display 2-3 tasks with their due-date and priority. display-assist should be doing that. 
+
+Add Cat and settings should be binded to the bottom. DomMain must be fixed height, and rest scrollable
+
+*/
 
 /* Make the edit invisible, and visible only upon hovering on subtasks */
