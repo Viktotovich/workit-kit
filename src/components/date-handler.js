@@ -17,7 +17,8 @@ const getDateInformation = {
     isToday: function(dateStr){
         const todayObj = new Date();
         const today = this.formatDueDate(todayObj);
-        if (dateStr === today){
+        const userDate = this.formatDueDate(dateStr)
+        if (userDate === today){
             return true;
         } else {
             return false;
