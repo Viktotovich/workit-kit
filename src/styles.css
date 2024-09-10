@@ -62,7 +62,7 @@
 
 .subtask-details.complete {
     text-decoration: line-through;
-    color: red
+    opacity: 0.4;
 }
 
 .subtask-details:hover {

@@ -5,11 +5,11 @@ This module does everything to assist CSS styles, the goals are:
 
 Target specifically <div class="subtask-status">incomplete</div>
 
-Transform subtask status into [x] [ ], and the subtask itself to strike through. Find a good way to change text from normal to strikethrough or something: the <span> inside might pose a problem though
 */
 import * as taskMaster from "./task-master";
 
 const visualCues = {
+    currentDateType: null,
     addToggleListener: function(domElement){
         domElement.addEventListener("click", this.statusToggle);
     },
@@ -19,12 +19,47 @@ const visualCues = {
         if (list.contains("incomplete")){
             list.remove("incomplete");
             list.add("complete");
-            //visualCues.processUpdate(e, "complete")
+            visualCues.processUpdate(e, "complete")
         } else {
             list.remove("complete");
             list.add("incomplete");
-            //visualCues.processUpdate(e, "incomplete");
+            visualCues.processUpdate(e, "incomplete");
         };
+    },
+    processUpdate: function(e, newStatus){
+        const targetSubtask = e.target;
+        const subtaskIndex = this.getSubtaskIndex(targetSubtask);
+        const taskIndex = this.getTaskIndexForToggle(targetSubtask);
+        const cat = this.getCat();
+
+        if (cat === 'obyect-vremeni'){
+            this.publishUpdateDate(subtaskIndex, taskIndex, newStatus)
+        } else {
+            this.publishUpdate(cat, subtaskIndex, taskIndex, newStatus);
+        }
+    },
+    publishUpdate: function(cat, subtaskIndex, taskIndex, newStatus){
+        const subtaskPath = taskMaster.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
+
+        subtaskPath.status = newStatus;
+    },
+    publishUpdateDate: function(subtaskIndex, taskIndex, newStatus){
+        const path = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex]
+
+        path.status = newStatus;
+    },
+    getSubtaskIndex: function(target){
+        let subtaskIndex = target.classList[2].split('subtask')[1];
+        return subtaskIndex;
+    },
+    getTaskIndexForToggle: function(target){
+        let taskIndex = target.parentNode.parentNode.getAttribute("id");
+        return taskIndex;
+    },
+    getCat: function(){
+        let cat = document.querySelector(".cat");
+        let catId = cat.getAttribute("id");
+        return catId;
     },
 }
 

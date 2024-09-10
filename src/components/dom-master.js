@@ -27,22 +27,26 @@ const processDateObjs = {
     todayToDom: function(){
         domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.today, ': due by today');
-        dateDomManager.currentDateType = "today"
+        dateDomManager.currentDateType = "today";
+        visualCues.currentDateType = "today";
     },
     soonToDom: function(){
         domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.soonArray, ': due soon');
-        dateDomManager.currentDateType = "soonArray"
+        dateDomManager.currentDateType = "soonArray";
+        visualCues.currentDateType = "soonArray";
     },
     overdueToDom: function(){
         domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.overdueArray, ': overdue')
-        dateDomManager.currentDateType = "overdueArray"
+        dateDomManager.currentDateType = "overdueArray";
+        visualCues.currentDateType = "overdueArray";
     },
     anytimeToDom: function(){
         domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.anytimeArray, ': due anytime')
-        dateDomManager.currentDateType = "anytimeArray"
+        dateDomManager.currentDateType = "anytimeArray";
+        dateDomManager.currentDateType = "anytimeArray";
     },
     checkType: function(type){
         if (type === 'normal'){
@@ -695,6 +699,7 @@ const editors = {
         }
     },
     editSubtask: function(e){
+        console.log(e.target)
         let targetIndex = e.target.getAttribute("id");
         let targetSubtask = document.querySelector(`.${targetIndex}`);
 
