@@ -655,7 +655,6 @@ const priorityHandler = {
     },
     priorities: [
         "Urgent",
-        "Overdue",
         "Completed",
         "Normal"
     ],
@@ -831,6 +830,10 @@ const editors = {
                 <label for="due-date">(Optional) Change due date, current is ${processDateObjs.processDateFormat(path.due)}</label>
                 <input type="date" id="due-date" name="due-date"></input>
                 </div>
+                <div class="priority-container">
+                <label for="priority">Priority:</label>
+                <div id="priority" class="${path.priority}">Click to toggle. Current Priority is ${path.priority}</div>
+                </div>
                 <div class="error-handler"></div>
                 <div class="task-buttons">
                     <button type="submit" id="submit-task-button">Submit Changes</button>
@@ -889,11 +892,13 @@ const editors = {
         const submitChangesButton = document.querySelector("#submit-task-button");
         const clearTaskButton = document.querySelector("#clear-task");
         const deleteTaskButton = document.querySelector("#delete-task-button");
+        const priority = document.querySelector("#priority");
 
         clearTaskButton.addEventListener("click", this.clearTask);
         submitChangesButton.addEventListener("click", this.submitTaskChanges);
         clearModalButton.addEventListener("click", this.clearTaskModal);
-        deleteTaskButton.addEventListener("click", this.deleteTask)
+        deleteTaskButton.addEventListener("click", this.deleteTask);
+        priority.addEventListener("click", priorityHandler.togglePriority);
     },
     activateButtons: function(){
         const clearModalButton = document.querySelector(".clear-modal");
@@ -982,11 +987,13 @@ const editors = {
         const newTaskDescription = editors.getTaskDescription();
         const newTaskTitle = editors.getTaskTitle();
         const newTaskDue = document.querySelector("#due-date").value;
+        const taskPriority = document.querySelector("#priority").className;
         const currentPath = editors.currentSubtaskPath.getTaskPath();
         let cat = domMain.findOwnerCat();
 
         currentPath.description = newTaskDescription;
         currentPath.title = newTaskTitle;
+        currentPath.priority = taskPriority;
 
         //fixes annoying bug where empty date crash the full app
         if (newTaskDue == "") {

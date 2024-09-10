@@ -60,7 +60,7 @@ const exampleTasksObj = {
         //either move this to own object, or do something else
         exampleSubtasksObj.subtasks1(exampleTask1)
 
-        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "08/20/2024", 'overdue');
+        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "08/20/2024", 'normal');
 
         exampleSubtasksObj.subtasks2(exampleTask2);
 
