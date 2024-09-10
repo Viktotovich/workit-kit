@@ -431,6 +431,7 @@ const domMain = {
         let catDescription = taskMaster.projects[cat].catDescription;
         domMain.displayCat(catTitle, catDescription);
 
+        changeListener.pubChangesToDates(taskMaster.projects);
         processDateObjs.showAddTaskOption();
     },
     displayCat: function(catTitle, catDescription){
@@ -600,6 +601,7 @@ const domMain = {
             domMain.clearModal();
             //prevents error 732
             domMain.taskIndex = 0;
+            changeListener.pubChangesToDates(taskMaster.projects);
             domMain.renderTasks(catTitle);
         }
     },
@@ -985,8 +987,14 @@ const editors = {
 
         currentPath.description = newTaskDescription;
         currentPath.title = newTaskTitle;
-        currentPath.due = newTaskDue
-        domMain.defaultLoad(cat);
+
+        //fixes annoying bug where empty date crash the full app
+        if (newTaskDue == "") {
+            domMain.defaultLoad(cat);
+        } else {
+            currentPath.due = newTaskDue;
+            domMain.defaultLoad(cat);
+        }
     },
     submitCatChanges: function(e){
         e.preventDefault();
