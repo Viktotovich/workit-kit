@@ -507,19 +507,22 @@ const domMain = {
         let indexOfSubtask = 0;
 
         subtaskArray.forEach((element) => {
+            let subtaskDetailsContainer = document.createElement("div")
             let subtaskDetails = document.createElement("div")
 
             subtaskDetails.textContent = element.details;
-            //complete or incomplete
 
-            subtaskContainer.appendChild(subtaskDetails);
+            subtaskContainer.appendChild(subtaskDetailsContainer);
+            subtaskDetailsContainer.appendChild(subtaskDetails);
 
+            subtaskDetailsContainer.classList.add("subtask-details-container")
             subtaskDetails.classList.add('subtask-details');
             subtaskDetails.classList.add(`index${editors.subtaskTracker}`);
             subtaskDetails.classList.add(`subtask${indexOfSubtask}`);
             subtaskDetails.classList.add(`${element.status}`);
 
-            domMain.createToolbar(subtaskDetails, "subtasks");
+            //subtask Details Container separates the toolbar and the subtask
+            domMain.createToolbar(subtaskDetailsContainer, "subtasks");
             visualCues.addToggleListener(subtaskDetails);
 
             indexOfSubtask += 1;
@@ -729,7 +732,7 @@ const editors = {
         return subtaskIndex;
     },
     getTaskIndex: function(target){
-        let taskIndex = target.parentNode.getAttribute("id");
+        let taskIndex = target.parentNode.parentNode.getAttribute("id");
         return taskIndex;
     },
     getCat: function(){
