@@ -994,7 +994,7 @@ const editors = {
         } else {
             currentPath.due = newTaskDue;
             domMain.defaultLoad(cat);
-        }
+        };
     },
     submitCatChanges: function(e){
         e.preventDefault();
@@ -1118,9 +1118,7 @@ export { domManager, domMain };
     /*
     To do:
         
-    5 - Visual UI/UX and making the code here more approachable
-
-    6 - Make dates changeable, just alter the template - Done, make new dates update on date Objs upon changes. Currently it's static: i.e - if you add a task due by today, it does not reflect on today Obj (because it doesnt get sorted)
+    5 - Visual UI/UX and making the code here more approachable. CSS TIME
 
     7 - JSONify everything
 
