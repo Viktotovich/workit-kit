@@ -1,6 +1,8 @@
 :root {
+    font-size: 11px;
     --primary-color: white;
     --secondary-color: grey;
+    --hover-shade-color: antiquewhite;
     --font-size-main: 1rem;
     --font-size-secondary: 0.8rem;
     --font-size-large: 1.5rem;
@@ -51,6 +53,15 @@
 .task-title,
 .due-display {
     font-size: var(--font-size-medium);
+}
+
+.subtask-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.subtask-details:hover {
+    background-color: var(--hover-shade-color);
 }
 
 .add-subtask {

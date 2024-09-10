@@ -1,5 +1,6 @@
 import * as taskMaster from "./task-master";
 import { changeListener } from "./sub-to-changes";
+import { visualCues } from "./display-assist";
 
 //make it sleek - move it down after finishing
 function updateListener(cats){
@@ -58,7 +59,7 @@ const processDateObjs = {
         catDiv.innerHTML = `These tasks are <span id="date-type">${type} </span>`;
 
         //Ru class name for time, to avoid conflict with user-set cat titles
-        catDiv.setAttribute("id", "obyect-vremeni")
+        catDiv.setAttribute("id", "obyect-vremeni");
 
         this.hideAddTaskOption()
     },
@@ -507,20 +508,20 @@ const domMain = {
 
         subtaskArray.forEach((element) => {
             let subtaskDetails = document.createElement("div")
-            let subtaskStatus = document.createElement("div");
 
             subtaskDetails.textContent = element.details;
-            subtaskStatus.textContent = element.status;
+            //complete or incomplete
 
-            subtaskContainer.appendChild(subtaskStatus);
             subtaskContainer.appendChild(subtaskDetails);
 
             subtaskDetails.classList.add('subtask-details');
             subtaskDetails.classList.add(`index${editors.subtaskTracker}`);
             subtaskDetails.classList.add(`subtask${indexOfSubtask}`);
-            domMain.createToolbar(subtaskDetails, "subtasks");
+            subtaskDetails.classList.add(`${element.status}`);
 
-            subtaskStatus.setAttribute("class", 'subtask-status');
+            domMain.createToolbar(subtaskDetails, "subtasks");
+            visualCues.addToggleListener(subtaskDetails);
+
             indexOfSubtask += 1;
         });
     },
@@ -718,7 +719,6 @@ const editors = {
         let cat = this.getCat();
 
         if (cat === 'obyect-vremeni'){
-            console.log("yes");
             dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, target);
         } else {
             this.popupSubtask(cat, subtaskIndex, taskIndex, target);
