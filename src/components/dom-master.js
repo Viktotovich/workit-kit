@@ -718,7 +718,7 @@ const editors = {
     },
     processElements: function(target){
         let subtaskIndex = this.getSubtaskIndex(target);
-        let taskIndex = this.getTaskIndex(target);
+        let taskIndex = this.getTaskIndexForEditing(target);
         let cat = this.getCat();
 
         if (cat === 'obyect-vremeni'){
@@ -731,8 +731,12 @@ const editors = {
         let subtaskIndex = target.classList[2].split('subtask')[1];
         return subtaskIndex;
     },
-    getTaskIndex: function(target){
+    getTaskIndexForEditing: function(target){
         let taskIndex = target.parentNode.parentNode.getAttribute("id");
+        return taskIndex;
+    },
+    getTaskIndex: function(target){
+        let taskIndex = target.parentNode.getAttribute("id");
         return taskIndex;
     },
     getCat: function(){

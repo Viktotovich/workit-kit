@@ -60,6 +60,11 @@
     justify-content: space-between;
 }
 
+.subtask-details.complete {
+    text-decoration: line-through;
+    color: red
+}
+
 .subtask-details:hover {
     background-color: var(--hover-shade-color);
 }
