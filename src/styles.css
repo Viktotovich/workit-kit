@@ -88,6 +88,7 @@
 .subtask-details-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .subtask-details-container:hover {
@@ -133,6 +134,16 @@
 .add-task:hover::after{
     content: "<";
 }
+
+/* Sidebar */
+/* To-do:
+1 - Our Logo that leads to the website
+2 - Tasks under category showing (2-or 3)
+3 - Visual hierarchy, with Work Tasks being bigger font than add Category and tasks
+4 - (don't) yet work on the settings: only after completely finishing with this and modals
+5 - Remove the ugly bold letters, use another way to get attention
+6 - Highlight current selection, work with display-assist 
+
 
 /* Modals */
 .clear-modal {

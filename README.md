@@ -14,3 +14,7 @@ Additionally, at the point of time that I am writing this, this project has no U
 05SEP2024 06:33 AM: Cyclical dependecy problem is a giant problem for this codebase at the moment that has to be solved for the date-obj idea to work
 
 08SEP2024 20:27: Having to admit that the Task Delete option for date objects has to go hurts so god damn bad, I feel like I failed but at the same time I know I didnt. 
+
+11SEP2024 15:10: Using the HMR or whatever it is that allows me to just refresh and see updates quick as opposed to always npm run build(ing) really supercharged my development. I am definetely seeing more results now that I don't see webpack as a roadblack with feautures.
+
+However, not being able to interact with items/objects through the console IS a hinderance I still haven't got used to.
