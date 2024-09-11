@@ -223,6 +223,11 @@
     border-radius: 5px;
 }
 
+.cats > div,
+.add-cat {
+    padding: 0.1rem 0.4rem;
+}
+
 .cats > div:hover {
     box-shadow: var(--shadow-default);
     background-color: var(--hover-shade-color);
