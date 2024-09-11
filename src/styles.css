@@ -5,7 +5,7 @@
     --secondary-color: grey;
     --color-urgent: rgb(53, 23, 23);
     --color-normal: black;
-    --soft-background-color: rgb(245, 245, 245);
+    --soft-background-color: rgba(245, 245, 245, 0.65);
     --hover-shade-color: antiquewhite;
     --exagerated-hover-color: rgb(236, 198, 148);
     --font-size-main: 1rem;
@@ -108,6 +108,7 @@
     background-color: var(--hover-shade-color);
     box-shadow: var(--shadow-default);
     transform: translateY(-1px);
+    border-radius: 5px;
 }
 
 .subtask-details {
@@ -152,6 +153,9 @@
 }
 
 /* Sidebar */
+#link {
+    text-decoration: none;
+}
 
 .logo-container {
     display: flex;
@@ -184,9 +188,9 @@
 .logo-container:active #activate-logo::before {
     content: "RUNO";
     font-size: var(--font-size-medium);
-    color: rgb(53, 136, 231);
     font-weight: bold;
     margin-left: -14px;
+    color: #1f2937;
 }
 
 .date-obj-container {
@@ -205,6 +209,7 @@
     background-color: var(--hover-shade-color);
     cursor: pointer;
     box-shadow: var(--shadow-default);
+    border-radius: 5px;
 }
 
 .date-obj-container:hover svg {
@@ -215,50 +220,28 @@
     background-color: var(--soft-background-color);
     cursor: pointer;
     box-shadow: var(--shadow-default);
+    border-radius: 5px;
 }
 
 .cats > div:hover {
     box-shadow: var(--shadow-default);
     background-color: var(--hover-shade-color);
     cursor: pointer;
+    border-radius: 5px;
 }
 
+/* Modals 
 
-
-/* To-do:
-1 - Our Logo that leads to the website
-2 - Tasks under category showing (2-or 3)
-3 - Visual hierarchy, with Work Tasks being bigger font than add Category and tasks
-4 - (don't) yet work on the settings: only after completely finishing with this and modals
-5 - Remove the ugly bold letters, use another way to get attention
-6 - Highlight current selection, work with display-assist 
-
-
-/* Modals */
+eh..not really a fan of modals - maybe even generic modal css import would be okay*/
 .clear-modal {
     font-size: var(--font-size-medium);
 }
 
-/* Notes
-1 - Do not add any colors till the end
 
-2 - Work with whitespace, and css variables
-
-3 - Add the gif in the back, our logo somewhere (probably the black and white version)
-
-4 - Custom font
-
-5 - Jazz music maybe? in the background. unrelated to css obviously
+/* To-do:
+1 - Our Logo that leads to the website
+2 - Show 2-3 tasks under category (considering not to, as it looks quite okay at the moment. 
+4 - Highlight current selection, work with display-assist 
+5 - go back to main and learn local-storage API
 
 */
-
-
-/* as weird as it sounds, sidebar is going to be the hardest parts and css will work along with display-assist.
-
-this is for a simple reason: under each cat, I want to display 2-3 tasks with their due-date and priority. display-assist should be doing that. 
-
-Add Cat and settings should be binded to the bottom. DomMain must be fixed height, and rest scrollable
-
-*/
-
-/* Make the edit invisible, and visible only upon hovering on subtasks */

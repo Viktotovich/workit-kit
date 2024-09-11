@@ -1137,7 +1137,7 @@ export { domManager, domMain };
     /*
     To do:
         
-    5 - Visual UI/UX and making the code here more approachable. CSS TIME
+    5 - Visual UI/UX - 90% done, 10% left are boring modals with small changes only
 
     7 - JSONify everything
 
@@ -1145,6 +1145,7 @@ export { domManager, domMain };
 
     It works also as an insurance, to prevent "oops I didnt know if I delete the category, I delete everything in the category"
 
-    Bonus points: add WARNINGS
+    New Categories MUST HAVE cat remove button or something. Work Tasks are immune to prevent empty displays
+
     */
 
