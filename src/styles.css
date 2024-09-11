@@ -1,7 +1,10 @@
 :root {
+    color: #1f2937;
     font-size: 11px;
     --primary-color: white;
     --secondary-color: grey;
+    --color-urgent: rgb(53, 23, 23);
+    --color-normal: black;
     --hover-shade-color: antiquewhite;
     --font-size-main: 1rem;
     --font-size-secondary: 0.8rem;
@@ -47,6 +50,21 @@
     justify-content: space-between;
 }
 
+.task-description.urgent,
+.task-description.urgent + div {
+    color: var(--color-urgent);
+}
+
+.task-description.normal {
+    color: var(--color-normal);
+}
+
+.task-description.completed,
+.task-description.completed + div{
+    color: var(--color-normal);
+    opacity: 0.4;
+}
+
 .due-display {
     border: 1px solid var(--border-color);
 }
@@ -54,6 +72,7 @@
 .task-title,
 .due-display {
     font-size: var(--font-size-medium);
+    color: var(--color-normal);
 }
 
 .subtask-details-container {
@@ -70,26 +89,29 @@
     background-color: var(--hover-shade-color);
 }
 
-.add-subtask {
+.add-task {
+    font-size: var(--font-size-medium);
+    text-align: center;
+}
+
+.add-subtask,
+.add-task {
     margin: 0.3rem 0;
     opacity: 0.8;
 }
 
-.add-subtask:hover {
+.add-subtask:hover,
+.add-task:hover {
     opacity: 1;
     cursor: pointer;
 }
 
-.add-task {
-    appearance: none;
-    border: 1px solid var(--primary-color);
-    background-color: var(--primary-color);
-    font-size: var(--font-size-medium);
-    margin: 2rem 0;
+.add-task:hover::before{
+    content: ">";
 }
 
-.add-task:hover {
-    cursor: pointer;
+.add-task:hover::after{
+    content: "<";
 }
 
 /* Modals */

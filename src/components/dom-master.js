@@ -475,7 +475,7 @@ const domMain = {
                 ${element.title}
             `
 
-            taskDescription.textContent = element.description;
+            taskDescription.textContent = `${element.description} ${visualCues.getUrgency(element.priority)}`
 
             taskContainer.appendChild(taskTitle);
             taskContainer.appendChild(detailsContainer);
@@ -660,9 +660,9 @@ const priorityHandler = {
         priorityHandler.indexTracker();
     },
     priorities: [
-        "Urgent",
-        "Completed",
-        "Normal"
+        "urgent",
+        "completed",
+        "normal"
     ],
 };
 

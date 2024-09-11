@@ -61,6 +61,15 @@ const visualCues = {
         let catId = cat.getAttribute("id");
         return catId;
     },
+    getUrgency: function(urgency){
+        if (urgency === 'normal'){
+            return ''
+        } else if (urgency === 'urgent'){
+            return "[urgent]"
+        } else {
+            return "[completed]"
+        }
+    }
 }
 
 export {visualCues}
