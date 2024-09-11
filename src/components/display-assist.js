@@ -44,7 +44,7 @@ const visualCues = {
         subtaskPath.status = newStatus;
     },
     publishUpdateDate: function(subtaskIndex, taskIndex, newStatus){
-        const path = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex]
+        const path = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex];
 
         path.status = newStatus;
     },

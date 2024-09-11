@@ -7,7 +7,7 @@
     --font-size-secondary: 0.8rem;
     --font-size-large: 1.5rem;
     --font-size-medium: 1.3rem;
-    --primary-font: 'Times New Roman';
+    --primary-font: 'Times New Roman'; /* needs a fallback set*/
     --border-color: black;
 }
 
@@ -15,6 +15,7 @@
     display: grid;
     grid-template-columns: 1.2fr 3fr;
     height: 100%;
+    font-family: var(--primary-font);
 }
 
 /* dom.Main */
@@ -79,6 +80,22 @@
     cursor: pointer;
 }
 
+.add-task {
+    appearance: none;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    font-size: var(--font-size-medium);
+    margin: 2rem 0;
+}
+
+.add-task:hover {
+    cursor: pointer;
+}
+
+/* Modals */
+.clear-modal {
+    font-size: var(--font-size-medium);
+}
 
 /* Notes
 1 - Do not add any colors till the end

@@ -288,9 +288,9 @@ const domManager = {
     },
     addTaskButton: function(){
         const main = document.querySelector(".main");
-        const addTask = document.createElement("button");
+        const addTask = document.createElement("div");
 
-        addTask.textContent = "Add Tasks"
+        addTask.textContent = "Add a task"
         addTask.classList.add("add-task")
 
         main.appendChild(addTask);
@@ -699,7 +699,6 @@ const editors = {
         }
     },
     editSubtask: function(e){
-        console.log(e.target)
         let targetIndex = e.target.getAttribute("id");
         let targetSubtask = document.querySelector(`.${targetIndex}`);
 
@@ -725,12 +724,13 @@ const editors = {
         let subtaskIndex = this.getSubtaskIndex(target);
         let taskIndex = this.getTaskIndexForEditing(target);
         let cat = this.getCat();
+        let location = document.querySelector(".modal-space-tasks")
 
         if (cat === 'obyect-vremeni'){
-            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, target);
+            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, location);
         } else {
-            this.popupSubtask(cat, subtaskIndex, taskIndex, target);
-        }
+            this.popupSubtask(cat, subtaskIndex, taskIndex, location);
+        };
     },
     getSubtaskIndex: function(target){
         let subtaskIndex = target.classList[2].split('subtask')[1];
@@ -782,6 +782,7 @@ const editors = {
             };
     })(),
     popupSubtask: function(cat, subtaskIndex, taskIndex, location){
+        console.log(location)
         const modal = document.createElement("dialog");
         const subtaskPath = taskMaster.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
         const taskPath = taskMaster.projects[cat].tasks[taskIndex];
