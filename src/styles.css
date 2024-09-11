@@ -20,13 +20,14 @@
 #content {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    height: 100%;
+    max-height: 100%;
     font-family: var(--primary-font);
 }
 
 /* dom.Main */
 .main {
     margin: 2rem 3rem 0 3rem;
+    overflow: scroll;
 }
 .cat {
     font-size: var(--font-size-large);
@@ -51,6 +52,7 @@
 
 .options-on-hover:hover {
     cursor: pointer;
+    transform: translateY(-1px);
 }
 
 .task-description {
@@ -96,7 +98,7 @@
 .subtask-details-container:hover {
     background-color: var(--hover-shade-color);
     box-shadow: var(--shadow-default);
-
+    transform: translateY(-1px);
 }
 
 .subtask-details {
@@ -148,6 +150,43 @@
     border-radius: 10px;
 }
 
+#v-and-bruno-title {
+    font-size: var(--font-size-medium);
+}
+
+#v-and-bruno-logo {
+    width: 40px;
+    margin-right: 1rem;
+}
+
+.logo-container:hover {
+    cursor: pointer;
+}
+
+.logo-container:active #v-and-bruno-logo {
+    transform: translateY(-3px);
+    rotate: 45deg;
+}
+
+.logo-container:active #v-and-bruno-title {
+    visibility: hidden;
+}
+
+.logo-container:active #activate-logo::before {
+    content: "RUNO";
+    font-size: var(--font-size-medium);
+    color: rgb(53, 136, 231);
+    font-weight: bold;
+    margin-left: -14px;
+}
+
+.date-cat,
+.cats > div,
+.add-cat {
+    font-size: var(--font-size-medium);
+    margin: 0.24rem 0;
+}
+
 .date-cat:hover {
     background-color: var(--hover-shade-color);
     cursor: pointer;
@@ -166,18 +205,7 @@
     cursor: pointer;
 }
 
-.logo-container:hover {
-    cursor: pointer;
-}
 
-#v-and-bruno-title {
-    font-size: var(--font-size-medium);
-}
-
-#v-and-bruno-logo {
-    width: 40px;
-    margin-right: 1rem;
-}
 
 /* To-do:
 1 - Our Logo that leads to the website
