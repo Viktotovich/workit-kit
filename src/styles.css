@@ -1,27 +1,36 @@
 :root {
     color: #1f2937;
     font-size: 15px;
-    --primary-color: white;
+    --primary-color: #e7dfdf;
     --secondary-color: grey;
     --color-urgent: rgb(53, 23, 23);
     --color-normal: black;
     --soft-background-color: rgb(245, 245, 245);
     --hover-shade-color: antiquewhite;
+    --exagerated-hover-color: rgb(236, 198, 148);
     --font-size-main: 1rem;
     --font-size-secondary: 0.8rem;
     --font-size-large: 1.8rem;
     --font-size-medium: 1.3rem;
+    --darker-background: rgb(253, 253, 253);
     --primary-font: 'Times New Roman'; /* needs a fallback set*/
     --border-color: black;
     /* shamelessly stolen from my older projects */
     --shadow-default: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    background-image: url(../src/assets/images/starry-sunset.1920x1080.gif);
+    padding: 4rem;
 }
 
 #content {
     display: grid;
     grid-template-columns: 1fr 3fr;
     max-height: 100%;
+    width: 100%;
+    margin: 0;
     font-family: var(--primary-font);
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 1rem;
+    border-radius: 10px;
 }
 
 /* dom.Main */
@@ -143,10 +152,10 @@
 }
 
 /* Sidebar */
+
 .logo-container {
     display: flex;
     align-items: center;
-    background-color: var(--soft-background-color);
     border-radius: 10px;
 }
 
@@ -180,17 +189,26 @@
     margin-left: -14px;
 }
 
+.date-obj-container {
+    display: flex;
+    align-items: center;
+}
+
 .date-cat,
 .cats > div,
 .add-cat {
     font-size: var(--font-size-medium);
-    margin: 0.24rem 0;
+    margin: 0.24rem 0.5rem;
 }
 
-.date-cat:hover {
+.date-obj-container:hover {
     background-color: var(--hover-shade-color);
     cursor: pointer;
     box-shadow: var(--shadow-default);
+}
+
+.date-obj-container:hover svg {
+    fill: var(--exagerated-hover-color);
 }
 
 .add-cat:hover {
