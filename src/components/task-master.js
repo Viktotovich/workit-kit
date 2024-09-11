@@ -49,15 +49,15 @@ const taskManager = {
 }
 
 //Mock stuff to fill the display
-const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never have I ever heard anyone say this, but yaaaay). This is a work category, and here belong all tasks that are about work.");
+const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never have I ever heard anyone say this, but yaaaay). This is a work category, and here belong all tasks that are about work. Click on a subtask to complete it.");
 
 projects[workCat.catTitle] = workCat;
 
 const exampleTasksObj = {
     addExampleTasks: ()=> {
+        
         const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '08/31/2024', 'urgent');
 
-        //either move this to own object, or do something else
         exampleSubtasksObj.subtasks1(exampleTask1)
 
         const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "08/20/2024", 'normal');
@@ -66,9 +66,11 @@ const exampleTasksObj = {
 
         const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '09/03/2024', 'normal');
 
-        const exampleTask4 = new Task("Instagram Posts", 'Start making instagram posts for our Instagram account V and Bruno', '', 'normal');
+        const exampleTask4 = new Task("Use the workit-kit!", 'Get comfortable with using the to-work-on system', '', 'normal');
 
-        workCat.tasks.push(exampleTask1, exampleTask2, exampleTask3, exampleTask4);
+        exampleSubtasksObj.subtasks4(exampleTask4);
+
+        workCat.tasks.push(exampleTask4, exampleTask1, exampleTask2, exampleTask3);
     }
 };
 
@@ -86,6 +88,14 @@ const exampleSubtasksObj = {
         const subtask3 = new Subtask("Share the findings with Vlad");
 
         exampleTask2.subtasks.push(subtask1, subtask2, subtask3);
+    },
+    subtasks4: (exampleTask4) => {
+        const subtask1 = new Subtask("Click on a subtask like me to mark complete!");
+        const subtask2 = new Subtask("Change the details and the date of this task. (Hint: click on the '...' button on the top right.)");
+        const subtask3 = new Subtask("Create a new Category, and fill it up with new Tasks and Subtasks!");
+        const subtask4 = new Subtask("Delete the task to delete all subtasks inside :(");
+
+        exampleTask4.subtasks.push(subtask1, subtask2, subtask3, subtask4);
     },
 }
 
