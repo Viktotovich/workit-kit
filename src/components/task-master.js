@@ -49,7 +49,7 @@ const taskManager = {
 }
 
 //Mock stuff to fill the display
-const workCat = new Category("Work Tasks", "This category contains all tasks pertaining to work");
+const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never have I ever heard anyone say this, but yaaaay). This is a work category, and here belong all tasks that are about work.");
 
 projects[workCat.catTitle] = workCat;
 

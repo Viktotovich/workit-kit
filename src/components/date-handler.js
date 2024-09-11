@@ -12,7 +12,8 @@ const getDateInformation = {
     },
     processDate: function(dueDate){
         const dateObj = new Date(Date.parse(dueDate));
-        return format(dateObj, 'dd/MMM');
+        //dd-MM looks gorgeous, but sacrafices user friendlyness
+        return format(dateObj, 'dd MMM');
     },
     isToday: function(dateStr){
         const todayObj = new Date();
