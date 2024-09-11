@@ -782,7 +782,6 @@ const editors = {
             };
     })(),
     popupSubtask: function(cat, subtaskIndex, taskIndex, location){
-        console.log(location)
         const modal = document.createElement("dialog");
         const subtaskPath = taskMaster.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
         const taskPath = taskMaster.projects[cat].tasks[taskIndex];
@@ -966,6 +965,7 @@ const editors = {
 
         taskPath.subtasks.splice([subtaskIndex], 1);
         
+        editors.clearSubtaskModal();
         domMain.defaultLoad(cat);
     },
     deleteTask: function(e){
@@ -988,6 +988,7 @@ const editors = {
 
         if (validity === true) {
             currentSubtaskPath.details = newSubtask;
+            editors.clearSubtaskModal();
             domMain.defaultLoad(cat)
         } else {
             errorHandler.editorError()
