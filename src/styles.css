@@ -153,6 +153,10 @@
 }
 
 /* Sidebar */
+.sidebar {
+    padding: 0.7rem 0 0 0.7rem;
+}
+
 #link {
     text-decoration: none;
 }

@@ -72,6 +72,8 @@ const visualCues = {
     },
     highlightSelection: function(currentCat){
         //un-highlight previous selection - probs scrape the sidebar and erase all id's - while setting the id of current selection to id="current"
+
+        //also, whatever is going to work with local storage should also probably call this 
     },
 }
 

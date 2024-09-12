@@ -110,20 +110,6 @@ export const dateSorter = {
             };
         });
     },
-}
-
-/* DO NOT MAKE THE MISTAKE OF ASKING USERS TO SELECT DATE IN THE MODAL FOR TODAY OBJECT. - on date object just leave the template the same
- */
+};
 
 export {getDateInformation, defaultDue};
-
-/*
-To Do:
-Bonus (if I feel like it's worth the scope creep):
-5 - Sort tasks by dates ascending / descending (compareAsc)
-
-Note: 
-(1) toJson() calls toIsoString()
-(2) To get default to get called into getEndOfMonth in taskMaster, call a Task constructor with '', undefined, or NaN => putting undefined helps bandaid edge case errors to do with dates. ezpz
-
-*/

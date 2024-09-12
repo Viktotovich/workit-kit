@@ -427,9 +427,6 @@ const domMain = {
 
         processDateObjs.showAddTaskOption();
     },
-    renderDate: function(e){
-        //replicate renderCat and throw it into displayDate
-    },
     defaultLoad: function(cat){
         domMain.taskIndex *= 0;
         let catTitle = taskMaster.projects[cat].catTitle;
@@ -1007,7 +1004,7 @@ const editors = {
         currentPath.title = newTaskTitle;
         currentPath.priority = taskPriority;
 
-        //fixes annoying bug where empty date crash the full app
+        //fixes annoying bug where empty date crashes the full app
         if (newTaskDue == "") {
             domMain.defaultLoad(cat);
         } else {
@@ -1146,6 +1143,8 @@ export { domManager, domMain };
     It works also as an insurance, to prevent "oops I didnt know if I delete the category, I delete everything in the category"
 
     New Categories MUST HAVE cat remove button or something. Work Tasks are immune to prevent empty displays
+
+    Along the cat remove, give like a general reset option 
 
     */
 
