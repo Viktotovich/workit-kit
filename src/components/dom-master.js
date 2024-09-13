@@ -2,13 +2,6 @@ import * as taskMaster from "./task-master";
 import { changeListener } from "./sub-to-changes";
 import { visualCues } from "./display-assist";
 
-//make it sleek - move it down after finishing
-function updateListener(cats){
-    changeListener.pubChangesToDates(cats);
-    //prevents circular dependencies
-    processDateObjs.updateDomWithDates();
-};
-
 const processDateObjs = {
     updateDomWithDates: function(){
         this.bindToDom();
@@ -261,6 +254,7 @@ const dateDomManager = {
         dateDomManager.defaultLoad();
     },
     defaultLoad: function(){
+        changeListener.saveChanges();
         if (this.currentDateType === 'today'){
             processDateObjs.todayToDom();
         } else if (this.currentDateType === 'soonArray'){
@@ -393,6 +387,7 @@ const domManager = {
             domManager.clearModal();
             domSidebar.pubCats();
         }
+        changeListener.saveChanges();
     },
     checkValidity: function(operand){
         const isValid = Object.values(domManager.conditions).every(condition => condition(operand));
@@ -402,6 +397,9 @@ const domManager = {
 
 const domSidebar = {
     pubCats: function (){
+        changeListener.loadChanges();
+        //local storage implemented but now date objs dont work - and ticked off stuff also dont
+        updateListener(taskMaster.projects);
         const catsContainer = document.querySelector(".cats");
         //prevents duplications
         domMain.taskIndex = 0;
@@ -422,18 +420,19 @@ const domMain = {
         domMain.taskIndex *= 0;
         //communicate with domMain to show tasks
         let catTitle = e.target.getAttribute('class');
-        let catDescription = taskMaster.projects[catTitle].catDescription
+        let catDescription = taskMaster.projects[catTitle].catDescription;
         domMain.displayCat(catTitle, catDescription);
 
         processDateObjs.showAddTaskOption();
     },
     defaultLoad: function(cat){
+        changeListener.saveChanges();
         domMain.taskIndex *= 0;
         let catTitle = taskMaster.projects[cat].catTitle;
         let catDescription = taskMaster.projects[cat].catDescription;
         domMain.displayCat(catTitle, catDescription);
 
-        changeListener.pubChangesToDates(taskMaster.projects);
+        updateListener(taskMaster.projects);
         processDateObjs.showAddTaskOption();
     },
     displayCat: function(catTitle, catDescription){
@@ -604,6 +603,7 @@ const domMain = {
             domMain.clearModal();
             //prevents error 732
             domMain.taskIndex = 0;
+            //ABSOLUTE MISTAKE TO MESS WITH THIS LINE, I TRIED TO MAKE IT MORE MODULAR AND IT STOPPED ME FROM BEING ABLE TO MAKE TASKS WHEN I CREATE A NEW CAT -- do not, DO NOT USE UPDATE LISTENER HERE
             changeListener.pubChangesToDates(taskMaster.projects);
             domMain.renderTasks(catTitle);
         }
@@ -1125,8 +1125,15 @@ const errorHandler = {
         errorHandler.textContent = "Please don't leave fields blank, or exceed the 45 character limit."
     },
 };
-updateListener(taskMaster.projects);
 
+//This was so confusing to look at, I regret not documenting this. For future me: This just initiates the datesObj - but it is never re-used despite being perfectly modular
+function updateListener(cats){
+    changeListener.pubChangesToDates(cats);
+    //prevents circular dependencies
+    processDateObjs.updateDomWithDates();
+};
+
+updateListener(taskMaster.projects);
 
 domSidebar.pubCats();
 export { domManager, domMain };
@@ -1135,8 +1142,6 @@ export { domManager, domMain };
     To do:
         
     5 - Visual UI/UX - 90% done, 10% left are boring modals with small changes only
-
-    7 - JSONify everything
 
     8 - CAT remover last, doesn't make sense to leave users on a blank screen if they can delete from main; instead the only options users should have is to delete from the sidebar from the settings icon - nothing else. 
 

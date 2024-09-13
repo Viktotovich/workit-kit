@@ -1,8 +1,15 @@
 //pub/sub - this is listening to any time cats are rendered/re-rendered
 import { projects, dateObjs } from './task-master';
 import * as dateMaster from './date-handler';
+import { storageManager } from './storage-handler';
 
 const changeListener = {
+    saveChanges: function(){
+        const cat = storageManager.saveProjects();
+    },
+    loadChanges: function(){
+        storageManager.loadProjects();
+    },
     //we actually don't need to get the catObj
     pubChangesToDates: function(cats){
         Object.keys(cats).forEach(cat => {

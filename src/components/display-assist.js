@@ -1,11 +1,3 @@
-/*
-This module does everything to assist CSS styles, the goals are:
-
-1 - Change subtasks status upon a click: click = toggle between complete and incomplete
-
-Target specifically <div class="subtask-status">incomplete</div>
-
-*/
 import * as taskMaster from "./task-master";
 
 const visualCues = {
@@ -43,8 +35,9 @@ const visualCues = {
 
         subtaskPath.status = newStatus;
     },
-    publishUpdateDate: function(subtaskIndex, taskIndex, newStatus){
-        const path = taskMaster.dateObjs[this.currentDateType][taskIndex].subtasks[subtaskIndex];
+    publishUpdateDate: function(subtaskIndex, indexOfTask, newStatus){
+        //tasxIndex got name polluted and caused a weird error, had to rename
+        const path = taskMaster.dateObjs[this.currentDateType][indexOfTask].subtasks[subtaskIndex];
 
         path.status = newStatus;
     },
