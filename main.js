@@ -24078,6 +24078,16 @@ exampleTasksObj.addExampleTasks(workCat)
 
 module.exports = __webpack_require__.p + "4232d72c103b75438f48.gif";
 
+/***/ }),
+
+/***/ "./src/assets/images/v-and-bruno.png":
+/*!*******************************************!*\
+  !*** ./src/assets/images/v-and-bruno.png ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "8ffc87800a5102efa701.png";
+
 /***/ })
 
 /******/ 	});
@@ -24226,17 +24236,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/task-master.js */ "./src/components/task-master.js");
 /* harmony import */ var _components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/dom-master.js */ "./src/components/dom-master.js");
 /* harmony import */ var _components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/sub-to-changes.js */ "./src/components/sub-to-changes.js");
+/* harmony import */ var _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./assets/images/v-and-bruno.png */ "./src/assets/images/v-and-bruno.png");
 
 
 
 
 _components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_3__.changeListener.loadChanges()
+;
+
 
 _components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__.domManager.findDom();
 //keep the default load as whatever for now, but change it to today or soon - looks better
 _components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__.domMain.defaultLoad("Work Tasks")
 
-console.log(_components_task_master_js__WEBPACK_IMPORTED_MODULE_1__.projects) 
+document.getElementById('v-and-bruno-logo').src = _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_4__;
+
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map
