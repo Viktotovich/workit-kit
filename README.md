@@ -31,10 +31,26 @@ There are still things left to work on, notably:
 
     It works also as an insurance, to prevent "oops I didnt know if I delete the category, I delete everything in the category"
 
-    New Categories MUST HAVE cat remove button or something. Work Tasks are immune to prevent empty displays
-
-    Along the cat remove, give like a general reset option 
-
 14SEP2024 17:43: Last night I went to festival city and actually used this framework to store data for marketing and make tasks for us. There were bugs, and just some odities: I didn't like the fact how the background img loops, but it works. 
 
 Additionally, the tiny clear button that clears local storage is awesome. 
+
+I am working on wrapping things up: there are only 2 crucial things I need to cover to make it work properly:
+
+1 - add a category must instantly reflect on the sidebar (DONE)
+
+2 - reset back to test data must work (DONE - but new problems introduced: duplicates of everything) - and those problems are fixed too
+
+PROJECT COMPLETE: 
+14SEP2024 20:21: I would love to work more on the features and minor bug fixes, but the fact that this project took this long to make is a testament to it's difficulty, and my personal perseverance. 
+
+All major things I wanted to learn have been covered in this projects. Yes there are still bugs, and the modal is a-okay, however - spending more time here instead of moving on to new resources would be wasteful.
+
+Additionally: every single new feauture is incrementally more difficult to add. Most of the features and the way things work have been solidified and became resistant to change.
+
+There are functions that could have been done better, but absolutely cannot be touched because of how much code depends on them. 
+
+The biggest shinning star of this code is that, in irony and contradiction to everything I had said in the previous points - having such conventions makes it extremely easy to add similar feautures to what's already implemented - think for example: like sending a boat through a running river, where the boat is a new function (that has many overlaps) and the river is a codebase.
+
+On the contrary, new feautures is like having to have the boat go upstream. We can obviously do it, but it's a lot of effort.
+

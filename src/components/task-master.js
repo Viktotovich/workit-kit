@@ -53,10 +53,18 @@ const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never 
 
 projects[workCat.catTitle] = workCat;
 
+const workCatReset = {
+    resetWorkCat: function(){
+        const newWorkCat = new Category(workCat.catTitle, workCat.catDescription);
+
+        exampleTasksObj.addExampleTasks(newWorkCat);
+        Object.keys(workCat).forEach(key => delete workCat[key]);
+        Object.assign(workCat, newWorkCat);
+    }
+}
+
 const exampleTasksObj = {
-    addExampleTasks: function(target) {
-        console.log(workCat)
-        
+    addExampleTasks: function(target) {        
         const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '08/31/2024', 'urgent');
 
         exampleSubtasksObj.subtasks1(exampleTask1)
@@ -102,4 +110,4 @@ const exampleSubtasksObj = {
 
 exampleTasksObj.addExampleTasks(workCat)
 
-export { Task, Category, Subtask, projects, taskManager, dateObjs, exampleTasksObj, workCat};
+export { Task, Category, Subtask, projects, taskManager, dateObjs, exampleTasksObj, workCat, workCatReset};

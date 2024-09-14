@@ -289,7 +289,7 @@ const domManager = {
     bindAttributes: function (target, pointer){
         Object.keys(pointer).forEach(attr => {
             target.setAttribute(attr, pointer[attr]);
-        })
+        });
     },
     addTaskButton: function(){
         const main = document.querySelector(".main");
@@ -390,15 +390,10 @@ const domManager = {
         const catTitle = document.querySelector("#cat-title").value;
         const catDescription = document.querySelector("#cat-description").value;
 
-        const check1 = domManager.checkValidity(catTitle)
-        const check2 = domManager.checkValidity(catDescription)
-
-        if (check1 == true && check2 == true){
-            taskMaster.taskManager.addCat(catTitle, catDescription)
-            domManager.clearModal();
-            domSidebar.pubCats();
-        }
+        taskMaster.taskManager.addCat(catTitle, catDescription)
+        domManager.clearModal();
         changeListener.saveChanges();
+        domSidebar.pubCats();
     },
     checkValidity: function(operand){
         const isValid = Object.values(domManager.conditions).every(condition => condition(operand));
