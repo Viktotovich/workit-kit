@@ -18,3 +18,23 @@ Additionally, at the point of time that I am writing this, this project has no U
 11SEP2024 15:10: Using the HMR or whatever it is that allows me to just refresh and see updates quick as opposed to always npm run build(ing) really supercharged my development. I am definetely seeing more results now that I don't see webpack as a roadblack with feautures.
 
 However, not being able to interact with items/objects through the console IS a hinderance I still haven't got used to.
+
+13SEP2024 17:02: it took a month to get to this point of the project - I have now successfully implemented the local storage, and 95% of things I wanted to do.
+
+There are still things left to work on, notably: 
+        
+    5 - Visual UI/UX - 90% done, 10% left are boring modals with small changes only
+
+    8 - CAT remover last, doesn't make sense to leave users on a blank screen if they can delete from main; instead the only options users should have is to delete from the sidebar from the settings icon - nothing else. 
+
+    9 - Reset local storage option: add a way to clear stored data
+
+    It works also as an insurance, to prevent "oops I didnt know if I delete the category, I delete everything in the category"
+
+    New Categories MUST HAVE cat remove button or something. Work Tasks are immune to prevent empty displays
+
+    Along the cat remove, give like a general reset option 
+
+14SEP2024 17:43: Last night I went to festival city and actually used this framework to store data for marketing and make tasks for us. There were bugs, and just some odities: I didn't like the fact how the background img loops, but it works. 
+
+Additionally, the tiny clear button that clears local storage is awesome. 

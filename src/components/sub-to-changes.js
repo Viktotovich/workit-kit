@@ -5,13 +5,17 @@ import { storageManager } from './storage-handler';
 
 const changeListener = {
     saveChanges: function(){
-        const cat = storageManager.saveProjects();
+        storageManager.saveProjects();
     },
     loadChanges: function(){
         storageManager.loadProjects();
     },
+    clearAll: function(){
+        storageManager.clearLocalStorage();
+    },
     //we actually don't need to get the catObj
     pubChangesToDates: function(cats){
+        dateMaster.dateSorter.resetArrays();
         Object.keys(cats).forEach(cat => {
             dateMaster.dateSorter.sortAll(projects[cat]);
         });

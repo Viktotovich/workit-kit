@@ -43,7 +43,6 @@ const defaultDue = getDateInformation.getEndOfMonth();
 //Due to the implementation 
 export const dateSorter = {
     sortAll: function(catObj){
-        this.resetArrays();
         this.sortAnytime(catObj);
         this.sortToday(catObj);
         this.sortOverdue(catObj);

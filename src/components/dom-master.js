@@ -39,7 +39,8 @@ const processDateObjs = {
         domMain.taskIndex *= 0;
         domMain.displayTasks(taskMaster.dateObjs.anytimeArray, ': due anytime')
         dateDomManager.currentDateType = "anytimeArray";
-        dateDomManager.currentDateType = "anytimeArray";
+        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  THIS WAS SUCH A PAIN TO TRACE THIS
+        visualCues.currentDateType = "anytimeArray";
     },
     checkType: function(type){
         if (type === 'normal'){
@@ -270,10 +271,20 @@ const dateDomManager = {
 const domManager = {
     findDom: function(){
         const addCategoryButton = document.querySelector(".add-cat");
+        const clearLocal = document.querySelector(".clear-local");
 
         addCategoryButton.addEventListener("click", this.categoryPopup)
+        clearLocal.addEventListener("click", this.clearLocalStorage)
 
         this.addTaskButton();
+    },
+    clearLocalStorage: function(){
+        changeListener.clearAll();
+        taskMaster.exampleTasksObj.addExampleTasks(taskMaster.workCat);
+        changeListener.loadChanges();
+        domSidebar.pubCats();
+        const cat = editors.getCat();
+        domMain.defaultLoad(cat);
     },
     bindAttributes: function (target, pointer){
         Object.keys(pointer).forEach(attr => {
@@ -524,7 +535,7 @@ const domMain = {
             //subtask Details Container separates the toolbar and the subtask
             domMain.createToolbar(subtaskDetailsContainer, "subtasks");
             visualCues.addToggleListener(subtaskDetails);
-
+            
             indexOfSubtask += 1;
         });
     },
@@ -604,6 +615,7 @@ const domMain = {
             //prevents error 732
             domMain.taskIndex = 0;
             //ABSOLUTE MISTAKE TO MESS WITH THIS LINE, I TRIED TO MAKE IT MORE MODULAR AND IT STOPPED ME FROM BEING ABLE TO MAKE TASKS WHEN I CREATE A NEW CAT -- do not, DO NOT USE UPDATE LISTENER HERE
+            changeListener.saveChanges();
             changeListener.pubChangesToDates(taskMaster.projects);
             domMain.renderTasks(catTitle);
         }
@@ -1137,19 +1149,3 @@ updateListener(taskMaster.projects);
 
 domSidebar.pubCats();
 export { domManager, domMain };
-
-    /*
-    To do:
-        
-    5 - Visual UI/UX - 90% done, 10% left are boring modals with small changes only
-
-    8 - CAT remover last, doesn't make sense to leave users on a blank screen if they can delete from main; instead the only options users should have is to delete from the sidebar from the settings icon - nothing else. 
-
-    It works also as an insurance, to prevent "oops I didnt know if I delete the category, I delete everything in the category"
-
-    New Categories MUST HAVE cat remove button or something. Work Tasks are immune to prevent empty displays
-
-    Along the cat remove, give like a general reset option 
-
-    */
-

@@ -1,4 +1,5 @@
 import * as taskMaster from "./task-master";
+import { changeListener } from "./sub-to-changes";
 
 const visualCues = {
     currentDateType: null,
@@ -19,6 +20,7 @@ const visualCues = {
         };
     },
     processUpdate: function(e, newStatus){
+        changeListener.saveChanges();
         const targetSubtask = e.target;
         const subtaskIndex = this.getSubtaskIndex(targetSubtask);
         const taskIndex = this.getTaskIndexForToggle(targetSubtask);
@@ -36,7 +38,7 @@ const visualCues = {
         subtaskPath.status = newStatus;
     },
     publishUpdateDate: function(subtaskIndex, indexOfTask, newStatus){
-        //tasxIndex got name polluted and caused a weird error, had to rename
+        //taskIndex got name polluted and caused a weird error, had to rename
         const path = taskMaster.dateObjs[this.currentDateType][indexOfTask].subtasks[subtaskIndex];
 
         path.status = newStatus;

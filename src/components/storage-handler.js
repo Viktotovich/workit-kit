@@ -7,6 +7,7 @@ const storageManager = {
     },
     loadProjects: function(){
         if (!localStorage.getItem('savedProjects')){
+            console.log("what doink")
             this.saveProjects()
         } else {
             const localObj = localStorage.getItem('savedProjects');
@@ -16,6 +17,10 @@ const storageManager = {
             Object.assign(taskMaster.projects, parsedObj);
         }
     },
+    clearLocalStorage: function(){
+        localStorage.clear();
+    }
 }
+
 
 export {storageManager}

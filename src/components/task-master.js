@@ -54,7 +54,8 @@ const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never 
 projects[workCat.catTitle] = workCat;
 
 const exampleTasksObj = {
-    addExampleTasks: ()=> {
+    addExampleTasks: function(target) {
+        console.log(workCat)
         
         const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '08/31/2024', 'urgent');
 
@@ -70,7 +71,7 @@ const exampleTasksObj = {
 
         exampleSubtasksObj.subtasks4(exampleTask4);
 
-        workCat.tasks.push(exampleTask4, exampleTask1, exampleTask2, exampleTask3);
+        target.tasks.push(exampleTask4, exampleTask1, exampleTask2, exampleTask3);
     }
 };
 
@@ -99,5 +100,6 @@ const exampleSubtasksObj = {
     },
 }
 
-exampleTasksObj.addExampleTasks()
-export { Task, Category, Subtask, projects, taskManager, dateObjs};
+exampleTasksObj.addExampleTasks(workCat)
+
+export { Task, Category, Subtask, projects, taskManager, dateObjs, exampleTasksObj, workCat};
