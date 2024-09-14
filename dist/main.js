@@ -22584,10 +22584,14 @@ const dateSorter = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   logoDisplay: () => (/* binding */ logoDisplay),
 /* harmony export */   visualCues: () => (/* binding */ visualCues)
 /* harmony export */ });
 /* harmony import */ var _task_master__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task-master */ "./src/components/task-master.js");
 /* harmony import */ var _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sub-to-changes */ "./src/components/sub-to-changes.js");
+/* harmony import */ var _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/images/v-and-bruno.png */ "./src/assets/images/v-and-bruno.png");
+
+
 
 
 
@@ -22655,12 +22659,30 @@ const visualCues = {
             return "[completed]"
         }
     },
-    highlightSelection: function(currentCat){
-        //un-highlight previous selection - probs scrape the sidebar and erase all id's - while setting the id of current selection to id="current"
-
-        //also, whatever is going to work with local storage should also probably call this 
-    },
 }
+
+const logoDisplay = {
+    initLogo: function(){
+        const myIcon = new Image();
+        const logoSpace = document.querySelector(".logo-container")
+        const logoTitle = document.createElement("h1");
+        const hiddenSpan = document.createElement("span");
+
+        myIcon.src = _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_2__;
+
+        hiddenSpan.setAttribute("id", "activate-logo");
+        myIcon.setAttribute("id", "v-and-bruno-logo");
+        logoTitle.setAttribute("id", "v-and-bruno-title");
+
+        logoTitle.textContent = 'V and Bruno';
+
+        logoSpace.appendChild(myIcon);
+        logoSpace.appendChild(hiddenSpan);
+        logoSpace.appendChild(logoTitle);
+    }
+}
+
+
 
 
 
@@ -24233,24 +24255,21 @@ var __webpack_exports__ = {};
   \*********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
-/* harmony import */ var _components_task_master_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/task-master.js */ "./src/components/task-master.js");
-/* harmony import */ var _components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/dom-master.js */ "./src/components/dom-master.js");
-/* harmony import */ var _components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/sub-to-changes.js */ "./src/components/sub-to-changes.js");
-/* harmony import */ var _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./assets/images/v-and-bruno.png */ "./src/assets/images/v-and-bruno.png");
+/* harmony import */ var _components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/dom-master.js */ "./src/components/dom-master.js");
+/* harmony import */ var _components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/sub-to-changes.js */ "./src/components/sub-to-changes.js");
+/* harmony import */ var _components_display_assist_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/display-assist.js */ "./src/components/display-assist.js");
 
 
 
 
-_components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_3__.changeListener.loadChanges()
+_components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_2__.changeListener.loadChanges()
 ;
 
-
-_components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__.domManager.findDom();
+_components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__.domManager.findDom();
 //keep the default load as whatever for now, but change it to today or soon - looks better
-_components_dom_master_js__WEBPACK_IMPORTED_MODULE_2__.domMain.defaultLoad("Work Tasks")
+_components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__.domMain.defaultLoad("Work Tasks")
 
-document.getElementById('v-and-bruno-logo').src = _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_4__;
-
+_components_display_assist_js__WEBPACK_IMPORTED_MODULE_3__.logoDisplay.initLogo()
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map

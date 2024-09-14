@@ -1,5 +1,7 @@
 import * as taskMaster from "./task-master";
 import { changeListener } from "./sub-to-changes";
+import vAndBrunoLogo from '../assets/images/v-and-bruno.png';
+
 
 const visualCues = {
     currentDateType: null,
@@ -65,11 +67,29 @@ const visualCues = {
             return "[completed]"
         }
     },
-    highlightSelection: function(currentCat){
-        //un-highlight previous selection - probs scrape the sidebar and erase all id's - while setting the id of current selection to id="current"
-
-        //also, whatever is going to work with local storage should also probably call this 
-    },
 }
 
-export {visualCues}
+const logoDisplay = {
+    initLogo: function(){
+        const myIcon = new Image();
+        const logoSpace = document.querySelector(".logo-container")
+        const logoTitle = document.createElement("h1");
+        const hiddenSpan = document.createElement("span");
+
+        myIcon.src = vAndBrunoLogo;
+
+        hiddenSpan.setAttribute("id", "activate-logo");
+        myIcon.setAttribute("id", "v-and-bruno-logo");
+        logoTitle.setAttribute("id", "v-and-bruno-title");
+
+        logoTitle.textContent = 'V and Bruno';
+
+        logoSpace.appendChild(myIcon);
+        logoSpace.appendChild(hiddenSpan);
+        logoSpace.appendChild(logoTitle);
+    }
+}
+
+
+
+export {visualCues, logoDisplay}
