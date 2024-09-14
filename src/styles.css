@@ -239,6 +239,26 @@
     border-radius: 5px;
 }
 
+.clear-local {
+    font-size: 0.8em;
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+
+.clear-local:hover {
+    cursor: pointer;
+}
+
+.clear-local:hover::before,
+.clear-local:hover::after {
+    content: "⚠️";
+}
+
+.clear-local:active {
+    cursor: progress;
+    transform: scale(1.3);
+}
+
 /* Modals 
 
 eh..not really a fan of modals - maybe even generic modal css import would be okay*/
@@ -246,8 +266,3 @@ eh..not really a fan of modals - maybe even generic modal css import would be ok
     font-size: var(--font-size-medium);
 }
 
-
-/* To-do:
-2 - Show 2-3 tasks under category (considering not to, as it looks quite okay at the moment. 
-4 - Highlight current selection, work with display-assist 
-*/
