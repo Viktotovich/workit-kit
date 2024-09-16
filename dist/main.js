@@ -22460,117 +22460,125 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   getDateInformation: () => (/* binding */ getDateInformation)
 /* harmony export */ });
 /* harmony import */ var _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sub-to-changes */ "./src/components/sub-to-changes.js");
-const { endOfMonth, format, isBefore, isAfter, add, endOfYesterday } = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+const {
+  endOfMonth,
+  format,
+  isBefore,
+  isAfter,
+  add,
+  endOfYesterday,
+} = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
 
 
 // Years must be displayed
 const getDateInformation = {
-    getEndOfMonth: function(){
-        return format(endOfMonth(new Date()), 'MMM/dd/yyyy');
-    },
-    formatDueDate: function(dueDate){
-        const dateObj = new Date(Date.parse(dueDate));
-        return format(dateObj, 'MMM/dd/yyyy');
-    },
-    processDate: function(dueDate){
-        const dateObj = new Date(Date.parse(dueDate));
-        return format(dateObj, 'dd MMM');
-    },
-    isToday: function(dateStr){
-        const todayObj = new Date();
-        const today = this.formatDueDate(todayObj);
-        const userDate = this.formatDueDate(dateStr)
-        if (userDate === today){
-            return true;
-        } else {
-            return false;
-        }
-    },
-    getToday: function(){
-        const todayObj = new Date();
-        const today = this.formatDueDate(todayObj);
-        return today 
-    },
-    getWeekFromNow: function(){
-        const today = this.getToday();
-        const weekFromToday = add(today, {
-            weeks: 1,
-        });
-        return weekFromToday
-    },
+  getEndOfMonth: function () {
+    return format(endOfMonth(new Date()), "MMM/dd/yyyy");
+  },
+  formatDueDate: function (dueDate) {
+    const dateObj = new Date(Date.parse(dueDate));
+    return format(dateObj, "MMM/dd/yyyy");
+  },
+  processDate: function (dueDate) {
+    const dateObj = new Date(Date.parse(dueDate));
+    return format(dateObj, "dd MMM");
+  },
+  isToday: function (dateStr) {
+    const todayObj = new Date();
+    const today = this.formatDueDate(todayObj);
+    const userDate = this.formatDueDate(dateStr);
+    if (userDate === today) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  getToday: function () {
+    const todayObj = new Date();
+    const today = this.formatDueDate(todayObj);
+    return today;
+  },
+  getWeekFromNow: function () {
+    const today = this.getToday();
+    const weekFromToday = add(today, {
+      weeks: 1,
+    });
+    return weekFromToday;
+  },
 };
 
 const defaultDue = getDateInformation.getEndOfMonth();
 
-//Due to the implementation 
+//Due to the implementation
 const dateSorter = {
-    sortAll: function(catObj){
-        this.sortAnytime(catObj);
-        this.sortToday(catObj);
-        this.sortOverdue(catObj);
-        this.sortSoon(catObj);
-        this.pubDateArrays();
-    },
-    resetArrays: function(){
-        this.todayArray = [];
-        this.soonArray = [];
-        this.overdueArray = [];
-        this.anytimeArray = [];
-    },
-    pubDateArrays: function(){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveAnytimeArray(this.anytimeArray);
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveOverdueArray(this.overdueArray);
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveSoonArray(this.soonArray);
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveTodayArray(this.todayArray);
-    },
-    todayArray: [],
-    soonArray: [],
-    overdueArray: [],
-    anytimeArray: [],
-    sortToday: function(catObj){
-        const tasksArr = catObj.tasks;
-        tasksArr.forEach(element => {
-            let dateCheck = getDateInformation.isToday(element.due);
-            if (dateCheck === true){
-                //works flawlessly
-                this.todayArray.push(element);
-            };
-        });
-    },
-    sortOverdue: function(catObj){
-        const tasksArr = catObj.tasks;
-        const today = getDateInformation.getToday();
+  sortAll: function (catObj) {
+    this.sortAnytime(catObj);
+    this.sortToday(catObj);
+    this.sortOverdue(catObj);
+    this.sortSoon(catObj);
+    this.pubDateArrays();
+  },
+  resetArrays: function () {
+    this.todayArray = [];
+    this.soonArray = [];
+    this.overdueArray = [];
+    this.anytimeArray = [];
+  },
+  pubDateArrays: function () {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveAnytimeArray(this.anytimeArray);
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveOverdueArray(this.overdueArray);
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveSoonArray(this.soonArray);
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_0__.changeListener.saveTodayArray(this.todayArray);
+  },
+  todayArray: [],
+  soonArray: [],
+  overdueArray: [],
+  anytimeArray: [],
+  sortToday: function (catObj) {
+    const tasksArr = catObj.tasks;
+    tasksArr.forEach((element) => {
+      let dateCheck = getDateInformation.isToday(element.due);
+      if (dateCheck === true) {
+        //works flawlessly
+        this.todayArray.push(element);
+      }
+    });
+  },
+  sortOverdue: function (catObj) {
+    const tasksArr = catObj.tasks;
+    const today = getDateInformation.getToday();
 
-        tasksArr.forEach(element => {
-            let dateCheck = isBefore(element.due, today);
-            if (dateCheck === true){
-                this.overdueArray.push(element);
-            }
-        });
-    },
-    sortAnytime: function(catObj){
-        const tasksArr = catObj.tasks;
+    tasksArr.forEach((element) => {
+      let dateCheck = isBefore(element.due, today);
+      if (dateCheck === true) {
+        this.overdueArray.push(element);
+      }
+    });
+  },
+  sortAnytime: function (catObj) {
+    const tasksArr = catObj.tasks;
 
-        tasksArr.forEach(element => {
-            this.anytimeArray.push(element);
-        });
-    },
-    sortSoon: function(catObj){
-        const tasksArr = catObj.tasks;
+    tasksArr.forEach((element) => {
+      this.anytimeArray.push(element);
+    });
+  },
+  sortSoon: function (catObj) {
+    const tasksArr = catObj.tasks;
 
-        const weekFromToday = getDateInformation.getWeekFromNow();
-        const yesterday = endOfYesterday();
+    const weekFromToday = getDateInformation.getWeekFromNow();
+    const yesterday = endOfYesterday();
 
-        tasksArr.forEach(element => {
-            let dateCheckBefore = isAfter(element.due, yesterday);
-            let dateCheckAfter = isBefore(element.due, weekFromToday);
+    tasksArr.forEach((element) => {
+      let dateCheckBefore = isAfter(element.due, yesterday);
+      let dateCheckAfter = isBefore(element.due, weekFromToday);
 
-            if (dateCheckAfter === true && dateCheckBefore === true){
-                this.soonArray.push(element);
-            };
-        });
-    },
+      if (dateCheckAfter === true && dateCheckBefore === true) {
+        this.soonArray.push(element);
+      }
+    });
+  },
 };
+
 
 
 
@@ -22594,94 +22602,96 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 const visualCues = {
-    currentDateType: null,
-    addToggleListener: function(domElement){
-        domElement.addEventListener("click", this.statusToggle);
-    },
-    statusToggle: function(e){
-        const list = e.target.classList;
+  currentDateType: null,
+  addToggleListener: function (domElement) {
+    domElement.addEventListener("click", this.statusToggle);
+  },
+  statusToggle: function (e) {
+    const list = e.target.classList;
 
-        if (list.contains("incomplete")){
-            list.remove("incomplete");
-            list.add("complete");
-            visualCues.processUpdate(e, "complete")
-        } else {
-            list.remove("complete");
-            list.add("incomplete");
-            visualCues.processUpdate(e, "incomplete");
-        };
-    },
-    processUpdate: function(e, newStatus){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
-        const targetSubtask = e.target;
-        const subtaskIndex = this.getSubtaskIndex(targetSubtask);
-        const taskIndex = this.getTaskIndexForToggle(targetSubtask);
-        const cat = this.getCat();
+    if (list.contains("incomplete")) {
+      list.remove("incomplete");
+      list.add("complete");
+      visualCues.processUpdate(e, "complete");
+    } else {
+      list.remove("complete");
+      list.add("incomplete");
+      visualCues.processUpdate(e, "incomplete");
+    }
+  },
+  processUpdate: function (e, newStatus) {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
+    const targetSubtask = e.target;
+    const subtaskIndex = this.getSubtaskIndex(targetSubtask);
+    const taskIndex = this.getTaskIndexForToggle(targetSubtask);
+    const cat = this.getCat();
 
-        if (cat === 'obyect-vremeni'){
-            this.publishUpdateDate(subtaskIndex, taskIndex, newStatus)
-        } else {
-            this.publishUpdate(cat, subtaskIndex, taskIndex, newStatus);
-        }
-    },
-    publishUpdate: function(cat, subtaskIndex, taskIndex, newStatus){
-        const subtaskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
+    if (cat === "obyect-vremeni") {
+      this.publishUpdateDate(subtaskIndex, taskIndex, newStatus);
+    } else {
+      this.publishUpdate(cat, subtaskIndex, taskIndex, newStatus);
+    }
+  },
+  publishUpdate: function (cat, subtaskIndex, taskIndex, newStatus) {
+    const subtaskPath =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
 
-        subtaskPath.status = newStatus;
-    },
-    publishUpdateDate: function(subtaskIndex, indexOfTask, newStatus){
-        //taskIndex got name polluted and caused a weird error, had to rename
-        const path = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[this.currentDateType][indexOfTask].subtasks[subtaskIndex];
+    subtaskPath.status = newStatus;
+  },
+  publishUpdateDate: function (subtaskIndex, indexOfTask, newStatus) {
+    //taskIndex got name polluted and caused a weird error, had to rename
+    const path =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[this.currentDateType][indexOfTask].subtasks[
+        subtaskIndex
+      ];
 
-        path.status = newStatus;
-    },
-    getSubtaskIndex: function(target){
-        let subtaskIndex = target.classList[2].split('subtask')[1];
-        return subtaskIndex;
-    },
-    getTaskIndexForToggle: function(target){
-        let taskIndex = target.parentNode.parentNode.getAttribute("id");
-        return taskIndex;
-    },
-    getCat: function(){
-        let cat = document.querySelector(".cat");
-        let catId = cat.getAttribute("id");
-        return catId;
-    },
-    getUrgency: function(urgency){
-        if (urgency === 'normal'){
-            return ''
-        } else if (urgency === 'urgent'){
-            return "[urgent]"
-        } else {
-            return "[completed]"
-        }
-    },
-}
+    path.status = newStatus;
+  },
+  getSubtaskIndex: function (target) {
+    let subtaskIndex = target.classList[2].split("subtask")[1];
+    return subtaskIndex;
+  },
+  getTaskIndexForToggle: function (target) {
+    let taskIndex = target.parentNode.parentNode.getAttribute("id");
+    return taskIndex;
+  },
+  getCat: function () {
+    let cat = document.querySelector(".cat");
+    let catId = cat.getAttribute("id");
+    return catId;
+  },
+  getUrgency: function (urgency) {
+    if (urgency === "normal") {
+      return "";
+    } else if (urgency === "urgent") {
+      return "[urgent]";
+    } else {
+      return "[completed]";
+    }
+  },
+};
 
 const logoDisplay = {
-    initLogo: function(){
-        const myIcon = new Image();
-        const logoSpace = document.querySelector(".logo-container")
-        const logoTitle = document.createElement("h1");
-        const hiddenSpan = document.createElement("span");
+  initLogo: function () {
+    const myIcon = new Image();
+    const logoSpace = document.querySelector(".logo-container");
+    const logoTitle = document.createElement("h1");
+    const hiddenSpan = document.createElement("span");
 
-        myIcon.src = _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_2__;
+    myIcon.src = _assets_images_v_and_bruno_png__WEBPACK_IMPORTED_MODULE_2__;
 
-        hiddenSpan.setAttribute("id", "activate-logo");
-        myIcon.setAttribute("id", "v-and-bruno-logo");
-        logoTitle.setAttribute("id", "v-and-bruno-title");
+    hiddenSpan.setAttribute("id", "activate-logo");
+    myIcon.setAttribute("id", "v-and-bruno-logo");
+    logoTitle.setAttribute("id", "v-and-bruno-title");
 
-        logoTitle.textContent = 'V and Bruno';
+    logoTitle.textContent = "V and Bruno";
 
-        logoSpace.appendChild(myIcon);
-        logoSpace.appendChild(hiddenSpan);
-        logoSpace.appendChild(logoTitle);
-    }
-}
-
+    logoSpace.appendChild(myIcon);
+    logoSpace.appendChild(hiddenSpan);
+    logoSpace.appendChild(logoTitle);
+  },
+};
 
 
 
@@ -22707,100 +22717,100 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const processDateObjs = {
-    updateDomWithDates: function(){
-        this.bindToDom();
-    },
-    bindToDom: function(){
-        const todayDiv = document.querySelector(".today");
-        const soonDiv = document.querySelector(".soon");
-        const overdueDiv = document.querySelector(".overdue");
-        const anytimeDiv = document.querySelector(".anytime");
+  updateDomWithDates: function () {
+    this.bindToDom();
+  },
+  bindToDom: function () {
+    const todayDiv = document.querySelector(".today");
+    const soonDiv = document.querySelector(".soon");
+    const overdueDiv = document.querySelector(".overdue");
+    const anytimeDiv = document.querySelector(".anytime");
 
-        todayDiv.addEventListener("click", this.todayToDom)
-        soonDiv.addEventListener("click", this.soonToDom);
-        overdueDiv.addEventListener("click", this.overdueToDom);
-        anytimeDiv.addEventListener("click", this.anytimeToDom)
-    },
-    todayToDom: function(){
-        domMain.taskIndex *= 0;
-        domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.today, ': due by today');
-        dateDomManager.currentDateType = "today";
-        _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "today";
-    },
-    soonToDom: function(){
-        domMain.taskIndex *= 0;
-        domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.soonArray, ': due soon');
-        dateDomManager.currentDateType = "soonArray";
-        _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "soonArray";
-    },
-    overdueToDom: function(){
-        domMain.taskIndex *= 0;
-        domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.overdueArray, ': overdue')
-        dateDomManager.currentDateType = "overdueArray";
-        _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "overdueArray";
-    },
-    anytimeToDom: function(){
-        domMain.taskIndex *= 0;
-        domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.anytimeArray, ': due anytime')
-        dateDomManager.currentDateType = "anytimeArray";
-        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  THIS WAS SUCH A PAIN TO TRACE THIS
-        _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "anytimeArray";
-    },
-    checkType: function(type){
-        if (type === 'normal'){
-            return
-        } else {
-            this.changeCatDisplay(type);
-        }
-    },
-    changeCatDisplay: function(type){
-        const catDiv = document.querySelector(".cat");
-        const catDescriptionDiv = document.querySelector(".cat-description");
-
-        catDescriptionDiv.textContent = '';
-        catDiv.innerHTML = `These tasks are <span id="date-type">${type} </span>`;
-
-        //Ru class name for time, to avoid conflict with user-set cat titles
-        catDiv.setAttribute("id", "obyect-vremeni");
-
-        this.hideAddTaskOption()
-    },
-    hideAddTaskOption: function(){
-        const addTask = document.querySelector(".add-task");
-
-        addTask.style.visibility = 'hidden'
-    },
-    showAddTaskOption: function(){
-        const addTask = document.querySelector(".add-task");
-
-        addTask.style.visibility = 'visible'
-    },
-    processDateFormat: function(date){
-        const processedDate = _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubUnprocessedDates(date);
-        return processedDate;
+    todayDiv.addEventListener("click", this.todayToDom);
+    soonDiv.addEventListener("click", this.soonToDom);
+    overdueDiv.addEventListener("click", this.overdueToDom);
+    anytimeDiv.addEventListener("click", this.anytimeToDom);
+  },
+  todayToDom: function () {
+    domMain.taskIndex *= 0;
+    domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.today, ": due by today");
+    dateDomManager.currentDateType = "today";
+    _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "today";
+  },
+  soonToDom: function () {
+    domMain.taskIndex *= 0;
+    domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.soonArray, ": due soon");
+    dateDomManager.currentDateType = "soonArray";
+    _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "soonArray";
+  },
+  overdueToDom: function () {
+    domMain.taskIndex *= 0;
+    domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.overdueArray, ": overdue");
+    dateDomManager.currentDateType = "overdueArray";
+    _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "overdueArray";
+  },
+  anytimeToDom: function () {
+    domMain.taskIndex *= 0;
+    domMain.displayTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.anytimeArray, ": due anytime");
+    dateDomManager.currentDateType = "anytimeArray";
+    //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  THIS WAS SUCH A PAIN TO TRACE THIS
+    _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.currentDateType = "anytimeArray";
+  },
+  checkType: function (type) {
+    if (type === "normal") {
+      return;
+    } else {
+      this.changeCatDisplay(type);
     }
-}
+  },
+  changeCatDisplay: function (type) {
+    const catDiv = document.querySelector(".cat");
+    const catDescriptionDiv = document.querySelector(".cat-description");
+
+    catDescriptionDiv.textContent = "";
+    catDiv.innerHTML = `These tasks are <span id="date-type">${type} </span>`;
+
+    //Ru class name for time, to avoid conflict with user-set cat titles
+    catDiv.setAttribute("id", "obyect-vremeni");
+
+    this.hideAddTaskOption();
+  },
+  hideAddTaskOption: function () {
+    const addTask = document.querySelector(".add-task");
+
+    addTask.style.visibility = "hidden";
+  },
+  showAddTaskOption: function () {
+    const addTask = document.querySelector(".add-task");
+
+    addTask.style.visibility = "visible";
+  },
+  processDateFormat: function (date) {
+    const processedDate = _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubUnprocessedDates(date);
+    return processedDate;
+  },
+};
 
 const dateDomManager = {
-    currentDateType: null,
-    currentSubtaskPath: null,
-    currentTaskPath: null,
-    currentSubtaskIndex: null,
-    currentTaskIndex: null,
-    popupSubtaskDate: function(subtaskIndex, taskIndex, location){
-        const modal = document.createElement("dialog");
-        const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[this.currentDateType][taskIndex];
-        const subtaskPath = taskPath.subtasks[subtaskIndex];
-        const subtask = subtaskPath.details;
+  currentDateType: null,
+  currentSubtaskPath: null,
+  currentTaskPath: null,
+  currentSubtaskIndex: null,
+  currentTaskIndex: null,
+  popupSubtaskDate: function (subtaskIndex, taskIndex, location) {
+    const modal = document.createElement("dialog");
+    const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[this.currentDateType][taskIndex];
+    const subtaskPath = taskPath.subtasks[subtaskIndex];
+    const subtask = subtaskPath.details;
 
-        //more sane way of not relying on DOM id's and classes for positions
-        this.currentSubtaskPath = subtaskPath;
-        this.currentTaskPath = taskPath;
-        this.currentSubtaskIndex = subtaskIndex;
+    //more sane way of not relying on DOM id's and classes for positions
+    this.currentSubtaskPath = subtaskPath;
+    this.currentTaskPath = taskPath;
+    this.currentSubtaskIndex = subtaskIndex;
 
-        modal.innerHTML = '';
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
             <div class="clear-modal">x</div>
             <div class="subtask-container">
                 <div class="popup-subtask-details">
@@ -22814,25 +22824,25 @@ const dateDomManager = {
                     <button type="submit" id="delete-subtask-button">Delete Subtask</button>
                 </div>
             </div>
-        `
+        `;
 
-        modal.classList.add("subtask-editor");
-        location.appendChild(modal);
+    modal.classList.add("subtask-editor");
+    location.appendChild(modal);
 
-        editors.activateTemplate(modal, template)
-        this.activateSubtaskButtons();
-    },
-    popupTaskDate: function(path, location, taskIndex){
-        const modal = document.createElement("dialog");
-        const taskDescription = path.description;
-        const taskTitle = path.title;
+    editors.activateTemplate(modal, template);
+    this.activateSubtaskButtons();
+  },
+  popupTaskDate: function (path, location, taskIndex) {
+    const modal = document.createElement("dialog");
+    const taskDescription = path.description;
+    const taskTitle = path.title;
 
-        dateDomManager.currentTaskPath = path;
-        dateDomManager.currentTaskIndex = taskIndex;
+    dateDomManager.currentTaskPath = path;
+    dateDomManager.currentTaskIndex = taskIndex;
 
-        modal.innerHTML = '';
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
         <div class="clear-modal">x</div>
             <div class="task-modal-container">
                 <div class="popup-task-title">
@@ -22849,81 +22859,88 @@ const dateDomManager = {
                 <button type="submit" id="clear-task">Clear</button>
             </div>
         </div>
-        `
+        `;
 
-        modal.classList.add("task-editor");
-        location.appendChild(modal);
+    modal.classList.add("task-editor");
+    location.appendChild(modal);
 
-        editors.activateTemplate(modal, template);
-        this.activateTaskButtons();
-    },
-    editTask: function(e){
-        const target = e.target.getAttribute("id").split('task-index')[1];
-        const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][target];
-        const location = e.target.parentElement;
+    editors.activateTemplate(modal, template);
+    this.activateTaskButtons();
+  },
+  editTask: function (e) {
+    const target = e.target.getAttribute("id").split("task-index")[1];
+    const taskPath =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][target];
+    const location = e.target.parentElement;
 
-        this.popupTaskDate(taskPath, location, target);
-    },
-    activateSubtaskButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const submitChangesButton = document.querySelector("#edit-subtask-button");
-        const clearSubtaskButton = document.querySelector("#clear-subtask");
-        const deleteSubtask = document.querySelector("#delete-subtask-button")
+    this.popupTaskDate(taskPath, location, target);
+  },
+  activateSubtaskButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const submitChangesButton = document.querySelector("#edit-subtask-button");
+    const clearSubtaskButton = document.querySelector("#clear-subtask");
+    const deleteSubtask = document.querySelector("#delete-subtask-button");
 
-        clearSubtaskButton.addEventListener("click", editors.clearSubtask);
-        clearModalButton.addEventListener("click", editors.clearSubtaskModal);
-        deleteSubtask.addEventListener("click", this.deleteSubtask);
-        submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
-    },
-    activateTaskButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const submitChangesButton = document.querySelector("#submit-task-button");
-        const clearTaskButton = document.querySelector("#clear-task");
+    clearSubtaskButton.addEventListener("click", editors.clearSubtask);
+    clearModalButton.addEventListener("click", editors.clearSubtaskModal);
+    deleteSubtask.addEventListener("click", this.deleteSubtask);
+    submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
+  },
+  activateTaskButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const submitChangesButton = document.querySelector("#submit-task-button");
+    const clearTaskButton = document.querySelector("#clear-task");
 
-        clearTaskButton.addEventListener("click", editors.clearTask);
-        clearModalButton.addEventListener("click", editors.clearTaskModal);
-        submitChangesButton.addEventListener("click", this.submitTaskChanges);
-    },
-    deleteSubtask: function(e){
-        e.preventDefault;
+    clearTaskButton.addEventListener("click", editors.clearTask);
+    clearModalButton.addEventListener("click", editors.clearTaskModal);
+    submitChangesButton.addEventListener("click", this.submitTaskChanges);
+  },
+  deleteSubtask: function (e) {
+    e.preventDefault;
 
-        dateDomManager.currentTaskPath.subtasks.splice(dateDomManager.currentSubtaskIndex, 1);
+    dateDomManager.currentTaskPath.subtasks.splice(
+      dateDomManager.currentSubtaskIndex,
+      1
+    );
 
-        dateDomManager.defaultLoad();
-    },
-    submitSubtaskChanges: function(e){
-        e.preventDefault();
+    dateDomManager.defaultLoad();
+  },
+  submitSubtaskChanges: function (e) {
+    e.preventDefault();
 
-        let newSubtask = editors.getSubtaskInput();
+    let newSubtask = editors.getSubtaskInput();
 
-        dateDomManager.currentSubtaskPath.details = newSubtask;
-        dateDomManager.defaultLoad()
-    },
-    submitTaskChanges: function(e){
-        e.preventDefault();
-        const newTaskDescription = editors.getTaskDescription();
-        const newTaskTitle = editors.getTaskTitle();
+    dateDomManager.currentSubtaskPath.details = newSubtask;
+    dateDomManager.defaultLoad();
+  },
+  submitTaskChanges: function (e) {
+    e.preventDefault();
+    const newTaskDescription = editors.getTaskDescription();
+    const newTaskTitle = editors.getTaskTitle();
 
-        dateDomManager.currentTaskPath.description = newTaskDescription;
-        dateDomManager.currentTaskPath.title = newTaskTitle;
-        dateDomManager.defaultLoad();
-    },
-    addNewSubtask: function(e){
-        const location = e.target.parentElement;
-        const taskIndex = editors.getTaskIndex(e.target);
+    dateDomManager.currentTaskPath.description = newTaskDescription;
+    dateDomManager.currentTaskPath.title = newTaskTitle;
+    dateDomManager.defaultLoad();
+  },
+  addNewSubtask: function (e) {
+    const location = e.target.parentElement;
+    const taskIndex = editors.getTaskIndex(e.target);
 
-        dateDomManager.currentTaskIndex = taskIndex;
+    dateDomManager.currentTaskIndex = taskIndex;
 
-        const modal = document.createElement("dialog");
-        const subtaskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][taskIndex].subtasks;
+    const modal = document.createElement("dialog");
+    const subtaskPath =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][taskIndex].subtasks;
 
-        dateDomManager.currentSubtaskPath = subtaskPath;
-        modal.innerHTML = '';
+    dateDomManager.currentSubtaskPath = subtaskPath;
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
         <div class="clear-modal">x</div>
         <div class="subtask-container">
-        <div class="subtask-location">This subtask will be under <span> Upcoming Tasks > ${_task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][taskIndex].title}</span></div>
+        <div class="subtask-location">This subtask will be under <span> Upcoming Tasks > ${
+          _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][taskIndex].title
+        }</span></div>
             <div class="popup-subtask-details">
                 <label for="create-subtask-details">Create a new Subtask:</label>
                 <textarea name="create-subtasks-details" id="create-subtask-details" maxlength="150" minlength="5" placeholder ="Add details here" required></textarea>
@@ -22940,324 +22957,344 @@ const dateDomManager = {
 
     editors.activateTemplate(modal, template);
     dateDomManager.activateNewSubtaskButtons();
-    },
-    activateNewSubtaskButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const createSubtask = document.querySelector("#create-subtask-button");
+  },
+  activateNewSubtaskButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const createSubtask = document.querySelector("#create-subtask-button");
 
-        createSubtask.addEventListener("click", this.submitNewSubtask);
-        clearModalButton.addEventListener("click", editors.clearSubtaskModal);
-    },
-    submitNewSubtask: function(e){
-        e.preventDefault();
-        
-        let path = _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][dateDomManager.currentTaskIndex].subtasks;
-        let newSubtaskDetails = editors.getNewSubtaskInput();
-        let subtask = new _task_master__WEBPACK_IMPORTED_MODULE_0__.Subtask(newSubtaskDetails)
+    createSubtask.addEventListener("click", this.submitNewSubtask);
+    clearModalButton.addEventListener("click", editors.clearSubtaskModal);
+  },
+  submitNewSubtask: function (e) {
+    e.preventDefault();
 
-        path.push(subtask)
-        dateDomManager.defaultLoad();
-    },
-    defaultLoad: function(){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
-        if (this.currentDateType === 'today'){
-            processDateObjs.todayToDom();
-        } else if (this.currentDateType === 'soonArray'){
-            processDateObjs.soonToDom();
-        } else if (this.currentDateType === 'overdueArray'){
-            processDateObjs.overdueToDom();
-        } else {
-            processDateObjs.anytimeToDom();
-        }
-    },
-}
+    let path =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs[dateDomManager.currentDateType][
+        dateDomManager.currentTaskIndex
+      ].subtasks;
+    let newSubtaskDetails = editors.getNewSubtaskInput();
+    let subtask = new _task_master__WEBPACK_IMPORTED_MODULE_0__.Subtask(newSubtaskDetails);
+
+    path.push(subtask);
+    dateDomManager.defaultLoad();
+  },
+  defaultLoad: function () {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
+    if (this.currentDateType === "today") {
+      processDateObjs.todayToDom();
+    } else if (this.currentDateType === "soonArray") {
+      processDateObjs.soonToDom();
+    } else if (this.currentDateType === "overdueArray") {
+      processDateObjs.overdueToDom();
+    } else {
+      processDateObjs.anytimeToDom();
+    }
+  },
+};
 //can't change domManager name now - couldn't use "this." due to context issues
 const domManager = {
-    findDom: function(){
-        const addCategoryButton = document.querySelector(".add-cat");
-        const clearLocal = document.querySelector(".clear-local");
+  findDom: function () {
+    const addCategoryButton = document.querySelector(".add-cat");
+    const clearLocal = document.querySelector(".clear-local");
 
-        addCategoryButton.addEventListener("click", this.categoryPopup)
-        clearLocal.addEventListener("click", this.clearLocalStorage)
+    addCategoryButton.addEventListener("click", this.categoryPopup);
+    clearLocal.addEventListener("click", this.clearLocalStorage);
 
-        this.addTaskButton();
+    this.addTaskButton();
+  },
+  clearLocalStorage: function () {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.clearAll();
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.exampleTasksObj.addExampleTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat);
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.loadChanges();
+    domSidebar.pubCats();
+    const cat = editors.getCat();
+    domMain.defaultLoad(cat);
+  },
+  bindAttributes: function (target, pointer) {
+    Object.keys(pointer).forEach((attr) => {
+      target.setAttribute(attr, pointer[attr]);
+    });
+  },
+  addTaskButton: function () {
+    const main = document.querySelector(".main");
+    const addTask = document.createElement("div");
+
+    addTask.textContent = "Add a task";
+    addTask.classList.add("add-task");
+
+    main.appendChild(addTask);
+    addTask.addEventListener("click", domMain.taskPopup);
+  },
+  attributes: {
+    catTitle: {
+      name: "cat-title",
+      type: "text",
+      id: "cat-title",
+      required: "",
     },
-    clearLocalStorage: function(){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.clearAll();
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.exampleTasksObj.addExampleTasks(_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat);
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.loadChanges();
-        domSidebar.pubCats();
-        const cat = editors.getCat();
-        domMain.defaultLoad(cat);
+    catTitleLabel: {
+      for: "cat-title",
     },
-    bindAttributes: function (target, pointer){
-        Object.keys(pointer).forEach(attr => {
-            target.setAttribute(attr, pointer[attr]);
-        });
+    catDescription: {
+      name: "cat-description",
+      type: "text",
+      id: "cat-description",
+      required: "",
+      maxlength: "45",
     },
-    addTaskButton: function(){
-        const main = document.querySelector(".main");
-        const addTask = document.createElement("div");
-
-        addTask.textContent = "Add a task"
-        addTask.classList.add("add-task")
-
-        main.appendChild(addTask);
-        addTask.addEventListener("click", domMain.taskPopup);
+    catDescriptionLabel: {
+      for: "cat-description",
     },
-    attributes: {
-        catTitle: {
-            name: 'cat-title',
-            type: 'text',
-            id: 'cat-title',
-            required: '',
-        },
-        catTitleLabel: {
-            for: 'cat-title'
-        },
-        catDescription: {
-            name: 'cat-description',
-            type: 'text',
-            id: 'cat-description',
-            required: '',
-            maxlength: '45'
-        },
-        catDescriptionLabel: {
-            for: 'cat-description'
-        },
-        closeModal: {
-            id: 'close-modal',
-        }
+    closeModal: {
+      id: "close-modal",
     },
-    conditions: {
-        notNull: (input) => input !== null,
-        notEmpty: (input) => input !== '',
-        notUndefined: (input) => input !== undefined,
-        maxlength: (input) => input.length <= 45
-    },
-    categoryPopup: function(){
-        const modalSpace = document.querySelector(".modal-space");
-        const popup = document.createElement("dialog");
-        const form = document.createElement("form");
-        const formDescription = document.createElement("p");
-        const catTitleContainer = document.createElement("div")
-        const catTitleLabel = document.createElement('label');
-        const catTitle = document.createElement('input')
-        const catDescriptionContainer = document.createElement("div");
-        const catDescriptionLabel = document.createElement("label");
-        const catDescription = document.createElement("textarea");
-        const catSubmitButton = document.createElement("button");
-        const closeModalButton = document.createElement('span');
+  },
+  conditions: {
+    notNull: (input) => input !== null,
+    notEmpty: (input) => input !== "",
+    notUndefined: (input) => input !== undefined,
+    maxlength: (input) => input.length <= 45,
+  },
+  categoryPopup: function () {
+    const modalSpace = document.querySelector(".modal-space");
+    const popup = document.createElement("dialog");
+    const form = document.createElement("form");
+    const formDescription = document.createElement("p");
+    const catTitleContainer = document.createElement("div");
+    const catTitleLabel = document.createElement("label");
+    const catTitle = document.createElement("input");
+    const catDescriptionContainer = document.createElement("div");
+    const catDescriptionLabel = document.createElement("label");
+    const catDescription = document.createElement("textarea");
+    const catSubmitButton = document.createElement("button");
+    const closeModalButton = document.createElement("span");
 
+    //The way to prevent multiple modals from being created
+    modalSpace.innerHTML = "";
 
-        //The way to prevent multiple modals from being created
-        modalSpace.innerHTML = ''
+    modalSpace.appendChild(popup);
+    popup.appendChild(form);
+    form.appendChild(closeModalButton);
+    form.appendChild(formDescription);
+    form.appendChild(catTitleContainer);
+    catTitleContainer.appendChild(catTitleLabel);
+    catTitleContainer.appendChild(catTitle);
+    form.appendChild(catDescriptionContainer);
+    catDescriptionContainer.appendChild(catDescriptionLabel);
+    catDescriptionContainer.appendChild(catDescription);
+    form.appendChild(catSubmitButton);
 
-        modalSpace.appendChild(popup)
-        popup.appendChild(form);
-        form.appendChild(closeModalButton)
-        form.appendChild(formDescription);
-        form.appendChild(catTitleContainer);
-        catTitleContainer.appendChild(catTitleLabel);
-        catTitleContainer.appendChild(catTitle);
-        form.appendChild(catDescriptionContainer);
-        catDescriptionContainer.appendChild(catDescriptionLabel)
-        catDescriptionContainer.appendChild(catDescription);
-        form.appendChild(catSubmitButton);
+    domManager.bindAttributes(catTitle, domManager.attributes.catTitle);
+    domManager.bindAttributes(
+      catDescription,
+      domManager.attributes.catDescription
+    );
+    domManager.bindAttributes(
+      catDescriptionLabel,
+      domManager.attributes.catDescriptionLabel
+    );
+    domManager.bindAttributes(
+      catTitleLabel,
+      domManager.attributes.catTitleLabel
+    );
+    domManager.bindAttributes(
+      closeModalButton,
+      domManager.attributes.closeModal
+    );
+    catSubmitButton.setAttribute("id", "submit-cats");
 
+    formDescription.textContent = "Please fill in the categories and text";
+    catTitleLabel.textContent = "Enter the Category title:";
+    catDescriptionLabel.textContent = "Please describe the Task Category:";
+    closeModalButton.textContent = "x";
+    catSubmitButton.textContent = "Submit";
 
-        domManager.bindAttributes(catTitle, domManager.attributes.catTitle);
-        domManager.bindAttributes(catDescription, domManager.attributes.catDescription);
-        domManager.bindAttributes(catDescriptionLabel, domManager.attributes.catDescriptionLabel)
-        domManager.bindAttributes(catTitleLabel, domManager.attributes.catTitleLabel)
-        domManager.bindAttributes(closeModalButton, domManager.attributes.closeModal)
-        catSubmitButton.setAttribute('id', 'submit-cats')
+    popup.showModal();
 
-        formDescription.textContent = "Please fill in the categories and text";
-        catTitleLabel.textContent = "Enter the Category title:";
-        catDescriptionLabel.textContent = "Please describe the Task Category:";
-        closeModalButton.textContent = 'x';
-        catSubmitButton.textContent = 'Submit'
+    closeModalButton.addEventListener("click", domManager.clearModal);
+    catSubmitButton.addEventListener("click", domManager.createCat);
+  },
+  clearModal: function () {
+    const modalSpace = document.querySelector(".modal-space");
+    modalSpace.innerHTML = "";
+  },
+  createCat: function (e) {
+    e.preventDefault();
 
-        popup.showModal();
+    const catTitle = document.querySelector("#cat-title").value;
+    const catDescription = document.querySelector("#cat-description").value;
 
-        closeModalButton.addEventListener("click", domManager.clearModal);
-        catSubmitButton.addEventListener('click', domManager.createCat);
-    },
-    clearModal: function(){
-        const modalSpace = document.querySelector(".modal-space");
-        modalSpace.innerHTML = '';
-    },
-    createCat: function(e){
-        e.preventDefault();
-
-        const catTitle = document.querySelector("#cat-title").value;
-        const catDescription = document.querySelector("#cat-description").value;
-
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.taskManager.addCat(catTitle, catDescription)
-        domManager.clearModal();
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
-        domSidebar.pubCats();
-    },
-    checkValidity: function(operand){
-        const isValid = Object.values(domManager.conditions).every(condition => condition(operand));
-        return isValid;
-    },
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.taskManager.addCat(catTitle, catDescription);
+    domManager.clearModal();
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
+    domSidebar.pubCats();
+  },
+  checkValidity: function (operand) {
+    const isValid = Object.values(domManager.conditions).every((condition) =>
+      condition(operand)
+    );
+    return isValid;
+  },
 };
 
 const domSidebar = {
-    pubCats: function (){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.loadChanges();
-        //local storage implemented but now date objs dont work - and ticked off stuff also dont
-        updateListener(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
-        const catsContainer = document.querySelector(".cats");
-        //prevents duplications
-        domMain.taskIndex = 0;
-        catsContainer.innerHTML = '';
-        Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach(key => {
-            let cat = document.createElement("div");
-            cat.textContent = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key].catTitle;
-            cat.setAttribute("class", _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key].catTitle)
-            catsContainer.appendChild(cat);
-            cat.addEventListener("click", domMain.renderCat)
-        });
-    },
-}
+  pubCats: function () {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.loadChanges();
+    //local storage implemented but now date objs dont work - and ticked off stuff also dont
+    updateListener(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
+    const catsContainer = document.querySelector(".cats");
+    //prevents duplications
+    domMain.taskIndex = 0;
+    catsContainer.innerHTML = "";
+    Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach((key) => {
+      let cat = document.createElement("div");
+      cat.textContent = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key].catTitle;
+      cat.setAttribute("class", _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key].catTitle);
+      catsContainer.appendChild(cat);
+      cat.addEventListener("click", domMain.renderCat);
+    });
+  },
+};
 
 const domMain = {
-    //depends on what cat user selects, the tasks get displayed
-    renderCat: function(e){
-        domMain.taskIndex *= 0;
-        //communicate with domMain to show tasks
-        let catTitle = e.target.getAttribute('class');
-        let catDescription = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[catTitle].catDescription;
-        domMain.displayCat(catTitle, catDescription);
+  //depends on what cat user selects, the tasks get displayed
+  renderCat: function (e) {
+    domMain.taskIndex *= 0;
+    //communicate with domMain to show tasks
+    let catTitle = e.target.getAttribute("class");
+    let catDescription = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[catTitle].catDescription;
+    domMain.displayCat(catTitle, catDescription);
 
-        processDateObjs.showAddTaskOption();
-    },
-    defaultLoad: function(cat){
-        _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
-        domMain.taskIndex *= 0;
-        let catTitle = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].catTitle;
-        let catDescription = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].catDescription;
-        domMain.displayCat(catTitle, catDescription);
+    processDateObjs.showAddTaskOption();
+  },
+  defaultLoad: function (cat) {
+    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
+    domMain.taskIndex *= 0;
+    let catTitle = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].catTitle;
+    let catDescription = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].catDescription;
+    domMain.displayCat(catTitle, catDescription);
 
-        updateListener(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
-        processDateObjs.showAddTaskOption();
-    },
-    displayCat: function(catTitle, catDescription){
-        const cat = document.querySelector(".cat");
-        cat.textContent = catTitle;
-        //subtle but important, helps to identify which cat does a task belong to later down the code
-        cat.setAttribute("id", catTitle)
+    updateListener(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
+    processDateObjs.showAddTaskOption();
+  },
+  displayCat: function (catTitle, catDescription) {
+    const cat = document.querySelector(".cat");
+    cat.textContent = catTitle;
+    //subtle but important, helps to identify which cat does a task belong to later down the code
+    cat.setAttribute("id", catTitle);
 
-        //After a while, I concluded this is the best place to put this function:
+    //After a while, I concluded this is the best place to put this function:
 
-        const catDetails = document.querySelector(".cat-description");
-        catDetails.textContent = catDescription;
+    const catDetails = document.querySelector(".cat-description");
+    catDetails.textContent = catDescription;
 
-        domMain.createToolbar(catDetails, "cat");
-        domMain.renderTasks(catTitle);
-    },
-    renderTasks: function(catTitle){
-        const taskArray = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[catTitle].tasks;
-        domMain.displayTasks(taskArray, "normal");
-    },
-    displayTasks: function(taskArray, type){
-        const taskContainer = document.querySelector(".task-container");
+    domMain.createToolbar(catDetails, "cat");
+    domMain.renderTasks(catTitle);
+  },
+  renderTasks: function (catTitle) {
+    const taskArray = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[catTitle].tasks;
+    domMain.displayTasks(taskArray, "normal");
+  },
+  displayTasks: function (taskArray, type) {
+    const taskContainer = document.querySelector(".task-container");
 
-        taskContainer.innerHTML = '';
-            editors.taskTracker *= 0
-        
-        processDateObjs.checkType(type);
+    taskContainer.innerHTML = "";
+    editors.taskTracker *= 0;
 
-        taskArray.forEach((element) => {
-            let taskTitle = document.createElement("span");
-            let taskDescription = document.createElement('div');
-            let detailsContainer = document.createElement("div");
+    processDateObjs.checkType(type);
 
-            taskTitle.innerHTML  = `
-                <span class="due-display">${processDateObjs.processDateFormat(element.due)}</span>
+    taskArray.forEach((element) => {
+      let taskTitle = document.createElement("span");
+      let taskDescription = document.createElement("div");
+      let detailsContainer = document.createElement("div");
+
+      taskTitle.innerHTML = `
+                <span class="due-display">${processDateObjs.processDateFormat(
+                  element.due
+                )}</span>
                 ${element.title}
-            `
+            `;
 
-            taskDescription.textContent = `${element.description} ${_display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.getUrgency(element.priority)}`
+      taskDescription.textContent = `${
+        element.description
+      } ${_display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.getUrgency(element.priority)}`;
 
-            taskContainer.appendChild(taskTitle);
-            taskContainer.appendChild(detailsContainer);
-            detailsContainer.appendChild(taskDescription);
+      taskContainer.appendChild(taskTitle);
+      taskContainer.appendChild(detailsContainer);
+      detailsContainer.appendChild(taskDescription);
 
-            taskTitle.setAttribute("class", 'task-title');
-            taskDescription.classList.add('task-description');
-            taskDescription.classList.add(`${element.priority}`);
-            detailsContainer.setAttribute("class", 'details-container')
+      taskTitle.setAttribute("class", "task-title");
+      taskDescription.classList.add("task-description");
+      taskDescription.classList.add(`${element.priority}`);
+      detailsContainer.setAttribute("class", "details-container");
 
+      if (type === "normal") {
+        domMain.renderSubtasks(element.subtasks, detailsContainer);
+        //if you ever wonder why index starts at 3, follow this path
+        domMain.createToolbar(taskDescription, "tasks");
+        this.createSubSection();
+      } else {
+        domMain.renderSubtasks(element.subtasks, detailsContainer);
+        domMain.createToolbar(taskDescription, "tasks");
+        this.createSubSection();
+        return;
+      }
+    });
+  },
+  renderSubtasks: function (subtaskArray, location) {
+    let subtaskContainer = document.createElement("div");
 
-            if (type === 'normal') {
-                domMain.renderSubtasks(element.subtasks, detailsContainer);
-                //if you ever wonder why index starts at 3, follow this path
-                domMain.createToolbar(taskDescription, 'tasks');
-                this.createSubSection();
-            } else {
-                domMain.renderSubtasks(element.subtasks, detailsContainer);
-                domMain.createToolbar(taskDescription, 'tasks');
-                this.createSubSection();
-                return
-            };
-        });
-    },
-    renderSubtasks: function(subtaskArray, location){
-        let subtaskContainer = document.createElement("div");
+    location.appendChild(subtaskContainer);
 
-        location.appendChild(subtaskContainer);
+    subtaskContainer.classList.add(`subtask-container${domMain.taskIndex}`);
+    subtaskContainer.setAttribute("id", `${domMain.taskIndex}`);
+    //unique identifier of finding subtask within a task
+    let indexOfSubtask = 0;
 
-        subtaskContainer.classList.add( `subtask-container${domMain.taskIndex}`);
-        subtaskContainer.setAttribute("id", `${domMain.taskIndex}`);
-        //unique identifier of finding subtask within a task
-        let indexOfSubtask = 0;
+    subtaskArray.forEach((element) => {
+      let subtaskDetailsContainer = document.createElement("div");
+      let subtaskDetails = document.createElement("div");
 
-        subtaskArray.forEach((element) => {
-            let subtaskDetailsContainer = document.createElement("div")
-            let subtaskDetails = document.createElement("div")
+      subtaskDetails.textContent = element.details;
 
-            subtaskDetails.textContent = element.details;
+      subtaskContainer.appendChild(subtaskDetailsContainer);
+      subtaskDetailsContainer.appendChild(subtaskDetails);
 
-            subtaskContainer.appendChild(subtaskDetailsContainer);
-            subtaskDetailsContainer.appendChild(subtaskDetails);
+      subtaskDetailsContainer.classList.add("subtask-details-container");
+      subtaskDetails.classList.add("subtask-details");
+      subtaskDetails.classList.add(`index${editors.subtaskTracker}`);
+      subtaskDetails.classList.add(`subtask${indexOfSubtask}`);
+      subtaskDetails.classList.add(`${element.status}`);
 
-            subtaskDetailsContainer.classList.add("subtask-details-container")
-            subtaskDetails.classList.add('subtask-details');
-            subtaskDetails.classList.add(`index${editors.subtaskTracker}`);
-            subtaskDetails.classList.add(`subtask${indexOfSubtask}`);
-            subtaskDetails.classList.add(`${element.status}`);
+      //subtask Details Container separates the toolbar and the subtask
+      domMain.createToolbar(subtaskDetailsContainer, "subtasks");
+      _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.addToggleListener(subtaskDetails);
 
-            //subtask Details Container separates the toolbar and the subtask
-            domMain.createToolbar(subtaskDetailsContainer, "subtasks");
-            _display_assist__WEBPACK_IMPORTED_MODULE_2__.visualCues.addToggleListener(subtaskDetails);
-            
-            indexOfSubtask += 1;
-        });
-    },
-    createSubSection: function(){
-        const taskContainer = document.querySelector(`.subtask-container${domMain.taskIndex}`);
+      indexOfSubtask += 1;
+    });
+  },
+  createSubSection: function () {
+    const taskContainer = document.querySelector(
+      `.subtask-container${domMain.taskIndex}`
+    );
 
-        const addSubtask = document.createElement("div");
+    const addSubtask = document.createElement("div");
 
-        addSubtask.textContent = '+ Add a subtask';
+    addSubtask.textContent = "+ Add a subtask";
 
-        addSubtask.classList.add("add-subtask");
+    addSubtask.classList.add("add-subtask");
 
-        taskContainer.appendChild(addSubtask);
-        domMain.taskIndex += 1;
+    taskContainer.appendChild(addSubtask);
+    domMain.taskIndex += 1;
 
-        addSubtask.addEventListener("click", editors.precheckType)
-    },
-    taskIndex: 0,
-    taskPopup: function(e){
-        const modalSpace = document.querySelector(".modal-space-tasks");
-        //templating is just so much easier:
-        const modal = document.createElement("dialog");
-        const modalTemplate = `
+    addSubtask.addEventListener("click", editors.precheckType);
+  },
+  taskIndex: 0,
+  taskPopup: function () {
+    const modalSpace = document.querySelector(".modal-space-tasks");
+    //templating is just so much easier:
+    const modal = document.createElement("dialog");
+    const modalTemplate = `
         <form action="" method="">
             <span id="clear-task-modal">x</span>
             <div class="task-title-container">
@@ -23278,230 +23315,236 @@ const domMain = {
             </div>
             <button type='submit' id='submit-tasks'>Submit</button>
         </form>
-        `
-        domMain.clearModal(modalSpace);
-        modalSpace.appendChild(modal);
-        modal.innerHTML = modalTemplate;
-        modal.showModal();
+        `;
+    domMain.clearModal(modalSpace);
+    modalSpace.appendChild(modal);
+    modal.innerHTML = modalTemplate;
+    modal.showModal();
 
-        const closeModal = document.querySelector("#clear-task-modal");
-        const submitTasksButton = document.querySelector("#submit-tasks");
-        const priority = document.querySelector("#priority");
+    const closeModal = document.querySelector("#clear-task-modal");
+    const submitTasksButton = document.querySelector("#submit-tasks");
+    const priority = document.querySelector("#priority");
 
-        closeModal.addEventListener("click", domMain.clearModal)
-        submitTasksButton.addEventListener("click", domMain.createTask)
-        priority.addEventListener("click", priorityHandler.togglePriority);
-    },
-    clearModal: function(){
-        const taskSpace = document.querySelector(".modal-space-tasks")
-        taskSpace.innerHTML = '';
-    },
-    createTask: function(e){
-        e.preventDefault();
+    closeModal.addEventListener("click", domMain.clearModal);
+    submitTasksButton.addEventListener("click", domMain.createTask);
+    priority.addEventListener("click", priorityHandler.togglePriority);
+  },
+  clearModal: function () {
+    const taskSpace = document.querySelector(".modal-space-tasks");
+    taskSpace.innerHTML = "";
+  },
+  createTask: function (e) {
+    e.preventDefault();
 
-        const taskTitle = document.querySelector("#task-title").value;
-        const taskDescription = document.querySelector("#task-description").value;
-        const taskDue = document.querySelector("#due-date").value;
-        const taskPriority = document.querySelector("#priority").className;
+    const taskTitle = document.querySelector("#task-title").value;
+    const taskDescription = document.querySelector("#task-description").value;
+    const taskDue = document.querySelector("#due-date").value;
+    const taskPriority = document.querySelector("#priority").className;
 
-        const check1 = domManager.checkValidity(taskTitle);
-        const check2 = domManager.checkValidity(taskDescription);
+    const check1 = domManager.checkValidity(taskTitle);
+    const check2 = domManager.checkValidity(taskDescription);
 
-        if (check1 == true && check2 == true){
-            let catTitle = domMain.findOwnerCat()
-            _task_master__WEBPACK_IMPORTED_MODULE_0__.taskManager.addTask(catTitle, taskTitle, taskDescription, taskDue, taskPriority);
-            domMain.clearModal();
-            //prevents error 732
-            domMain.taskIndex = 0;
-            //ABSOLUTE MISTAKE TO MESS WITH THIS LINE, I TRIED TO MAKE IT MORE MODULAR AND IT STOPPED ME FROM BEING ABLE TO MAKE TASKS WHEN I CREATE A NEW CAT -- do not, DO NOT USE UPDATE LISTENER HERE
-            _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
-            _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubChangesToDates(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
-            domMain.renderTasks(catTitle);
-        }
-    },
-    findOwnerCat: function(){
-        const cat = document.querySelector(".cat");
-        return cat.getAttribute("id");
-    },
-    createToolbar: function(parentElement, type){
-        const options = document.createElement("span");
-
-        parentElement.appendChild(options);
-
-        options.classList.add("options-on-hover");
-        options.classList.add(type);
-        options.addEventListener("click", editors.render);
-
-        domMain.trackToolbar(options, type);
-
-        if (type === 'subtasks') {
-            options.textContent = '[edit]'
-        } else {
-            options.textContent = '...';
-        }
-    },
-    //associateToolbar: tracks where it belongs
-    trackToolbar: function(container, type) {
-        if (type === 'subtasks') {
-            container.setAttribute("id", `index${editors.subtaskTracker}`);
-            editors.indexTracker(type);
-        } else if (type === 'tasks'){
-            container.setAttribute("id", `task-index${editors.taskTracker}`)
-            editors.indexTracker(type);
-        };
+    if (check1 == true && check2 == true) {
+      let catTitle = domMain.findOwnerCat();
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.taskManager.addTask(
+        catTitle,
+        taskTitle,
+        taskDescription,
+        taskDue,
+        taskPriority
+      );
+      domMain.clearModal();
+      //prevents error 732
+      domMain.taskIndex = 0;
+      //ABSOLUTE MISTAKE TO MESS WITH THIS LINE, I TRIED TO MAKE IT MORE MODULAR AND IT STOPPED ME FROM BEING ABLE TO MAKE TASKS WHEN I CREATE A NEW CAT -- do not, DO NOT USE UPDATE LISTENER HERE
+      _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.saveChanges();
+      _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubChangesToDates(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
+      domMain.renderTasks(catTitle);
     }
+  },
+  findOwnerCat: function () {
+    const cat = document.querySelector(".cat");
+    return cat.getAttribute("id");
+  },
+  createToolbar: function (parentElement, type) {
+    const options = document.createElement("span");
+
+    parentElement.appendChild(options);
+
+    options.classList.add("options-on-hover");
+    options.classList.add(type);
+    options.addEventListener("click", editors.render);
+
+    domMain.trackToolbar(options, type);
+
+    if (type === "subtasks") {
+      options.textContent = "[edit]";
+    } else {
+      options.textContent = "...";
+    }
+  },
+  //associateToolbar: tracks where it belongs
+  trackToolbar: function (container, type) {
+    if (type === "subtasks") {
+      container.setAttribute("id", `index${editors.subtaskTracker}`);
+      editors.indexTracker(type);
+    } else if (type === "tasks") {
+      container.setAttribute("id", `task-index${editors.taskTracker}`);
+      editors.indexTracker(type);
+    }
+  },
 };
 
 const priorityHandler = {
-    i: 0,
-    indexTracker: function(){
-        if (this.i == this.priorities.length - 1){
-            this.i = 0;
-        } else {
-            this.i += 1;
-        }
-    },
-    togglePriority: function(e){
-        e.target.setAttribute("class", priorityHandler.priorities[priorityHandler.i])
-        e.target.textContent = priorityHandler.priorities[priorityHandler.i]
+  i: 0,
+  indexTracker: function () {
+    if (this.i == this.priorities.length - 1) {
+      this.i = 0;
+    } else {
+      this.i += 1;
+    }
+  },
+  togglePriority: function (e) {
+    e.target.setAttribute(
+      "class",
+      priorityHandler.priorities[priorityHandler.i]
+    );
+    e.target.textContent = priorityHandler.priorities[priorityHandler.i];
 
-        priorityHandler.indexTracker();
-    },
-    priorities: [
-        "urgent",
-        "completed",
-        "normal"
-    ],
+    priorityHandler.indexTracker();
+  },
+  priorities: ["urgent", "completed", "normal"],
 };
 
 const editors = {
-    //tracker to track which subtasks is edited
-    subtaskTracker: 0,
-    taskTracker: 0,
-    indexTracker: function(type){
-        if (type === 'subtasks'){
-            this.subtaskTracker += 1;
-        } else if ( type == 'tasks'){
-            this.taskTracker += 1;
-        }
-    },
-    render: function(e){
-        let classArray = e.target.classList;
-        editors.checkType(classArray, e);
-    },
-    checkType: function(classArray, e){
-        if (classArray.contains("subtasks")){
-            editors.editSubtask(e);
-        } else if (classArray.contains("tasks")){
-            editors.checkTaskType(e);
-        } else {
-            editors.editCat(e);
-        }
-    },
-    checkTaskType: function(e){
-        let cat = this.getCat();
-        if (cat === 'obyect-vremeni'){
-                dateDomManager.editTask(e);
-        } else {
-            editors.editTask(e);
-        }
-    },
-    editSubtask: function(e){
-        let targetIndex = e.target.getAttribute("id");
-        let targetSubtask = document.querySelector(`.${targetIndex}`);
+  //tracker to track which subtasks is edited
+  subtaskTracker: 0,
+  taskTracker: 0,
+  indexTracker: function (type) {
+    if (type === "subtasks") {
+      this.subtaskTracker += 1;
+    } else if (type == "tasks") {
+      this.taskTracker += 1;
+    }
+  },
+  render: function (e) {
+    let classArray = e.target.classList;
+    editors.checkType(classArray, e);
+  },
+  checkType: function (classArray, e) {
+    if (classArray.contains("subtasks")) {
+      editors.editSubtask(e);
+    } else if (classArray.contains("tasks")) {
+      editors.checkTaskType(e);
+    } else {
+      editors.editCat(e);
+    }
+  },
+  checkTaskType: function (e) {
+    let cat = this.getCat();
+    if (cat === "obyect-vremeni") {
+      dateDomManager.editTask(e);
+    } else {
+      editors.editTask(e);
+    }
+  },
+  editSubtask: function (e) {
+    let targetIndex = e.target.getAttribute("id");
+    let targetSubtask = document.querySelector(`.${targetIndex}`);
 
-        editors.processElements(targetSubtask)
-    },
-    editTask: function(e){
-        const target = e.target.getAttribute("id").split('task-index')[1];
-        const cat = this.getCat();
-        const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[target];
-        const location = e.target.parentElement;
+    editors.processElements(targetSubtask);
+  },
+  editTask: function (e) {
+    const target = e.target.getAttribute("id").split("task-index")[1];
+    const cat = this.getCat();
+    const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[target];
+    const location = e.target.parentElement;
 
-        editors.popupTask(taskPath, location, target);
-    },
-    editCat: function(e){
-        const cat = editors.getCat();
-        const catPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
+    editors.popupTask(taskPath, location, target);
+  },
+  editCat: function (e) {
+    const cat = editors.getCat();
+    const catPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
 
-        const location = e.target.parentElement;
+    const location = e.target.parentElement;
 
-        editors.popupCat(catPath, location);
-    },
-    processElements: function(target){
-        let subtaskIndex = this.getSubtaskIndex(target);
-        let taskIndex = this.getTaskIndexForEditing(target);
-        let cat = this.getCat();
-        let location = document.querySelector(".modal-space-tasks")
+    editors.popupCat(catPath, location);
+  },
+  processElements: function (target) {
+    let subtaskIndex = this.getSubtaskIndex(target);
+    let taskIndex = this.getTaskIndexForEditing(target);
+    let cat = this.getCat();
+    let location = document.querySelector(".modal-space-tasks");
 
-        if (cat === 'obyect-vremeni'){
-            dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, location);
-        } else {
-            this.popupSubtask(cat, subtaskIndex, taskIndex, location);
-        };
-    },
-    getSubtaskIndex: function(target){
-        let subtaskIndex = target.classList[2].split('subtask')[1];
-        return subtaskIndex;
-    },
-    getTaskIndexForEditing: function(target){
-        let taskIndex = target.parentNode.parentNode.getAttribute("id");
-        return taskIndex;
-    },
-    getTaskIndex: function(target){
-        let taskIndex = target.parentNode.getAttribute("id");
-        return taskIndex;
-    },
-    getCat: function(){
-        let cat = document.querySelector(".cat");
-        let catId = cat.getAttribute("id");
-        return catId;
-    },
-    //overlooked the modularization chance - this is applied for the task too
-    currentSubtaskPath: (function(){
-        let currentPath;
-        let taskPath;
-        let subtaskIndex;
-        function setSubtaskPath(path){
-            currentPath = path;
-        };
-        function getSubtaskPath(){
-            return currentPath;
-        };
-        function setTaskPath(path){
-            taskPath = path;
-        };
-        function getTaskPath(){
-            return taskPath;
-        };
-        function setIndex(index){
-            subtaskIndex = index;
-        };
-        function getIndex(){
-            return subtaskIndex;
-        };
-        return {
-            setSubtaskPath,
-            getSubtaskPath,
-            setTaskPath,
-            getTaskPath,
-            setIndex,
-            getIndex
-            };
-    })(),
-    popupSubtask: function(cat, subtaskIndex, taskIndex, location){
-        const modal = document.createElement("dialog");
-        const subtaskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
-        const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex];
-        const subtask = subtaskPath.details;
+    if (cat === "obyect-vremeni") {
+      dateDomManager.popupSubtaskDate(subtaskIndex, taskIndex, location);
+    } else {
+      this.popupSubtask(cat, subtaskIndex, taskIndex, location);
+    }
+  },
+  getSubtaskIndex: function (target) {
+    let subtaskIndex = target.classList[2].split("subtask")[1];
+    return subtaskIndex;
+  },
+  getTaskIndexForEditing: function (target) {
+    let taskIndex = target.parentNode.parentNode.getAttribute("id");
+    return taskIndex;
+  },
+  getTaskIndex: function (target) {
+    let taskIndex = target.parentNode.getAttribute("id");
+    return taskIndex;
+  },
+  getCat: function () {
+    let cat = document.querySelector(".cat");
+    let catId = cat.getAttribute("id");
+    return catId;
+  },
+  //overlooked the modularization chance - this is applied for the task too
+  currentSubtaskPath: (function () {
+    let currentPath;
+    let taskPath;
+    let subtaskIndex;
+    function setSubtaskPath(path) {
+      currentPath = path;
+    }
+    function getSubtaskPath() {
+      return currentPath;
+    }
+    function setTaskPath(path) {
+      taskPath = path;
+    }
+    function getTaskPath() {
+      return taskPath;
+    }
+    function setIndex(index) {
+      subtaskIndex = index;
+    }
+    function getIndex() {
+      return subtaskIndex;
+    }
+    return {
+      setSubtaskPath,
+      getSubtaskPath,
+      setTaskPath,
+      getTaskPath,
+      setIndex,
+      getIndex,
+    };
+  })(),
+  popupSubtask: function (cat, subtaskIndex, taskIndex, location) {
+    const modal = document.createElement("dialog");
+    const subtaskPath =
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks[subtaskIndex];
+    const taskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex];
+    const subtask = subtaskPath.details;
 
-        this.currentSubtaskPath.setSubtaskPath(subtaskPath);
-        this.currentSubtaskPath.setTaskPath(taskPath);
-        this.currentSubtaskPath.setIndex(subtaskIndex);
+    this.currentSubtaskPath.setSubtaskPath(subtaskPath);
+    this.currentSubtaskPath.setTaskPath(taskPath);
+    this.currentSubtaskPath.setIndex(subtaskIndex);
 
-        modal.innerHTML = '';
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
             <div class="clear-modal">x</div>
             <div class="subtask-container">
                 <div class="popup-subtask-details">
@@ -23515,25 +23558,25 @@ const editors = {
                     <button type="submit" id="delete-subtask-button">Delete Subtask</button>
                 </div>
             </div>
-        `
+        `;
 
-        modal.classList.add("subtask-editor");
-        location.appendChild(modal);
+    modal.classList.add("subtask-editor");
+    location.appendChild(modal);
 
-        this.activateTemplate(modal, template)
-        this.activateButtons();
-    },
-    popupTask: function(path, location, taskIndex){
-        const modal = document.createElement("dialog");
-        const taskDescription = path.description;
-        const taskTitle = path.title;
+    this.activateTemplate(modal, template);
+    this.activateButtons();
+  },
+  popupTask: function (path, location, taskIndex) {
+    const modal = document.createElement("dialog");
+    const taskDescription = path.description;
+    const taskTitle = path.title;
 
-        editors.currentSubtaskPath.setTaskPath(path);
-        editors.currentSubtaskPath.setIndex(taskIndex);
+    editors.currentSubtaskPath.setTaskPath(path);
+    editors.currentSubtaskPath.setIndex(taskIndex);
 
-        modal.innerHTML = '';
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
             <div class="clear-modal">x</div>
                 <div class="task-modal-container">
                     <div class="popup-task-title">
@@ -23545,12 +23588,16 @@ const editors = {
                     <textarea name="edit-task-description" id="edit-task-description" maxlength="150" required>${taskDescription}</textarea>
                 </div>
                 <div class="due-date-container">
-                <label for="due-date">(Optional) Change due date, current is ${processDateObjs.processDateFormat(path.due)}</label>
+                <label for="due-date">(Optional) Change due date, current is ${processDateObjs.processDateFormat(
+                  path.due
+                )}</label>
                 <input type="date" id="due-date" name="due-date"></input>
                 </div>
                 <div class="priority-container">
                 <label for="priority">Priority:</label>
-                <div id="priority" class="${path.priority}">Click to toggle. Current Priority is ${path.priority}</div>
+                <div id="priority" class="${
+                  path.priority
+                }">Click to toggle. Current Priority is ${path.priority}</div>
                 </div>
                 <div class="error-handler"></div>
                 <div class="task-buttons">
@@ -23559,22 +23606,22 @@ const editors = {
                     <button type="submit" id="delete-task-button">Delete Task</button>
                 </div>
             </div>
-        `
+        `;
 
-        modal.classList.add("task-editor");
-        location.appendChild(modal);
+    modal.classList.add("task-editor");
+    location.appendChild(modal);
 
-        this.activateTemplate(modal, template);
-        this.activateTaskButtons();
-    },
-    popupCat: function(path, location){
-        const modal = document.createElement("dialog");
-        const catTitle = path.catTitle;
-        const catDescription = path.catDescription;
+    this.activateTemplate(modal, template);
+    this.activateTaskButtons();
+  },
+  popupCat: function (path, location) {
+    const modal = document.createElement("dialog");
+    const catTitle = path.catTitle;
+    const catDescription = path.catDescription;
 
-        modal.innerHTML = '';
+    modal.innerHTML = "";
 
-        const template = `
+    const template = `
             <div class="clear-modal">x</div>
                 <div class="cat-modal-container">
                     <div class="popup-cat-title">
@@ -23593,201 +23640,207 @@ const editors = {
             </div>
         `;
 
-        modal.classList.add("cat-editor");
-        location.appendChild(modal);
+    modal.classList.add("cat-editor");
+    location.appendChild(modal);
 
-        this.activateTemplate(modal, template);
-        this.activateCatButtons();
-    },
-    activateTemplate: function(modal, template){
-        const form = document.createElement("form");
-        modal.appendChild(form);
-        form.innerHTML = template;
-        modal.showModal();
-    },
-    activateTaskButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const submitChangesButton = document.querySelector("#submit-task-button");
-        const clearTaskButton = document.querySelector("#clear-task");
-        const deleteTaskButton = document.querySelector("#delete-task-button");
-        const priority = document.querySelector("#priority");
+    this.activateTemplate(modal, template);
+    this.activateCatButtons();
+  },
+  activateTemplate: function (modal, template) {
+    const form = document.createElement("form");
+    modal.appendChild(form);
+    form.innerHTML = template;
+    modal.showModal();
+  },
+  activateTaskButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const submitChangesButton = document.querySelector("#submit-task-button");
+    const clearTaskButton = document.querySelector("#clear-task");
+    const deleteTaskButton = document.querySelector("#delete-task-button");
+    const priority = document.querySelector("#priority");
 
-        clearTaskButton.addEventListener("click", this.clearTask);
-        submitChangesButton.addEventListener("click", this.submitTaskChanges);
-        clearModalButton.addEventListener("click", this.clearTaskModal);
-        deleteTaskButton.addEventListener("click", this.deleteTask);
-        priority.addEventListener("click", priorityHandler.togglePriority);
-    },
-    activateButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const submitChangesButton = document.querySelector("#edit-subtask-button");
-        const clearSubtaskButton = document.querySelector("#clear-subtask");
-        const deleteSubtask = document.querySelector("#delete-subtask-button")
+    clearTaskButton.addEventListener("click", this.clearTask);
+    submitChangesButton.addEventListener("click", this.submitTaskChanges);
+    clearModalButton.addEventListener("click", this.clearTaskModal);
+    deleteTaskButton.addEventListener("click", this.deleteTask);
+    priority.addEventListener("click", priorityHandler.togglePriority);
+  },
+  activateButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const submitChangesButton = document.querySelector("#edit-subtask-button");
+    const clearSubtaskButton = document.querySelector("#clear-subtask");
+    const deleteSubtask = document.querySelector("#delete-subtask-button");
 
-        clearSubtaskButton.addEventListener("click", this.clearSubtask);
-        submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
-        clearModalButton.addEventListener("click", this.clearSubtaskModal);
-        deleteSubtask.addEventListener("click", this.deleteSubtask);
-    },
-    activateCatButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const submitChangesButton = document.querySelector("#submit-cat-button");
-        const clearCatButton = document.querySelector("#clear-cat");
+    clearSubtaskButton.addEventListener("click", this.clearSubtask);
+    submitChangesButton.addEventListener("click", this.submitSubtaskChanges);
+    clearModalButton.addEventListener("click", this.clearSubtaskModal);
+    deleteSubtask.addEventListener("click", this.deleteSubtask);
+  },
+  activateCatButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const submitChangesButton = document.querySelector("#submit-cat-button");
+    const clearCatButton = document.querySelector("#clear-cat");
 
-        clearCatButton.addEventListener("click", this.clearCat);
-        submitChangesButton.addEventListener("click", this.submitCatChanges);
-        clearModalButton.addEventListener("click", this.clearCatModal);
-    },
-    clearSubtaskModal: function(){
-        const subtaskEditor = document.querySelector(".subtask-editor");
-        subtaskEditor.remove();
-    },
-    clearTaskModal: function(){
-        const taskEditor = document.querySelector(".task-editor");
-        taskEditor.remove();
-    },
-    clearCatModal: function(){
-        const catEditor = document.querySelector(".cat-editor");
-        catEditor.remove();
-    },
-    clearSubtask: function(e){
-        e.preventDefault();
-        const subtask = document.querySelector("#edit-subtask-details");
-        subtask.textContent = '';
-    },
-    clearTask: function(e){
-        e.preventDefault();
-        const taskDescription = document.querySelector("#edit-task-description");
-        taskDescription.textContent = '';
-    },
-    clearCat: function(e){
-        e.preventDefault();
-        const catDescription = document.querySelector("#edit-cat-description");
-        catDescription.textContent = '';
-    },
-    deleteSubtask: function(e){
-        e.preventDefault();
-        let cat = domMain.findOwnerCat();
-        let taskPath = editors.currentSubtaskPath.getTaskPath();
-        let subtaskIndex = editors.currentSubtaskPath.getIndex();
+    clearCatButton.addEventListener("click", this.clearCat);
+    submitChangesButton.addEventListener("click", this.submitCatChanges);
+    clearModalButton.addEventListener("click", this.clearCatModal);
+  },
+  clearSubtaskModal: function () {
+    const subtaskEditor = document.querySelector(".subtask-editor");
+    subtaskEditor.remove();
+  },
+  clearTaskModal: function () {
+    const taskEditor = document.querySelector(".task-editor");
+    taskEditor.remove();
+  },
+  clearCatModal: function () {
+    const catEditor = document.querySelector(".cat-editor");
+    catEditor.remove();
+  },
+  clearSubtask: function (e) {
+    e.preventDefault();
+    const subtask = document.querySelector("#edit-subtask-details");
+    subtask.textContent = "";
+  },
+  clearTask: function (e) {
+    e.preventDefault();
+    const taskDescription = document.querySelector("#edit-task-description");
+    taskDescription.textContent = "";
+  },
+  clearCat: function (e) {
+    e.preventDefault();
+    const catDescription = document.querySelector("#edit-cat-description");
+    catDescription.textContent = "";
+  },
+  deleteSubtask: function (e) {
+    e.preventDefault();
+    let cat = domMain.findOwnerCat();
+    let taskPath = editors.currentSubtaskPath.getTaskPath();
+    let subtaskIndex = editors.currentSubtaskPath.getIndex();
 
-        taskPath.subtasks.splice([subtaskIndex], 1);
-        
-        editors.clearSubtaskModal();
-        domMain.defaultLoad(cat);
-    },
-    deleteTask: function(e){
-        e.preventDefault();
-        let cat = domMain.findOwnerCat();
-        let taskIndex = editors.currentSubtaskPath.getIndex();
+    taskPath.subtasks.splice([subtaskIndex], 1);
 
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks.splice([taskIndex], 1);
+    editors.clearSubtaskModal();
+    domMain.defaultLoad(cat);
+  },
+  deleteTask: function (e) {
+    e.preventDefault();
+    let cat = domMain.findOwnerCat();
+    let taskIndex = editors.currentSubtaskPath.getIndex();
 
-        domMain.defaultLoad(cat);
-    },
-    submitSubtaskChanges: function(e){
-        e.preventDefault();
-        let currentSubtaskPath = editors.currentSubtaskPath.getSubtaskPath()
-        let cat = domMain.findOwnerCat();
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks.splice([taskIndex], 1);
 
-        let newSubtask = editors.getSubtaskInput();
+    domMain.defaultLoad(cat);
+  },
+  submitSubtaskChanges: function (e) {
+    e.preventDefault();
+    let currentSubtaskPath = editors.currentSubtaskPath.getSubtaskPath();
+    let cat = domMain.findOwnerCat();
 
-        let validity = this.checkValidity(newSubtask);
+    let newSubtask = editors.getSubtaskInput();
 
-        if (validity === true) {
-            currentSubtaskPath.details = newSubtask;
-            editors.clearSubtaskModal();
-            domMain.defaultLoad(cat)
-        } else {
-            errorHandler.editorError()
-        }
-    },
-    submitTaskChanges: function(e){
-        e.preventDefault();
-        const newTaskDescription = editors.getTaskDescription();
-        const newTaskTitle = editors.getTaskTitle();
-        const newTaskDue = document.querySelector("#due-date").value;
-        const taskPriority = document.querySelector("#priority").className;
-        const currentPath = editors.currentSubtaskPath.getTaskPath();
-        let cat = domMain.findOwnerCat();
+    let validity = this.checkValidity(newSubtask);
 
-        currentPath.description = newTaskDescription;
-        currentPath.title = newTaskTitle;
-        currentPath.priority = taskPriority;
+    if (validity === true) {
+      currentSubtaskPath.details = newSubtask;
+      editors.clearSubtaskModal();
+      domMain.defaultLoad(cat);
+    } else {
+      errorHandler.editorError();
+    }
+  },
+  submitTaskChanges: function (e) {
+    e.preventDefault();
+    const newTaskDescription = editors.getTaskDescription();
+    const newTaskTitle = editors.getTaskTitle();
+    const newTaskDue = document.querySelector("#due-date").value;
+    const taskPriority = document.querySelector("#priority").className;
+    const currentPath = editors.currentSubtaskPath.getTaskPath();
+    let cat = domMain.findOwnerCat();
 
-        //fixes annoying bug where empty date crashes the full app
-        if (newTaskDue == "") {
-            domMain.defaultLoad(cat);
-        } else {
-            currentPath.due = newTaskDue;
-            domMain.defaultLoad(cat);
-        };
-    },
-    submitCatChanges: function(e){
-        e.preventDefault();
-        const cat = domMain.findOwnerCat();
-        const catPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
-        const newCatTitle = document.querySelector("#cat-input-title").value;
-        const newCatDescription = document.querySelector("#edit-cat-description").value;
+    currentPath.description = newTaskDescription;
+    currentPath.title = newTaskTitle;
+    currentPath.priority = taskPriority;
 
-        if (newCatTitle === cat){
-            //prevent things from blowing up
-            catPath.catDescription = newCatDescription;
-            //re-render main
-            domMain.defaultLoad(cat);
-        } else {
-            catPath.catTitle = newCatTitle;
-            catPath.catDescription = newCatDescription;
-            //make a copy, to get a new obj key
-            _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[newCatTitle] = catPath;
-            //delete the old key
-            delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
-            //re-render everything
-            domMain.defaultLoad(newCatTitle);
-            domSidebar.pubCats();
-        };
-    },
-    getTaskDescription: function(){
-        const taskDescription = document.querySelector("#edit-task-description").value;
-        return taskDescription;
-    },
-    getTaskTitle: function(){
-        const taskTitle = document.querySelector("#task-input-title").value;
-        return taskTitle
-    },
-    getSubtaskInput: function(){
-        const subtask = document.querySelector("#edit-subtask-details").value;
-        return subtask;
-    },
-    getNewSubtaskInput: function(){
-        const subtask = document.querySelector("#create-subtask-details").value;
-        return subtask;
-    },
-    checkValidity: function(operand){
-        const isValid = Object.values(domManager.conditions).every(condition => condition(operand));
-        return isValid
-    },
-    precheckType: function(e){
-        let cat = editors.getCat();
-        if (cat === 'obyect-vremeni'){
-                dateDomManager.addNewSubtask(e);
-        } else {
-            editors.addNewSubtask(e);
-        }
-    },
-    addNewSubtask: function(e){
-        let location = e.target.parentElement;
-        let taskIndex = editors.getTaskIndex(e.target);
-        let cat = editors.getCat();
+    //fixes annoying bug where empty date crashes the full app
+    if (newTaskDue == "") {
+      domMain.defaultLoad(cat);
+    } else {
+      currentPath.due = newTaskDue;
+      domMain.defaultLoad(cat);
+    }
+  },
+  submitCatChanges: function (e) {
+    e.preventDefault();
+    const cat = domMain.findOwnerCat();
+    const catPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
+    const newCatTitle = document.querySelector("#cat-input-title").value;
+    const newCatDescription = document.querySelector(
+      "#edit-cat-description"
+    ).value;
 
-        //this is communicating with line 225
-        const modal = document.createElement("dialog");
-        const subtaskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks;
+    if (newCatTitle === cat) {
+      //prevent things from blowing up
+      catPath.catDescription = newCatDescription;
+      //re-render main
+      domMain.defaultLoad(cat);
+    } else {
+      catPath.catTitle = newCatTitle;
+      catPath.catDescription = newCatDescription;
+      //make a copy, to get a new obj key
+      _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[newCatTitle] = catPath;
+      //delete the old key
+      delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat];
+      //re-render everything
+      domMain.defaultLoad(newCatTitle);
+      domSidebar.pubCats();
+    }
+  },
+  getTaskDescription: function () {
+    const taskDescription = document.querySelector(
+      "#edit-task-description"
+    ).value;
+    return taskDescription;
+  },
+  getTaskTitle: function () {
+    const taskTitle = document.querySelector("#task-input-title").value;
+    return taskTitle;
+  },
+  getSubtaskInput: function () {
+    const subtask = document.querySelector("#edit-subtask-details").value;
+    return subtask;
+  },
+  getNewSubtaskInput: function () {
+    const subtask = document.querySelector("#create-subtask-details").value;
+    return subtask;
+  },
+  checkValidity: function (operand) {
+    const isValid = Object.values(domManager.conditions).every((condition) =>
+      condition(operand)
+    );
+    return isValid;
+  },
+  precheckType: function (e) {
+    let cat = editors.getCat();
+    if (cat === "obyect-vremeni") {
+      dateDomManager.addNewSubtask(e);
+    } else {
+      editors.addNewSubtask(e);
+    }
+  },
+  addNewSubtask: function (e) {
+    let location = e.target.parentElement;
+    let taskIndex = editors.getTaskIndex(e.target);
+    let cat = editors.getCat();
 
-        editors.currentSubtaskPath.setSubtaskPath(subtaskPath);
-        modal.innerHTML = '';
+    //this is communicating with line 225
+    const modal = document.createElement("dialog");
+    const subtaskPath = _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].subtasks;
 
-        const template = `
+    editors.currentSubtaskPath.setSubtaskPath(subtaskPath);
+    modal.innerHTML = "";
+
+    const template = `
             <div class="clear-modal">x</div>
             <div class="subtask-container">
             <div class="subtask-location">This subtask is under <span>${cat} > ${_task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat].tasks[taskIndex].title}</span></div>
@@ -23802,47 +23855,48 @@ const editors = {
             </div>
         `;
 
-        modal.classList.add("subtask-editor");
-        location.appendChild(modal);
+    modal.classList.add("subtask-editor");
+    location.appendChild(modal);
 
-        editors.activateTemplate(modal, template);
-        editors.activateNewSubtaskButtons();
-    },
-    activateNewSubtaskButtons: function(){
-        const clearModalButton = document.querySelector(".clear-modal");
-        const createSubtask = document.querySelector("#create-subtask-button");
+    editors.activateTemplate(modal, template);
+    editors.activateNewSubtaskButtons();
+  },
+  activateNewSubtaskButtons: function () {
+    const clearModalButton = document.querySelector(".clear-modal");
+    const createSubtask = document.querySelector("#create-subtask-button");
 
-        createSubtask.addEventListener("click", this.submitNewSubtask);
-        clearModalButton.addEventListener("click", this.clearSubtaskModal);
-    },
-    submitNewSubtask: function(e){
-        e.preventDefault();
-        //this leads to target task's subtask array
-        let currentSubtaskPath = editors.currentSubtaskPath.getSubtaskPath();
-        let cat = domMain.findOwnerCat();
-        let newSubtaskDetails = editors.getNewSubtaskInput();
-        let subtask = new _task_master__WEBPACK_IMPORTED_MODULE_0__.Subtask(newSubtaskDetails);
+    createSubtask.addEventListener("click", this.submitNewSubtask);
+    clearModalButton.addEventListener("click", this.clearSubtaskModal);
+  },
+  submitNewSubtask: function (e) {
+    e.preventDefault();
+    //this leads to target task's subtask array
+    let currentSubtaskPath = editors.currentSubtaskPath.getSubtaskPath();
+    let cat = domMain.findOwnerCat();
+    let newSubtaskDetails = editors.getNewSubtaskInput();
+    let subtask = new _task_master__WEBPACK_IMPORTED_MODULE_0__.Subtask(newSubtaskDetails);
 
-        currentSubtaskPath.push(subtask);
-        domMain.defaultLoad(cat);
-    },
+    currentSubtaskPath.push(subtask);
+    domMain.defaultLoad(cat);
+  },
 };
 
 const errorHandler = {
-    //DONT TOUCH OR IMPLEMENT.
-    editorError: function(){
-        const errorHandler = document.querySelector(".error-handler");
+  //DONT TOUCH OR IMPLEMENT.
+  editorError: function () {
+    const errorHandler = document.querySelector(".error-handler");
 
-        errorHandler.textContent = "Please don't leave fields blank, or exceed the 45 character limit."
-    },
+    errorHandler.textContent =
+      "Please don't leave fields blank, or exceed the 45 character limit.";
+  },
 };
 
 //This was so confusing to look at, I regret not documenting this. For future me: This just initiates the datesObj - but it is never re-used despite being perfectly modular
-function updateListener(cats){
-    _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubChangesToDates(cats);
-    //prevents circular dependencies
-    processDateObjs.updateDomWithDates();
-};
+function updateListener(cats) {
+  _sub_to_changes__WEBPACK_IMPORTED_MODULE_1__.changeListener.pubChangesToDates(cats);
+  //prevents circular dependencies
+  processDateObjs.updateDomWithDates();
+}
 
 updateListener(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
 
@@ -23866,34 +23920,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const storageManager = {
-    saveProjects: function(){
-        const jsonObj = JSON.stringify(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
-        localStorage.setItem('savedProjects', jsonObj);
-    },
-    loadProjects: function(){
-        if (!localStorage.getItem('savedProjects')){
-            this.saveProjects()
-        } else {
-            const localObj = localStorage.getItem('savedProjects');
-            const parsedObj = JSON.parse(localObj);
-            
-            Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach(key => delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key]);
-            Object.assign(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects, parsedObj);
-        }
-    },
-    clearLocalStorage: function(){
-        localStorage.clear();
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.workCatReset.resetWorkCat();
-        
-        const deepProjectInstance = {};
-        //basically, this is because Javascript is Javascript. We are doing this to prevent having 8 tasks, as not using parse and stringify would mean that we are storing a reference to the properties and we end up with x2 the properties. This way however, the object goes through so much that it basically has nothing to do with the original workCat anymore
-        deepProjectInstance[_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat.catTitle] = JSON.parse(JSON.stringify(_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat));
-        console.log(deepProjectInstance)
+  saveProjects: function () {
+    const jsonObj = JSON.stringify(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects);
+    localStorage.setItem("savedProjects", jsonObj);
+  },
+  loadProjects: function () {
+    if (!localStorage.getItem("savedProjects")) {
+      this.saveProjects();
+    } else {
+      const localObj = localStorage.getItem("savedProjects");
+      const parsedObj = JSON.parse(localObj);
 
-        Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach(key => delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key]);
-        Object.assign(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects, deepProjectInstance);
+      Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach(
+        (key) => delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key]
+      );
+      Object.assign(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects, parsedObj);
     }
-}
+  },
+  clearLocalStorage: function () {
+    localStorage.clear();
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.workCatReset.resetWorkCat();
+
+    const deepProjectInstance = {};
+    //basically, this is because Javascript is Javascript. We are doing this to prevent having 8 tasks, as not using parse and stringify would mean that we are storing a reference to the properties and we end up with x2 the properties. This way however, the object goes through so much that it basically has nothing to do with the original workCat anymore
+    deepProjectInstance[_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat.catTitle] = JSON.parse(
+      JSON.stringify(_task_master__WEBPACK_IMPORTED_MODULE_0__.workCat)
+    );
+    console.log(deepProjectInstance);
+
+    Object.keys(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects).forEach(
+      (key) => delete _task_master__WEBPACK_IMPORTED_MODULE_0__.projects[key]
+    );
+    Object.assign(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects, deepProjectInstance);
+  },
+};
 
 
 
@@ -23919,39 +23979,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const changeListener = {
-    saveChanges: function(){
-        _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.saveProjects();
-    },
-    loadChanges: function(){
-        _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.loadProjects();
-    },
-    clearAll: function(){
-        _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.clearLocalStorage();
-    },
-    //we actually don't need to get the catObj
-    pubChangesToDates: function(cats){
-        _date_handler__WEBPACK_IMPORTED_MODULE_1__.dateSorter.resetArrays();
-        Object.keys(cats).forEach(cat => {
-            _date_handler__WEBPACK_IMPORTED_MODULE_1__.dateSorter.sortAll(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat]);
-        });
-    },
-    saveTodayArray: function(arr){
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.today = arr;
-    },
-    saveSoonArray: function(arr){
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.soonArray = arr;
-    },
-    saveOverdueArray: function(arr){
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.overdueArray = arr;
-    },
-    saveAnytimeArray: function(arr){
-        _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.anytimeArray = arr;
-    },
-    pubUnprocessedDates(date){
-        const processedDate = _date_handler__WEBPACK_IMPORTED_MODULE_1__.getDateInformation.processDate(date);
-        return processedDate;
-    },
-}
+  saveChanges: function () {
+    _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.saveProjects();
+  },
+  loadChanges: function () {
+    _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.loadProjects();
+  },
+  clearAll: function () {
+    _storage_handler__WEBPACK_IMPORTED_MODULE_2__.storageManager.clearLocalStorage();
+  },
+  //we actually don't need to get the catObj
+  pubChangesToDates: function (cats) {
+    _date_handler__WEBPACK_IMPORTED_MODULE_1__.dateSorter.resetArrays();
+    Object.keys(cats).forEach((cat) => {
+      _date_handler__WEBPACK_IMPORTED_MODULE_1__.dateSorter.sortAll(_task_master__WEBPACK_IMPORTED_MODULE_0__.projects[cat]);
+    });
+  },
+  saveTodayArray: function (arr) {
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.today = arr;
+  },
+  saveSoonArray: function (arr) {
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.soonArray = arr;
+  },
+  saveOverdueArray: function (arr) {
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.overdueArray = arr;
+  },
+  saveAnytimeArray: function (arr) {
+    _task_master__WEBPACK_IMPORTED_MODULE_0__.dateObjs.anytimeArray = arr;
+  },
+  pubUnprocessedDates(date) {
+    const processedDate = _date_handler__WEBPACK_IMPORTED_MODULE_1__.getDateInformation.processDate(date);
+    return processedDate;
+  },
+};
+
 
 
 
@@ -23979,36 +24040,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Category {
-    constructor(catTitle, catDescription){
-        this.catTitle = catTitle;
-        this.catDescription = catDescription;
-        this.tasks = [];
-    };
-};
+  constructor(catTitle, catDescription) {
+    this.catTitle = catTitle;
+    this.catDescription = catDescription;
+    this.tasks = [];
+  }
+}
 
 class Task {
-    constructor(title, description, due, priority){
-        this.title = title;
-        this.description = description;
-        this.due = this.processDate(due);
-        this.priority = priority;
-        this.subtasks = [];
-    }
+  constructor(title, description, due, priority) {
+    this.title = title;
+    this.description = description;
+    this.due = this.processDate(due);
+    this.priority = priority;
+    this.subtasks = [];
+  }
 
-    processDate(date){
-        if (date === '' || date === undefined || date === NaN){
-            return _date_handler__WEBPACK_IMPORTED_MODULE_0__.defaultDue;
-        } else {
-            return _date_handler__WEBPACK_IMPORTED_MODULE_0__.getDateInformation.formatDueDate(date);
-        }
+  processDate(date) {
+    if (date === "" || date === undefined || date === NaN) {
+      return _date_handler__WEBPACK_IMPORTED_MODULE_0__.defaultDue;
+    } else {
+      return _date_handler__WEBPACK_IMPORTED_MODULE_0__.getDateInformation.formatDueDate(date);
     }
-};
+  }
+}
 
 class Subtask {
-    constructor(details, status = 'incomplete'){
-        this.details = details,
-        this.status = status
-    }
+  constructor(details, status = "incomplete") {
+    (this.details = details), (this.status = status);
+  }
 }
 
 //super duper crucial
@@ -24016,77 +24076,115 @@ const projects = {};
 const dateObjs = {};
 
 const taskManager = {
-    addCat: function(catTitle, catDescription){
-        const newcat = new Category(catTitle, catDescription);
-        projects[catTitle] = newcat;
-    },
-    addTask: function(catTitle, taskTitle, taskDescription, taskDue = 'anytime', taskPriority = 'normal'){
-        const newTask = new Task(taskTitle, taskDescription, taskDue, taskPriority);
-        projects[catTitle].tasks.push(newTask)
-    }
-}
+  addCat: function (catTitle, catDescription) {
+    const newcat = new Category(catTitle, catDescription);
+    projects[catTitle] = newcat;
+  },
+  addTask: function (
+    catTitle,
+    taskTitle,
+    taskDescription,
+    taskDue = "anytime",
+    taskPriority = "normal"
+  ) {
+    const newTask = new Task(taskTitle, taskDescription, taskDue, taskPriority);
+    projects[catTitle].tasks.push(newTask);
+  },
+};
 
 //Mock stuff to fill the display
-const workCat = new Category("Work Tasks", "Awesome possum work tasks!!! (Never have I ever heard anyone say this, but yaaaay). This is a work category, and here belong all tasks that are about work. Click on a subtask to complete it.");
+const workCat = new Category(
+  "Work Tasks",
+  "Awesome possum work tasks!!! (Never have I ever heard anyone say this, but yaaaay). This is a work category, and here belong all tasks that are about work. Click on a subtask to complete it."
+);
 
 projects[workCat.catTitle] = workCat;
 
 const workCatReset = {
-    resetWorkCat: function(){
-        const newWorkCat = new Category(workCat.catTitle, workCat.catDescription);
+  resetWorkCat: function () {
+    const newWorkCat = new Category(workCat.catTitle, workCat.catDescription);
 
-        exampleTasksObj.addExampleTasks(newWorkCat);
-        Object.keys(workCat).forEach(key => delete workCat[key]);
-        Object.assign(workCat, newWorkCat);
-    }
-}
+    exampleTasksObj.addExampleTasks(newWorkCat);
+    Object.keys(workCat).forEach((key) => delete workCat[key]);
+    Object.assign(workCat, newWorkCat);
+  },
+};
 
 const exampleTasksObj = {
-    addExampleTasks: function(target) {        
-        const exampleTask1 = new Task("Get Followers", "Run a social media campaign to generate new followers", '08/31/2024', 'urgent');
+  addExampleTasks: function (target) {
+    const exampleTask1 = new Task(
+      "Get Followers",
+      "Run a social media campaign to generate new followers",
+      "08/31/2024",
+      "urgent"
+    );
 
-        exampleSubtasksObj.subtasks1(exampleTask1)
+    exampleSubtasksObj.subtasks1(exampleTask1);
 
-        const exampleTask2 = new Task("Market Research", "Conduct a market research on our client's company, to better understand the client Avatar", "08/20/2024", 'normal');
+    const exampleTask2 = new Task(
+      "Market Research",
+      "Conduct a market research on our client's company, to better understand the client Avatar",
+      "08/20/2024",
+      "normal"
+    );
 
-        exampleSubtasksObj.subtasks2(exampleTask2);
+    exampleSubtasksObj.subtasks2(exampleTask2);
 
-        const exampleTask3 = new Task("Find a lead-magnet", 'Find or create a lead magnet that can help generate more traffic to our website', '09/03/2024', 'normal');
+    const exampleTask3 = new Task(
+      "Find a lead-magnet",
+      "Find or create a lead magnet that can help generate more traffic to our website",
+      "09/03/2024",
+      "normal"
+    );
 
-        const exampleTask4 = new Task("Use the workit-kit!", 'Get comfortable with using the to-work-on system', '', 'normal');
+    const exampleTask4 = new Task(
+      "Use the workit-kit!",
+      "Get comfortable with using the to-work-on system",
+      "",
+      "normal"
+    );
 
-        exampleSubtasksObj.subtasks4(exampleTask4);
+    exampleSubtasksObj.subtasks4(exampleTask4);
 
-        target.tasks.push(exampleTask4, exampleTask1, exampleTask2, exampleTask3);
-    }
+    target.tasks.push(exampleTask4, exampleTask1, exampleTask2, exampleTask3);
+  },
 };
 
 const exampleSubtasksObj = {
-    subtasks1: (exampleTask1) => {
-        const subtask1 = new Subtask("Create a budget");
-        const subtask2 = new Subtask("Determine project targets");
-        const subtask3 = new Subtask("Choose a good framework to follow");
+  subtasks1: (exampleTask1) => {
+    const subtask1 = new Subtask("Create a budget");
+    const subtask2 = new Subtask("Determine project targets");
+    const subtask3 = new Subtask("Choose a good framework to follow");
 
-        exampleTask1.subtasks.push(subtask1, subtask2, subtask3);
-    },
-    subtasks2: (exampleTask2) => {
-        const subtask1 = new Subtask("Create a blueprint of the client's business");
-        const subtask2 = new Subtask("Video call the client and have a meeting");
-        const subtask3 = new Subtask("Share the findings with Vlad");
+    exampleTask1.subtasks.push(subtask1, subtask2, subtask3);
+  },
+  subtasks2: (exampleTask2) => {
+    const subtask1 = new Subtask("Create a blueprint of the client's business");
+    const subtask2 = new Subtask("Video call the client and have a meeting");
+    const subtask3 = new Subtask("Share the findings with Vlad");
 
-        exampleTask2.subtasks.push(subtask1, subtask2, subtask3);
-    },
-    subtasks4: (exampleTask4) => {
-        const subtask1 = new Subtask("Click on a subtask like me to mark complete!");
-        const subtask2 = new Subtask("Change the details and the date of this task. (Hint: click on the '...' button on the top right.)");
-        const subtask3 = new Subtask("Create a new Category, and fill it up with new Tasks and Subtasks!");
-        const subtask4 = new Subtask("Delete the task to delete all subtasks inside :(");
+    exampleTask2.subtasks.push(subtask1, subtask2, subtask3);
+  },
+  subtasks4: (exampleTask4) => {
+    const subtask1 = new Subtask(
+      "Click on a subtask like me to mark complete!"
+    );
+    const subtask2 = new Subtask(
+      "Change the details and the date of this task. (Hint: click on the '...' button on the top right.)"
+    );
+    const subtask3 = new Subtask(
+      "Create a new Category, and fill it up with new Tasks and Subtasks!"
+    );
+    const subtask4 = new Subtask(
+      "Delete the task to delete all subtasks inside :("
+    );
 
-        exampleTask4.subtasks.push(subtask1, subtask2, subtask3, subtask4);
-    },
-}
+    exampleTask4.subtasks.push(subtask1, subtask2, subtask3, subtask4);
+  },
+};
 
-exampleTasksObj.addExampleTasks(workCat)
+exampleTasksObj.addExampleTasks(workCat);
+
 
 
 
@@ -24262,14 +24360,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_2__.changeListener.loadChanges()
-;
+_components_sub_to_changes_js__WEBPACK_IMPORTED_MODULE_2__.changeListener.loadChanges();
+
 
 _components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__.domManager.findDom();
 //keep the default load as whatever for now, but change it to today or soon - looks better
-_components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__.domMain.defaultLoad("Work Tasks")
+_components_dom_master_js__WEBPACK_IMPORTED_MODULE_1__.domMain.defaultLoad("Work Tasks");
 
-_components_display_assist_js__WEBPACK_IMPORTED_MODULE_3__.logoDisplay.initLogo()
+_components_display_assist_js__WEBPACK_IMPORTED_MODULE_3__.logoDisplay.initLogo();
+
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map
